@@ -10,7 +10,7 @@ const AuthCallbackPage = async () => {
     auth.status === 400 ||
     auth.status === 500
   ) {
-    redirect("signin");
+    redirect("/signin");
   }
 };
 
