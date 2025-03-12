@@ -12,6 +12,7 @@ const AuthCallbackPage = async () => {
   ) {
     redirect("/signin");
   }
+  return <>Callback</>;
 };
 
 export default AuthCallbackPage;

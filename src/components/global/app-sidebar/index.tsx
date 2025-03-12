@@ -1,10 +1,13 @@
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
   SidebarHeader,
+  SidebarMenuButton,
 } from "@/components/ui/sidebar";
+import { APP_NAME } from "@/global/constants";
 import { Project, User } from "@prisma/client";
 
 const AppSidebar = ({
@@ -22,7 +25,24 @@ const AppSidebar = ({
       {...props}
       className="max-w-[212px] bg-background-90"
     >
-      <SidebarHeader />
+      <SidebarHeader className="pt-6 px-3 pb-0">
+        <SidebarMenuButton
+          size={"lg"}
+          className="data-[state=open]:text-sidebar-accent-foreground"
+        >
+          <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground">
+            <Avatar className="h-10 w-10 rounded-full">
+              <AvatarImage src={"/next.svg"} alt={user.name} />
+              <AvatarFallback className="rounded-lg">
+                Pitch Perfect
+              </AvatarFallback>
+            </Avatar>
+          </div>
+          <span className="truncate text-primary text-3xl font-semibold">
+            {APP_NAME}
+          </span>
+        </SidebarMenuButton>
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup />
         <SidebarGroup />
