@@ -1,21 +1,24 @@
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
   SidebarHeader,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { APP_NAME } from "@/global/constants";
+import { APP_NAME, DATA } from "@/global/constants";
 import { Project, User } from "@prisma/client";
+import NavMenu from "./nav-menu";
+import RecentOpen from "./recent-open";
 
 const AppSidebar = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   recentProjects,
   user,
   ...props
 }: {
-  recentProjects: Project[];
+  recentProjects?: Project[];
   user: User;
   props: React.ComponentProps<typeof Sidebar>;
 }) => {
@@ -43,9 +46,9 @@ const AppSidebar = ({
           </span>
         </SidebarMenuButton>
       </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup />
-        <SidebarGroup />
+      <SidebarContent className="px-3 mt-10 gap-y-6">
+        <NavMenu items={DATA.navMain} />
+        <RecentOpen />
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>

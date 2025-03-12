@@ -14,7 +14,7 @@ const Layout = async ({ children }: Props) => {
   if (!checkUser.user) redirect("/signin");
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar recentProjects={[]} user={checkUser.user} />
     </SidebarProvider>
   );
 };
