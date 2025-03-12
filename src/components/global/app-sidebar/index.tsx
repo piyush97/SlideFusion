@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sidebar";
 import { APP_NAME, DATA } from "@/global/constants";
 import { Project, User } from "@prisma/client";
+import NavFooter from "./nav-footer";
 import NavMenu from "./nav-menu";
 import RecentOpen from "./recent-open";
 
@@ -49,7 +50,9 @@ const AppSidebar = ({
         <NavMenu items={DATA.navMain} />
         <RecentOpen recentProjects={recentProjects} />
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <NavFooter prismaUser={user} />
+      </SidebarFooter>
     </Sidebar>
   );
 };
