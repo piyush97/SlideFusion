@@ -13,12 +13,11 @@ import NavMenu from "./nav-menu";
 import RecentOpen from "./recent-open";
 
 const AppSidebar = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   recentProjects,
   user,
   ...props
 }: {
-  recentProjects?: Project[];
+  recentProjects: Project[];
   user: User;
   props: React.ComponentProps<typeof Sidebar>;
 }) => {
@@ -48,7 +47,7 @@ const AppSidebar = ({
       </SidebarHeader>
       <SidebarContent className="px-3 mt-10 gap-y-6">
         <NavMenu items={DATA.navMain} />
-        <RecentOpen />
+        <RecentOpen recentProjects={recentProjects} />
       </SidebarContent>
       <SidebarFooter />
     </Sidebar>
