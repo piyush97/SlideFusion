@@ -23,6 +23,7 @@ export const onAuthenticateUser = async () => {
     if (userExist) {
       return { status: 200, user: userExist };
     }
+
     const newUser = await client?.user.create({
       data: {
         clerkId: user.id,
