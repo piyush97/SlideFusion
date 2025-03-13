@@ -23,11 +23,7 @@ const AppSidebar = ({
   // props: React.ComponentProps<typeof Sidebar>;
 }) => {
   return (
-    <Sidebar
-      collapsible="icon"
-      {...props}
-      className="max-w-[212px] bg-background-90"
-    >
+    <Sidebar collapsible="icon" className="max-w-[212px] bg-background-90">
       <SidebarHeader className="pt-6 px-3 pb-0">
         <SidebarMenuButton
           size={"lg"}

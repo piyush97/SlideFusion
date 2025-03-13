@@ -1,4 +1,5 @@
 import { getAllProjects } from "@/actions/project";
+import { Project } from "@prisma/client";
 
 const DashboardPage = async () => {
   const allProjects = await getAllProjects();
@@ -14,7 +15,7 @@ const DashboardPage = async () => {
           </p>
         </div>
       </div>
-      {allProjects.data?.map((project) => (
+      {allProjects.data?.map((project: Project) => (
         <div key={project.id} className="flex flex-col gap-2">
           <h1 className="text-xl font-semibold dark:text-primary">
             {project.title}
