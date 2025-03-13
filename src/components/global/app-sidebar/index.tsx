@@ -16,11 +16,11 @@ import RecentOpen from "./recent-open";
 const AppSidebar = ({
   recentProjects,
   user,
-  ...props
-}: {
+}: // ...props
+{
   recentProjects: Project[];
   user: User;
-  props: React.ComponentProps<typeof Sidebar>;
+  // props: React.ComponentProps<typeof Sidebar>;
 }) => {
   return (
     <Sidebar

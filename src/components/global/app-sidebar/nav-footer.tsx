@@ -7,13 +7,11 @@ import {
 } from "@/components/ui/sidebar";
 import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import { User } from "@prisma/client";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const NavFooter = ({ prismaUser }: { prismaUser: User }) => {
   const { isLoaded, isSignedIn, user } = useUser();
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+  const [loading] = useState(false);
   if (!isLoaded || !isSignedIn) return null;
 
   return (

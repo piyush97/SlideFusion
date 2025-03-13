@@ -18,7 +18,6 @@ const Layout = async ({ children }: Props) => {
       <AppSidebar
         recentProjects={recentProjects.data || []}
         user={checkUser.user}
-        props={{}}
       />
       {children}
     </SidebarProvider>
