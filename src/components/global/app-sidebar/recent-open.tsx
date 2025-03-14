@@ -7,6 +7,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { ROUTES } from "@/global/constants";
 import { useSlideStore } from "@/store/useSlideStore";
 import { Project } from "@prisma/client";
 import { JsonValue } from "@prisma/client/runtime/library";
@@ -29,7 +30,7 @@ const RecentOpen = ({ recentProjects }: Props) => {
       return;
     }
     setSlides(JSON.parse(JSON.stringify(slides)));
-    router.push(`/presentation/${projectId}`);
+    router.push(`${ROUTES.presentation}/${projectId}`);
   };
   return (
     recentProjects.length > 0 && (
