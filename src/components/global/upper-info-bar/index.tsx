@@ -1,7 +1,10 @@
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { User } from "@prisma/client";
+import { Upload } from "lucide-react";
 import ThemeSwitcher from "../mode-toggle";
+import NewProjectButton from "./new-project-button";
 import SearchBar from "./uper-info-searchbar";
 
 type Props = {
@@ -19,6 +22,13 @@ const UpperInfoBar = ({ user, children }: Props) => {
         <SearchBar />
       </div>
       <ThemeSwitcher />
+      <div className="flex flex-wrap gap-4 items-center justify-end">
+        <Button className="bg-primary-80 rounded-lg hover:bg-background-80 text-primary font-semibold cursor-not-allowed">
+          <Upload />
+          Import
+        </Button>
+        <NewProjectButton user={user} />
+      </div>
     </header>
   );
 };
