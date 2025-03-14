@@ -1,6 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { User } from "@prisma/client";
+import ThemeSwitcher from "../mode-toggle";
 import SearchBar from "./uper-info-searchbar";
 
 type Props = {
@@ -17,6 +18,7 @@ const UpperInfoBar = ({ user, children }: Props) => {
       <div className="w-full max-w-[95%] flex items-center justify-between gap-4 flex-wrap">
         <SearchBar />
       </div>
+      <ThemeSwitcher />
     </header>
   );
 };
