@@ -8,7 +8,8 @@ type Props = {
 };
 const DashboardLayout = async ({ children }: Props) => {
   const auth = await onAuthenticateUser();
-  if (!auth.user) redirect("/sigin");
+  if (!auth?.user) redirect("/signin");
+
   return <div className="w-full min-h-screen">{children}</div>;
 };
 

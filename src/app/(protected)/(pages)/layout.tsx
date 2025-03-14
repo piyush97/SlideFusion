@@ -14,7 +14,7 @@ const Layout = async ({ children }: Props) => {
   const recentProjects = await getRecentProjects();
   const checkUser = await onAuthenticateUser();
 
-  if (!checkUser.user) redirect("/signin");
+  if (!checkUser?.user) redirect("/signin");
 
   return (
     <SidebarProvider>

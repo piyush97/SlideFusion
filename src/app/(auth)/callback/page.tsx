@@ -11,11 +11,20 @@ const AuthCallbackPage = async () => {
   } else if (
     auth.status === 403 ||
     auth.status === 400 ||
-    auth.status === 500 ||
-    auth.status === 404
+    auth.status === 500
   ) {
     console.log("Redirecting to signin due to status:", auth.status);
     redirect("/signin");
+  }
+  if (auth.status === 404) {
+    console.log("Redirecting to signup");
+    redirect("/signup");
+  } else if (auth.status === 401) {
+    console.log("Redirecting to signout");
+    redirect("/signout");
+  } else if (auth.status === 409) {
+    console.log("Redirecting to verify");
+    redirect("/verify");
   } else {
     console.log("Unhandled status code:", auth.status);
     redirect("/signin");

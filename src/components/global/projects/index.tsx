@@ -15,7 +15,9 @@ const Projects = ({ projects }: Props) => {
       initial="hidden"
       animate="visible"
     >
-      <ProjectCard />
+      {projects.map((project) => (
+        <ProjectCard key={project.id} project={project} />
+      ))}
     </motion.div>
   );
 };

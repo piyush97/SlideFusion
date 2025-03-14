@@ -8,7 +8,8 @@ export const onAuthenticateUser = async () => {
     if (!user) {
       return { status: 403 };
     }
-    const userExist = await client?.user.findUnique({
+
+    const userExist = await client.user.findUnique({
       where: {
         clerkId: user.id,
       },
@@ -35,7 +36,6 @@ export const onAuthenticateUser = async () => {
     if (newUser) {
       return { status: 201, user: newUser };
     }
-    return { status: 404 };
   } catch (error) {
     console.error("Error", error);
     return { status: 500, error: "Internal Server Error" };

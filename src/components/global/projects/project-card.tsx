@@ -1,7 +1,9 @@
-type Props = {};
+import { Project } from "@prisma/client";
 
-const ProjectCard = (props: Props) => {
-  return <div>ProjectCard</div>;
+type Props = { project: Project };
+
+const ProjectCard = ({ project }: Props) => {
+  return <div>{JSON.stringify(project)}</div>;
 };
 
 export default ProjectCard;
