@@ -16,7 +16,16 @@ const Projects = ({ projects }: Props) => {
       animate="visible"
     >
       {projects.map((project) => (
-        <ProjectCard key={project.id} project={project} />
+        <ProjectCard
+          key={project.id}
+          title={project.title}
+          projectId={project.id}
+          isDeleted={project.isDeleted}
+          createdAt={project.createdAt}
+          slideData={project.slides}
+          src={project.thumbnail || "Random Image here"}
+          themeName={project.themeName}
+        />
       ))}
     </motion.div>
   );

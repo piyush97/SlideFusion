@@ -1,30 +1,52 @@
 "use client";
-import { itemVariant, ROUTES } from "@/global/constants";
+import { itemVariant, ROUTES, themes } from "@/global/constants";
 import { useSlideStore } from "@/store/useSlideStore";
-import { Project } from "@prisma/client";
+import { JsonValue } from "@prisma/client/runtime/library";
 import { motion } from "framer-motion";
 import router from "next/router";
-type Props = { project: Project };
+import Thumbnail from "./thumbnail";
+type Props = {
+  projectId: string;
+  isDeleted?: boolean;
+  createdAt: Date;
+  slideData: JsonValue;
+  src: string;
+  title: string;
+  themeName: string;
+};
 
-const ProjectCard = ({ project }: Props) => {
+const ProjectCard = ({
+  projectId,
+  isDeleted,
+  createdAt,
+  slideData,
+  src,
+  title,
+  themeName,
+}: Props) => {
   const { setSlides } = useSlideStore();
-
+  const theme = themes.find((theme) => theme.name === themeName) || themes[0];
   const handleNavigation = () => {
-    setSlides(JSON.parse(JSON.stringify(project.slides)));
-    router.push(`${ROUTES.presentation}/${project.id}`);
+    setSlides(JSON.parse(JSON.stringify(slideData)));
+    router.push(`${ROUTES.presentation}/${projectId}`);
   };
 
   return (
     <motion.div
       className={`group w-full flex flex-col gap-y-3 rounded-xl p-3 transition-colors ${
-        !project.isDeleted && "hover:bg-muted/50"
+        !isDeleted && "hover:bg-muted/50"
       }`}
       variants={itemVariant}
     >
       <div
         className="relative aspect-[16/10] overflow-hidden rounded-lg cursor-pointer"
         onClick={handleNavigation}
-      ></div>
+      >
+        <Thumbnail
+          slide={JSON.parse(JSON.stringify(slideData))?.[0]}
+          theme={theme}
+        />
+      </div>
     </motion.div>
   );
 };
