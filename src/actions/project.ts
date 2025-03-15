@@ -7,7 +7,7 @@ export const getAllProjects = async () => {
   try {
     const checkUser = await onAuthenticateUser();
 
-    if (checkUser.status !== 200 || !checkUser.user) {
+    if (!checkUser || checkUser.status !== 200 || !checkUser.user) {
       return { status: 403, error: "User Not Authenticated" };
     }
 
