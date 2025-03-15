@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { itemVariant, ROUTES, themes } from "@/global/constants";
 import { useSlideStore } from "@/store/useSlideStore";
