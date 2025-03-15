@@ -36,7 +36,7 @@ export const getRecentProjects = async () => {
   try {
     const user = await onAuthenticateUser();
 
-    if (user.status !== 200 || !user.user) {
+    if (!user || user.status !== 200 || !user.user) {
       return { status: 403, error: "User Not Authenticated" };
     }
 
