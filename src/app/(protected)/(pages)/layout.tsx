@@ -3,6 +3,7 @@ import { onAuthenticateUser } from "@/actions/user";
 import AppSidebar from "@/components/global/app-sidebar";
 import UpperInfoBar from "@/components/global/upper-info-bar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { ROUTES } from "@/global/constants";
 import { redirect } from "next/navigation";
 import React from "react";
 
@@ -14,7 +15,7 @@ const Layout = async ({ children }: Props) => {
   const recentProjects = await getRecentProjects();
   const checkUser = await onAuthenticateUser();
 
-  if (!checkUser.user) redirect("/signin");
+  if (!checkUser?.user) redirect(ROUTES.signin);
 
   return (
     <SidebarProvider>
