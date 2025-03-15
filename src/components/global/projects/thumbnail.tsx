@@ -19,7 +19,11 @@ const Thumbnail = ({ slide, theme }: Props) => {
         backgroundImage: theme.gradientBackground,
       }}
     >
-      {slide ? <div></div> : ""}
+      {slide ? (
+        <div className="scale-[0.5] origin-top-left w-[200%] h-[200%] overflow-hidden"></div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
