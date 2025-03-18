@@ -19,7 +19,6 @@ type Props = {
   handleOpen: () => void;
   open: boolean;
   children: React.ReactNode;
-  className: string;
 };
 
 const AlertDialogBox = ({

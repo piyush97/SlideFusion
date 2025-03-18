@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import { deleteProject, recoverProject } from "@/actions/project";
 import { Button } from "@/components/ui/button";
@@ -17,7 +16,6 @@ type Props = {
   isDeleted?: boolean;
   createdAt: Date;
   slideData: JsonValue;
-  src: string;
   title: string;
   themeName: string;
 };
@@ -27,7 +25,6 @@ const ProjectCard = ({
   isDeleted,
   createdAt,
   slideData,
-  src,
   title,
   themeName,
 }: Props) => {
