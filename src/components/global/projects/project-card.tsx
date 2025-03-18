@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
+import { recoverProject } from "@/actions/project";
 import { Button } from "@/components/ui/button";
 import { itemVariant, ROUTES, themes } from "@/global/constants";
 import { timeAgo } from "@/lib/utils";
@@ -8,6 +9,7 @@ import { JsonValue } from "@prisma/client/runtime/library";
 import { motion } from "framer-motion";
 import router from "next/router";
 import { useState } from "react";
+import { toast } from "sonner";
 import AlertDialogBox from "../alert-dialog";
 import Thumbnail from "./thumbnail";
 type Props = {
@@ -38,6 +40,30 @@ const ProjectCard = ({
   const handleNavigation = () => {
     setSlides(JSON.parse(JSON.stringify(slideData)));
     router.push(`${ROUTES.presentation}/${projectId}`);
+  };
+
+  const handleRecover = async () => {
+    setLoading(true);
+    if (!projectId) {
+      setLoading(false);
+      toast.error("Error: Project Not found");
+      return;
+    }
+    try {
+      const response = await recoverProject(projectId);
+      if (response.status !== 200) {
+        toast.error(
+          `Something is wrong, please try again later: ${response.error}`
+        );
+        return;
+      }
+      setOpen(false);
+      router.reload();
+      toast.success("Project recovered successfully");
+    } catch (error) {
+      console.error(error);
+      toast.error("Something is wrong, please try again later");
+    }
   };
 
   return (
@@ -74,7 +100,7 @@ const ProjectCard = ({
                 className="bg-green-500 text-white dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700"
                 loading={loading}
                 open={open}
-                // onClick={handleRecover}
+                onClick={handleRecover}
                 handleOpen={() => setOpen(!open)}
               >
                 <Button
