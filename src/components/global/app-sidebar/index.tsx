@@ -27,7 +27,7 @@ const AppSidebar = ({
       <SidebarHeader className="pt-6 px-2 pb-0">
         <SidebarMenuButton
           size={"lg"}
-          className="data-[state=open]:text-sidebar-accent-foreground"
+          className="data-[state=open]:text-sidebar-accent-foreground "
         >
           <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground">
             <Avatar className="h-10 w-10 rounded-full">
