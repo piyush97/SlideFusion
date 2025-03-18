@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import { recoverProject } from "@/actions/project";
+import { deleteProject, recoverProject } from "@/actions/project";
 import { Button } from "@/components/ui/button";
 import { itemVariant, ROUTES, themes } from "@/global/constants";
 import { timeAgo } from "@/lib/utils";
@@ -40,6 +40,31 @@ const ProjectCard = ({
   const handleNavigation = () => {
     setSlides(JSON.parse(JSON.stringify(slideData)));
     router.push(`${ROUTES.presentation}/${projectId}`);
+  };
+
+  const handleDelete = async () => {
+    setLoading(true);
+    if (!projectId) {
+      setLoading(false);
+      toast.error("Error: Project Not found");
+      return;
+    }
+
+    try {
+      const response = await deleteProject(projectId);
+      if (response.status !== 200) {
+        toast.error(
+          `Something is wrong, please try again later: ${response.error}`
+        );
+        return;
+      }
+      setOpen(false);
+      router.reload();
+      toast.success("Project recovered successfully");
+    } catch (error) {
+      console.error(error);
+      toast.error("Something is wrong, please try again later");
+    }
   };
 
   const handleRecover = async () => {
@@ -113,7 +138,23 @@ const ProjectCard = ({
                 </Button>
               </AlertDialogBox>
             ) : (
-              ""
+              <AlertDialogBox
+                description="This will delete your project and remove it from the list"
+                className="bg-red-500 text-white dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700"
+                loading={loading}
+                open={open}
+                onClick={handleDelete}
+                handleOpen={() => setOpen(!open)}
+              >
+                <Button
+                  size="sm"
+                  variant={"ghost"}
+                  className="bg-background-80 dark:hover:bg-background-90"
+                  disabled={loading}
+                >
+                  Delete
+                </Button>
+              </AlertDialogBox>
             )}
           </div>
         </div>
