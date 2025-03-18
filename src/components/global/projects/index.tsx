@@ -23,7 +23,6 @@ const Projects = ({ projects }: Props) => {
           isDeleted={project.isDeleted}
           createdAt={project.createdAt}
           slideData={project.slides}
-          src={project.thumbnail || "Random Image here"}
           themeName={project.themeName}
         />
       ))}
