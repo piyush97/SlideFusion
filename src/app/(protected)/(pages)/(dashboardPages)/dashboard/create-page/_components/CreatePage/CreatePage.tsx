@@ -46,36 +46,41 @@ const CreatePage = ({ onSelectOption }: Props) => {
             } rounded-xl p-[1px] transition-all duration-300 ease-in-out`}
             onClick={() => onSelectOption(card.title)}
           >
-            <div className="flex flex-col items-start w-full gap-y-3">
-              <div>
-                <p className="text-lg font-semibold text-primary">
-                  {card.title}
-                </p>
-                <p
-                  className={`${
-                    card.highlight ? "text-vivid" : "text-primary"
-                  } text-4xl font-bold`}
-                >
-                  {card.highlightedText}
+            <motion.div
+              className="flex flex-col items-start w-full p-4 bg-white gap-y-6 dark:bg-black rounded-xl"
+              whileHover={{ transition: { duration: 0.1 } }}
+            >
+              <div className="flex flex-col items-start w-full gap-y-3">
+                <div>
+                  <p className="text-lg font-semibold text-primary">
+                    {card.title}
+                  </p>
+                  <p
+                    className={`${
+                      card.highlight ? "text-vivid" : "text-primary"
+                    } text-4xl font-bold`}
+                  >
+                    {card.highlightedText}
+                  </p>
+                </div>
+                <p className="text-sm font-normal text-secondary">
+                  {card.description}
                 </p>
               </div>
-              <p className="text-sm font-normal text-secondary">
-                {card.description}
-              </p>
-            </div>
-            <motion.div
-              className="self-end"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button
-                variant={card.highlight ? "default" : "outline"}
-                className="font-bold w-fit rounded-xl"
-                size="sm"
-                onClick={() => onSelectOption(card.type)}
+              <motion.div
+                className="self-end"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {card.highlight ? "Generate" : "Continue"}
-              </Button>
+                <Button
+                  variant={card.highlight ? "default" : "outline"}
+                  className="font-bold w-fit rounded-xl"
+                  size="sm"
+                  onClick={() => onSelectOption(card.type)}
+                >
+                  {card.highlight ? "Generate" : "Continue"}
+                </Button>
+              </motion.div>
             </motion.div>
           </motion.div>
         ))}
