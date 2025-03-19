@@ -17,7 +17,7 @@ const CreatePage = ({ onSelectOption }: Props) => {
       className="space-y-8"
       variants={containerVariants}
     >
-      <motion.div variants={itemVariant} className="text-center space-y-2">
+      <motion.div variants={itemVariant} className="space-y-2 text-center">
         <h1 className="text-4xl font-bold text-primary">
           How would you like to get started?
         </h1>
@@ -44,7 +44,22 @@ const CreatePage = ({ onSelectOption }: Props) => {
                 : "hover:bg-vivid-gradient border"
             } rounded-xl p-[1px] transition-all duration-300 ease-in-out`}
             onClick={() => onSelectOption(card.title)}
-          ></motion.div>
+          >
+            <div className="flex flex-col items-start w-full gap-y-3">
+              <div>
+                <p className="text-lg font-semibold text-primary">
+                  {card.title}
+                </p>
+                <p
+                  className={`${
+                    card.highlight ? "text-vivid" : "text-primary"
+                  } text-4xl font-bold`}
+                >
+                  {card.highlightedText}
+                </p>
+              </div>
+            </div>
+          </motion.div>
         ))}
       </motion.div>
     </motion.div>
