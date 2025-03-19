@@ -5,13 +5,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import CreatePage from "./CreatePage/CreatePage";
 
 const RenderPage = () => {
-  const { page, setPage } = usePromptStore();
+  const { page } = usePromptStore();
   const onSelectOption = () => {};
 
   const renderStep = () => {
     switch (page) {
       case "create":
-        setPage("create");
         return <CreatePage onSelectOption={onSelectOption} />;
       case "creative-ai":
         return <></>;
