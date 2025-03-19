@@ -36,6 +36,10 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v5
+        env:
+          CLERK_PUBLISHABLE_KEY: ${{ secrets.CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
         with:
           context: .
           file: ./Dockerfile
