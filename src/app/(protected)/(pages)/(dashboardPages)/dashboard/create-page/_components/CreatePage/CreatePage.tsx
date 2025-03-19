@@ -13,7 +13,7 @@ type Props = {
 };
 
 const CreatePage = ({ onSelectOption }: Props) => {
-  const { prompts, setPage } = usePromptStore();
+  const { prompts } = usePromptStore();
   return (
     <motion.div
       initial={"hidden"}
@@ -88,7 +88,7 @@ const CreatePage = ({ onSelectOption }: Props) => {
           </motion.div>
         ))}
       </motion.div>
-      <RecentPrompts />
+      {prompts?.length > 0 && <RecentPrompts />}
     </motion.div>
   );
 };
