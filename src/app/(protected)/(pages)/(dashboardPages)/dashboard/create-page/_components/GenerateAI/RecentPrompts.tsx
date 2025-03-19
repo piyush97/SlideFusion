@@ -1,11 +1,29 @@
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { containerVariants, itemVariant } from "@/global/constants";
 import { timeAgo } from "@/lib/utils";
+import { useCreativeAIStore } from "@/store/useCreativeAIStore";
 import { usePromptStore } from "@/store/usePromptStore";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 
 const RecentPrompts = () => {
   const { prompts, setPage } = usePromptStore();
+  const { addMultipleOutlines, setCurrentAIPrompt } = useCreativeAIStore();
+
+  const handleEdit = (id: string) => {
+    const prompt = prompts.find((prompt) => prompt?.id === id);
+    if (prompt) {
+      setPage("creative-ai");
+      addMultipleOutlines(prompt?.outlines);
+      setCurrentAIPrompt(prompt?.title);
+    } else {
+      toast.error("Error", {
+        description: "Prompt not found",
+      });
+    }
+  };
+
   return (
     <motion.div variants={containerVariants} className="space-y-4 !mt-20">
       <motion.h2
@@ -32,6 +50,17 @@ const RecentPrompts = () => {
                 <p className="font-semibold text-sm text-muted-foreground">
                   {timeAgo(new Date(prompt?.createdAt))}
                 </p>
+              </div>
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-vivid">Creative AI</span>
+                <Button
+                  variant={"default"}
+                  size="sm"
+                  className="rounded-xl bg-primary-20 dark:hover:bg-gray-700 hover:bg-gray-200 text-primary"
+                  onClick={() => handleEdit(prompt?.id)}
+                >
+                  Edit
+                </Button>
               </div>
             </Card>
           </motion.div>
