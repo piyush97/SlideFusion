@@ -3,7 +3,15 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["aceternity.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "aceternity.com",
+        port: "",
+        pathname: "/images/products/thumbnails/**",
+        search: "",
+      },
+    ],
   },
 };
 

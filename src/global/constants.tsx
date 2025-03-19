@@ -464,3 +464,31 @@ export const products: {
       "https://aceternity.com/images/products/thumbnails/new/efreeinvoice.png",
   },
 ];
+
+export const CreatePageCard: {
+  title: string;
+  highlightedText: string;
+  description: string;
+  type: string;
+  highlight?: boolean;
+}[] = [
+  {
+    title: "Use a",
+    highlightedText: "Template",
+    description: "Write a prompt and leave everything else for us to handle",
+    type: "template",
+  },
+  {
+    title: "Generate with",
+    highlightedText: "Creative AI",
+    description: "Write a prompt and leave everything else for us to handle",
+    type: "creative-ai",
+    highlight: true,
+  },
+  {
+    title: "Start from",
+    highlightedText: "Scratch",
+    description: "Write a prompt and leave everything else for us to handle",
+    type: "create-scratch",
+  },
+];
