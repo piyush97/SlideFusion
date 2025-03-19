@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   containerVariants,
   CreatePageCard,
@@ -58,7 +59,24 @@ const CreatePage = ({ onSelectOption }: Props) => {
                   {card.highlightedText}
                 </p>
               </div>
+              <p className="text-sm font-normal text-secondary">
+                {card.description}
+              </p>
             </div>
+            <motion.div
+              className="self-end"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                variant={card.highlight ? "default" : "outline"}
+                className="font-bold w-fit rounded-xl"
+                size="sm"
+                onClick={() => onSelectOption(card.type)}
+              >
+                {card.highlight ? "Generate" : "Continue"}
+              </Button>
+            </motion.div>
           </motion.div>
         ))}
       </motion.div>
