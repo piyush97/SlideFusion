@@ -2,11 +2,20 @@
 
 import { usePromptStore } from "@/store/usePromptStore";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 import CreatePage from "./CreatePage/CreatePage";
 
 const RenderPage = () => {
-  const { page } = usePromptStore();
-  const onSelectOption = () => {};
+  const { page, setPage } = usePromptStore();
+  const router = useRouter();
+  const onSelectOption = (option: string) => {
+    if (option === "template") router.push("/templates");
+    else if (option === "create-scratch") {
+      setPage("create-scratch");
+    } else {
+      setPage("creative-ai");
+    }
+  };
 
   const renderStep = () => {
     switch (page) {

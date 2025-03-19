@@ -4,13 +4,17 @@ import {
   CreatePageCard,
   itemVariant,
 } from "@/global/constants";
+import { usePromptStore } from "@/store/usePromptStore";
 import { motion } from "framer-motion";
+import RecentPrompts from "../GenerateAI/RecentPrompts";
 
 type Props = {
   onSelectOption: (option: string) => void;
 };
 
 const CreatePage = ({ onSelectOption }: Props) => {
+  const { prompts } = usePromptStore();
+
   return (
     <motion.div
       initial={"hidden"}
@@ -85,6 +89,7 @@ const CreatePage = ({ onSelectOption }: Props) => {
           </motion.div>
         ))}
       </motion.div>
+      {prompts?.length > 0 && <RecentPrompts />}
     </motion.div>
   );
 };

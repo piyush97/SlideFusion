@@ -33,7 +33,7 @@ const AppSidebar = ({
             <Avatar className="h-10 w-10 rounded-full">
               <AvatarImage src={"/next.svg"} alt={user.name} />
               <AvatarFallback className="rounded-lg">
-                Pitch Perfect
+                SlideFusion
               </AvatarFallback>
             </Avatar>
           </div>
