@@ -14,6 +14,7 @@ type Props = {
 
 const CreatePage = ({ onSelectOption }: Props) => {
   const { prompts } = usePromptStore();
+
   return (
     <motion.div
       initial={"hidden"}
