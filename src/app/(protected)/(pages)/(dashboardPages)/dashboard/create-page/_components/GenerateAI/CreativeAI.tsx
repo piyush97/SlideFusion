@@ -1,7 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { containerVariants } from "@/global/constants";
+import { Input } from "@/components/ui/input";
+import { containerVariants, itemVariant } from "@/global/constants";
 import { motion } from "framer-motion";
 import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -23,6 +24,24 @@ const CreativeAI = ({ onBack }: Props) => {
       <Button onClick={onBack} variant="outline" className="mb-4">
         <ChevronLeft className="mr-2 h-4" />
       </Button>
+      <motion.div variants={itemVariant} className="text-center space-y-2">
+        <h1 className="text-4xl font-bold text-primary">
+          Generate with <span className="text-vivid">Creative AI</span>
+        </h1>
+        <p className="text-secondary">What would you like to create?</p>
+      </motion.div>
+      <motion.div
+        className="bg-primary/10 p-4 rounded-xl"
+        variants={itemVariant}
+      >
+        <div className="flex flex-col sm:flex-row justify-between gap-3 items-center rounded-xl">
+          <Input
+            placeholder="Enter prompt and add to the cards..."
+            className="text-base sm:text-xl border-0 focus-visible:ring-0 shadow-none p-0 bg-transparent flex-grow"
+            required
+          />
+        </div>
+      </motion.div>
     </motion.div>
   );
 };
