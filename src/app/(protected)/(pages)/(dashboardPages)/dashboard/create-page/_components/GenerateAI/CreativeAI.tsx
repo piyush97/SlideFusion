@@ -3,18 +3,21 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { containerVariants, itemVariant } from "@/global/constants";
 import { useCreativeAIStore } from "@/store/useCreativeAIStore";
+import { usePromptStore } from "@/store/usePromptStore";
 import { motion } from "framer-motion";
 import { ChevronLeft, Loader2, RotateCcw } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 import CardList from "../Common/CardList";
+import RecentPrompts from "./RecentPrompts";
 
 type Props = {
   onBack: () => void;
@@ -36,6 +39,8 @@ const CreativeAI = ({ onBack }: Props) => {
     addMultipleOutlines,
   } = useCreativeAIStore();
 
+  const { prompts } = usePromptStore();
+
   const resetCards = () => {
     setNoOfCards(0);
     setEditingCard(null);
@@ -46,7 +51,20 @@ const CreativeAI = ({ onBack }: Props) => {
     setCurrentAIPrompt("");
   };
 
-  const generateOutline = () => {};
+  const generateOutline = async () => {
+    if (currentAIPrompt === "") {
+      toast.error("Error", {
+        description: "Please enter a prompt",
+      });
+      return;
+    }
+    setIsGenerating(true);
+
+    // const res = await generateCreativePrompt(currentAIPrompt);
+    // addPrompt({}); // TODO: Fix this
+    setIsGenerating(false);
+    resetCards();
+  };
 
   const handleGenerate = () => {
     setIsGenerating(true);
@@ -157,10 +175,21 @@ const CreativeAI = ({ onBack }: Props) => {
         }}
       />
       {outlines.length > 0 && (
-        <Button className="w-full" onClick={handleGenerate}>
-          Generate
+        <Button
+          className="w-full"
+          onClick={handleGenerate}
+          disabled={isGenerating}
+        >
+          {isGenerating ? (
+            <>
+              <Loader2 className="animate-spin mr-2" /> Generating...
+            </>
+          ) : (
+            "Generate"
+          )}
         </Button>
       )}
+      {prompts?.length > 0 && <RecentPrompts />}
     </motion.div>
   );
 };

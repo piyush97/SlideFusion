@@ -10,7 +10,7 @@ type Props = {
   editingCard: string | null;
   selectedCard: string | null;
   editText: string;
-  addOutline?: (card: OutlineCard) => void;
+  addOutline: (card: OutlineCard) => void;
   onEditChange: (value: string) => void;
   onCardSelect: (id: string) => void;
   onCardDoubleClick: (id: string, title: string) => void;
@@ -185,7 +185,7 @@ const CardList = ({
               }}
               dragOverStyles={getDragOverStyles(index)}
             />
-            <AddCardButton onAddCard={() => onAddCard()} />
+            <AddCardButton onAddCard={() => addOutline(card)} />
           </React.Fragment>
         ))}
       </AnimatePresence>
