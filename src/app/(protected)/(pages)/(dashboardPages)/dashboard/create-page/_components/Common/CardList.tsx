@@ -2,6 +2,7 @@
 import { OutlineCard } from "@/lib/types";
 import { AnimatePresence, motion } from "framer-motion";
 import React, { useRef, useState } from "react";
+import AddCardButton from "./AddCardButton";
 import Card from "./Card";
 
 type Props = {
@@ -184,6 +185,7 @@ const CardList = ({
               }}
               dragOverStyles={getDragOverStyles(index)}
             />
+            <AddCardButton onAddCard={() => onAddCard()} />
           </React.Fragment>
         ))}
       </AnimatePresence>

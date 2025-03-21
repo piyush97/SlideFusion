@@ -3,11 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
 import { containerVariants, itemVariant } from "@/global/constants";
 import { useCreativeAIStore } from "@/store/useCreativeAIStore";
@@ -46,7 +46,13 @@ const CreativeAI = ({ onBack }: Props) => {
     setCurrentAIPrompt("");
   };
 
-  const generateCards = () => {};
+  const generateOutline = () => {};
+
+  const handleGenerate = () => {
+    setIsGenerating(true);
+    generateOutline();
+    setIsGenerating(false);
+  };
 
   return (
     <motion.div
@@ -150,6 +156,11 @@ const CreativeAI = ({ onBack }: Props) => {
           setEditText(title);
         }}
       />
+      {outlines.length > 0 && (
+        <Button className="w-full" onClick={handleGenerate}>
+          Generate
+        </Button>
+      )}
     </motion.div>
   );
 };
