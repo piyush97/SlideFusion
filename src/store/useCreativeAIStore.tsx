@@ -7,6 +7,7 @@ type CreativeAIStore = {
   addOutline: (outline: OutlineCard) => void;
   setCurrentAIPrompt: (prompt: string) => void;
   currentAIPrompt: string;
+  resetOutlines: () => void;
 };
 
 export const useCreativeAIStore = create<CreativeAIStore>()(
@@ -19,9 +20,10 @@ export const useCreativeAIStore = create<CreativeAIStore>()(
         set((state) => ({ outlines: [...state.outlines, outline] })),
       setCurrentAIPrompt: (prompt: string) => set({ currentAIPrompt: prompt }),
       currentAIPrompt: "",
+      resetOutlines: () => set({ outlines: [] }),
     }),
     {
       name: "creative-ai",
-    }
-  )
+    },
+  ),
 );
