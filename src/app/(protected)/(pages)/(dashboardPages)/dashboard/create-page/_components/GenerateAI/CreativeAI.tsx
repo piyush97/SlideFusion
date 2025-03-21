@@ -12,8 +12,9 @@ import {
 import { containerVariants, itemVariant } from "@/global/constants";
 import { useCreativeAIStore } from "@/store/useCreativeAIStore";
 import { motion } from "framer-motion";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Loader2, RotateCcw } from "lucide-react";
 import { useState } from "react";
+import CardList from "../Common/CardList";
 
 type Props = {
   onBack: () => void;
@@ -21,8 +22,31 @@ type Props = {
 
 const CreativeAI = ({ onBack }: Props) => {
   const [noOfCards, setNoOfCards] = useState(0);
-  const { currentAIPrompt, setCurrentAIPrompt, outlines } =
-    useCreativeAIStore();
+  const [editingCard, setEditingCard] = useState<string | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [selectedCard, setSelectedCard] = useState<string | null>(null);
+  const [editText, setEditText] = useState<string>("");
+
+  const {
+    currentAIPrompt,
+    setCurrentAIPrompt,
+    outlines,
+    resetOutlines,
+    addOutline,
+    addMultipleOutlines,
+  } = useCreativeAIStore();
+
+  const resetCards = () => {
+    setNoOfCards(0);
+    setEditingCard(null);
+    setIsGenerating(false);
+    setSelectedCard(null);
+    setEditText("");
+    resetOutlines();
+    setCurrentAIPrompt("");
+  };
+
+  const generateCards = () => {};
 
   return (
     <motion.div
@@ -78,14 +102,54 @@ const CreativeAI = ({ onBack }: Props) => {
                       >
                         {num} Card{num > 1 ? "s" : ""}
                       </SelectItem>
-                    )
+                    ),
                   )
                 )}
               </SelectContent>
             </Select>
+            <Button
+              variant="destructive"
+              onClick={resetCards}
+              size="icon"
+              aria-label="Reset Cards"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </Button>
           </div>
         </div>
       </motion.div>
+      <div className="w-full flex justify-center items-center">
+        <Button
+          className="font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          onClick={generateOutline}
+          disabled={isGenerating}
+        >
+          {isGenerating ? (
+            <>
+              <Loader2 className="mr-2 animate-spin" /> Generating...
+            </>
+          ) : (
+            "Generate Outline"
+          )}
+        </Button>
+      </div>
+      <CardList
+        outlines={outlines}
+        addOutline={addOutline}
+        addMultipleOutlines={addMultipleOutlines}
+        editingCard={editingCard}
+        selectedCard={selectedCard}
+        editText={editText}
+        onEditChange={setEditText}
+        onCardSelect={setSelectedCard}
+        setEditText={setEditText}
+        setEditingCard={setEditingCard}
+        setSelectedCard={setSelectedCard}
+        onCardDoubleClick={(id, title) => {
+          setEditingCard(id);
+          setEditText(title);
+        }}
+      />
     </motion.div>
   );
 };
