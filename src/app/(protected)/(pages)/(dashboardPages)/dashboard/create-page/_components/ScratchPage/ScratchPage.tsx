@@ -12,9 +12,14 @@ import useScratchStore from "@/store/useScratchStore";
 import { motion } from "framer-motion";
 import { ChevronLeft, RotateCcw } from "lucide-react";
 import { useState } from "react";
+import CardList from "../Common/CardList";
 
 const ScratchPage = ({ onBack }: { onBack: () => void }) => {
-  const { resetOutlines, outlines } = useScratchStore();
+  const { resetOutlines, outlines, addOutline, addMultipleOutlines } =
+    useScratchStore();
+
+  const [editingCard, setEditingCard] = useState<string | null>(null);
+  const [selectedCard, setSelectedCard] = useState<string | null>(null);
 
   const [editText, setEditText] = useState("");
 
@@ -91,6 +96,23 @@ const ScratchPage = ({ onBack }: { onBack: () => void }) => {
           </div>
         </div>
       </motion.div>
+      <CardList
+        outlines={outlines}
+        addOutline={addOutline}
+        addMultipleOutlines={addMultipleOutlines}
+        editingCard={editingCard}
+        selectedCard={selectedCard}
+        editText={editText}
+        onEditChange={setEditText}
+        onCardSelect={setSelectedCard}
+        setEditText={setEditText}
+        setEditingCard={setEditingCard}
+        setSelectedCard={setSelectedCard}
+        onCardDoubleClick={(id, title) => {
+          setEditingCard(id);
+          setEditText(title);
+        }}
+      />
     </motion.div>
   );
 };
