@@ -1,6 +1,7 @@
 "use server";
 
 import { client } from "@/lib/prisma";
+import { OutlineCard } from "@/lib/types";
 import { onAuthenticateUser } from "./user";
 
 export const getAllProjects = async () => {
@@ -109,6 +110,41 @@ export const deleteProject = async (projectId: string) => {
 
     if (!project) {
       return { status: 404, error: "Project Not Found" };
+    }
+
+    return { status: 200, data: project };
+  } catch (error) {
+    console.error("Error", error);
+    return { status: 500, error: "Internal Server Error" };
+  }
+};
+
+export const createProject = async (title: string, outlines: OutlineCard[]) => {
+  try {
+    if (!title || !outlines || outlines.length === 0)
+      return { status: 400, error: "Titles and Outlines are required" };
+
+    const allOutlines = outlines.map((outline) => outline.title);
+
+    const user = await onAuthenticateUser();
+
+    if (!user || user.status !== 200 || !user.user) {
+      return { status: 403, error: "User Not Authenticated" };
+    }
+
+    const project = await client?.project.create({
+      data: {
+        title,
+        outlines: allOutlines,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        userId: user.user.id,
+        isDeleted: false,
+      },
+    });
+
+    if (!project) {
+      return { status: 500, error: "Failed to create project" };
     }
 
     return { status: 200, data: project };
