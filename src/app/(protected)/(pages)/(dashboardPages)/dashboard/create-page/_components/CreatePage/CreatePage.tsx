@@ -48,7 +48,7 @@ const CreatePage = ({ onSelectOption }: Props) => {
                 ? "bg-vivid-gradient"
                 : "hover:bg-vivid-gradient border"
             } rounded-xl p-[1px] transition-all duration-300 ease-in-out`}
-            onClick={() => onSelectOption(card.title)}
+            onClick={() => onSelectOption(card.type)}
           >
             <motion.div
               className="flex flex-col items-start w-full p-4 bg-white gap-y-6 dark:bg-black rounded-xl"

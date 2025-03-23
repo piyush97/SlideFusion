@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import CreatePage from "./CreatePage/CreatePage";
 import CreativeAI from "./GenerateAI/CreativeAI";
+import ScratchPage from "./ScratchPage/ScratchPage";
 
 const RenderPage = () => {
   const { page, setPage } = usePromptStore();
@@ -30,7 +31,7 @@ const RenderPage = () => {
       case "creative-ai":
         return <CreativeAI onBack={onBack} />;
       case "create-scratch":
-        return <></>;
+        return <ScratchPage onBack={onBack} />;
       default:
         return null;
     }

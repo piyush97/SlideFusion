@@ -1,5 +1,6 @@
 "use client";
 
+import { generateCreativePrompt } from "@/actions/openai";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,12 +11,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { containerVariants, itemVariant } from "@/global/constants";
+import { OutlineCard } from "@/lib/types";
 import { useCreativeAIStore } from "@/store/useCreativeAIStore";
 import { usePromptStore } from "@/store/usePromptStore";
 import { motion } from "framer-motion";
 import { ChevronLeft, Loader2, RotateCcw } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { v4 as uuidv4 } from "uuid";
 import CardList from "../Common/CardList";
 import RecentPrompts from "./RecentPrompts";
 
@@ -60,8 +63,25 @@ const CreativeAI = ({ onBack }: Props) => {
     }
     setIsGenerating(true);
 
-    // const res = await generateCreativePrompt(currentAIPrompt);
-    // addPrompt({}); // TODO: Fix this
+    const res = await generateCreativePrompt(currentAIPrompt);
+    if (res.status === 200 && res?.data?.outlines) {
+      const cardsData: OutlineCard[] = [];
+      res.data?.outlines?.map((outline: string, idx: number) => {
+        const newCard = {
+          id: uuidv4(),
+          title: outline,
+          order: idx + 1,
+        };
+        cardsData.push(newCard);
+      });
+      addMultipleOutlines(cardsData);
+      setNoOfCards(cardsData.length);
+      toast.success("Outline generated successfully");
+    } else {
+      toast.error("Error", {
+        description: "Failed to generate outline",
+      });
+    }
     setIsGenerating(false);
     resetCards();
   };
@@ -71,6 +91,10 @@ const CreativeAI = ({ onBack }: Props) => {
     generateOutline();
     setIsGenerating(false);
   };
+
+  useEffect(() => {
+    setNoOfCards(outlines.length);
+  }, [outlines.length]);
 
   return (
     <motion.div
@@ -144,7 +168,7 @@ const CreativeAI = ({ onBack }: Props) => {
       </motion.div>
       <div className="w-full flex justify-center items-center">
         <Button
-          className="font-medium text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          className="font-medium text-lg flex gap-2 items-center"
           onClick={generateOutline}
           disabled={isGenerating}
         >
