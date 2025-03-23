@@ -1,6 +1,7 @@
 "use client";
 
 import { generateCreativePrompt } from "@/actions/openai";
+import { createProject } from "@/actions/project";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -14,8 +15,10 @@ import { containerVariants, itemVariant } from "@/global/constants";
 import { OutlineCard } from "@/lib/types";
 import { useCreativeAIStore } from "@/store/useCreativeAIStore";
 import { usePromptStore } from "@/store/usePromptStore";
+import { useSlideStore } from "@/store/useSlideStore";
 import { motion } from "framer-motion";
 import { ChevronLeft, Loader2, RotateCcw } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
@@ -33,6 +36,8 @@ const CreativeAI = ({ onBack }: Props) => {
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const [editText, setEditText] = useState<string>("");
 
+  const router = useRouter();
+
   const {
     currentAIPrompt,
     setCurrentAIPrompt,
@@ -43,6 +48,7 @@ const CreativeAI = ({ onBack }: Props) => {
   } = useCreativeAIStore();
 
   const { prompts } = usePromptStore();
+  const { setProject } = useSlideStore();
 
   const resetCards = () => {
     setNoOfCards(0);
@@ -86,10 +92,45 @@ const CreativeAI = ({ onBack }: Props) => {
     resetCards();
   };
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     setIsGenerating(true);
-    generateOutline();
-    setIsGenerating(false);
+    if (outlines.length === 0) {
+      toast.error("Error", {
+        description:
+          "Failed to generate outline, Please add at least on card to generate slides",
+      });
+      return;
+    }
+    try {
+      const res = await createProject(
+        currentAIPrompt,
+        outlines.slice(0, noOfCards),
+      );
+
+      if (res.status !== 200 || !res.data) {
+        throw new Error("Failed to generate outline");
+      }
+      router.push(`/presentation/${res.data.id}/select-theme`);
+      setProject(res.data);
+
+      addPrompt({
+        id: uuidv4(),
+        title: currentAIPrompt || outlines?.[0]?.title,
+        outlines: outlines,
+        createdAt: new Date().toISOString(),
+      });
+
+      toast.success("Project Created successfully");
+      setCurrentAIPrompt("");
+      resetOutlines();
+    } catch (error) {
+      console.error(error);
+      toast.error("Error", {
+        description: "Failed to generate outline",
+      });
+    } finally {
+      setIsGenerating(false);
+    }
   };
 
   useEffect(() => {
