@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from "@/components/ui/select";
 import { containerVariants, itemVariant } from "@/global/constants";
 import useScratchStore from "@/store/useScratchStore";
@@ -59,6 +59,7 @@ const ScratchPage = ({ onBack }: { onBack: () => void }) => {
       return;
     }
     const res = await createProject(outlines?.[0]?.title, outlines);
+
     if (res.status !== 200) {
       toast.error(`${res.status} Failed to create project`);
       return;
