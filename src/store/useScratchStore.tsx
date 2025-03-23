@@ -8,16 +8,19 @@ type OutlineStore = {
   resetOutlines: () => void;
 };
 
-const useScratchStore = create(persist<OutlineStore>(
-  (set) => ({
-    outlines: [],
-    addOutline: (outline: OutlineCard) => set((state) => ({ outlines: [...state.outlines, outline] })),
-    addMultipleOutlines: (outlines: OutlineCard[]) => set((state) => ({ outlines: [...state.outlines, ...outlines] })),
-    resetOutlines: () => set({ outlines: [] }),
-  }),
-  {
-    name: 'scratch-store',
-  }
-));
+const useScratchStore = create(
+  persist<OutlineStore>(
+    (set) => ({
+      outlines: [],
+      addOutline: (outline: OutlineCard) =>
+        set((state) => ({ outlines: [...state.outlines, outline] })),
+      addMultipleOutlines: (outlines: OutlineCard[]) => set({ outlines }),
+      resetOutlines: () => set({ outlines: [] }),
+    }),
+    {
+      name: "scratch-store",
+    },
+  ),
+);
 
 export default useScratchStore;

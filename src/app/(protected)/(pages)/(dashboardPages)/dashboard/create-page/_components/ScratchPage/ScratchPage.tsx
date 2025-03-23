@@ -68,6 +68,8 @@ const ScratchPage = ({ onBack }: { onBack: () => void }) => {
       resetOutlines();
       toast.success("Project created successfully");
       router.push(`/presentation/${res.data.id}/select-theme`);
+    } else {
+      toast.error("Failed to create project");
     }
   };
 

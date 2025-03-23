@@ -1,4 +1,5 @@
 import { Slide } from "@/lib/types";
+import { Project } from "@prisma/client";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

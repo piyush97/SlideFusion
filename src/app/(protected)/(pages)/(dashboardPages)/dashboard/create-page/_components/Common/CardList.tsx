@@ -92,9 +92,6 @@ const CardList = ({
         .filter((card) => card.id !== id)
         .map((card, index) => ({ ...card, order: index + 1 })),
     );
-    // setEditingCard(null);
-    // setSelectedCard(null);
-    // setEditText("");
   };
 
   const onDragStart = (
@@ -142,6 +139,29 @@ const CardList = ({
     return {};
   };
 
+  const onAddCard = (index?: number) => {
+    const newCard: OutlineCard = {
+      id: Math.random().toString(36).substr(2, 9),
+      title: editText || "New Section",
+      order: (index !== undefined ? index + 1 : outlines.length) + 1,
+    };
+
+    const updatedCards =
+      index !== undefined
+        ? [
+            ...outlines.slice(0, index + 1),
+            newCard,
+            ...outlines.slice(index + 1).map((card) => ({
+              ...card,
+              order: card.order + 1,
+            })),
+          ]
+        : [...outlines, newCard];
+
+    addMultipleOutlines(updatedCards);
+    setEditText("");
+  };
+
   return (
     <motion.div
       className="space-y-2 my-2"
@@ -185,7 +205,7 @@ const CardList = ({
               }}
               dragOverStyles={getDragOverStyles(index)}
             />
-            <AddCardButton onAddCard={() => addOutline(card)} />
+            <AddCardButton onAddCard={() => onAddCard(index)} />
           </React.Fragment>
         ))}
       </AnimatePresence>
