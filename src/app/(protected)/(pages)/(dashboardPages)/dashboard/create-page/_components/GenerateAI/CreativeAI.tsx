@@ -47,7 +47,7 @@ const CreativeAI = ({ onBack }: Props) => {
     addMultipleOutlines,
   } = useCreativeAIStore();
 
-  const { prompts } = usePromptStore();
+  const { prompts, addPrompt } = usePromptStore();
   const { setProject } = useSlideStore();
 
   const resetCards = () => {
