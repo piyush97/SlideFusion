@@ -53,7 +53,56 @@ const ThemePreview = () => {
     </div>
   );
 
-  return <div>Theme Preview</div>;
+  const MainCardContent = (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div
+          className="rounded-xl p-6"
+          style={{ backgroundColor: selectedTheme.accentColor + "10" }}
+        >
+          <p style={{ color: selectedTheme.accentColor }}>
+            This is a smart layout: it acts as a text box.
+          </p>
+        </div>
+        <div
+          className="rounded-xl p-6"
+          style={{ backgroundColor: selectedTheme.accentColor + "10" }}
+        >
+          <p style={{ color: selectedTheme.accentColor }}>
+            You can get thee by typing /smart{" "}
+          </p>
+        </div>
+      </div>
+      <div className="flex flex-wrap gap-4">
+        <Button
+          className="w-full h-12 text-lg font-medium"
+          style={{
+            backgroundColor: selectedTheme.accentColor,
+            color: selectedTheme.accentColor,
+          }}
+        >
+          Primary button
+        </Button>
+        <Button
+          variant="outline"
+          className="w-full h-12 text-lg font-medium"
+          style={{
+            backgroundColor: selectedTheme.accentColor,
+            color: selectedTheme.accentColor,
+          }}
+        >
+          Secondarybutton
+        </Button>
+      </div>
+    </div>
+  );
+
+  return (
+    <>
+      {LeftCardContent}
+      {MainCardContent}
+    </>
+  );
 };
 
 export default ThemePreview;
