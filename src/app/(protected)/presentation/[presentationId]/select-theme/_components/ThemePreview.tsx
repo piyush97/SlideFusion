@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Theme } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { useAnimation } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 import { redirect, useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -133,7 +134,24 @@ const ThemePreview = () => {
         fontFamily: selectedTheme.fontFamily,
       }}
     >
-      <div className="flex-grow overflow-y-auto"></div>
+      <div className="flex-grow overflow-y-auto">
+        <div className="flex flex-col items-center min-h-screen p-12">
+          <Button
+            variant={"outline"}
+            className="self-start mb-12"
+            size="lg"
+            style={{
+              backgroundColor: selectedTheme.accentColor + "10",
+              color: selectedTheme.accentColor,
+              borderColor: selectedTheme.accentColor + "20",
+            }}
+            onClick={() => router.push("/create-page")}
+          >
+            <ArrowLeft className="w-5 h-5 mr-2" />
+            Back
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
