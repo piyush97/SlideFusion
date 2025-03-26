@@ -27,12 +27,12 @@ const ThemePreview = () => {
   const LeftCardContent = (
     <div className="space-y-4">
       <div
-        className="rounded-xl p-6"
+        className="p-6 rounded-xl"
         style={{ backgroundColor: selectedTheme.accentColor }}
       >
-        <h3 className="text-xl font-semibold mb-4">Quick Start Guide</h3>
+        <h3 className="mb-4 text-xl font-semibold">Quick Start Guide</h3>
         <ol
-          className="list-decimal list-inside space-y-2"
+          className="space-y-2 list-decimal list-inside"
           style={{ color: selectedTheme.accentColor }}
         >
           <li>Choose a theme</li>
@@ -55,9 +55,9 @@ const ThemePreview = () => {
 
   const MainCardContent = (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div
-          className="rounded-xl p-6"
+          className="p-6 rounded-xl"
           style={{ backgroundColor: selectedTheme.accentColor + "10" }}
         >
           <p style={{ color: selectedTheme.accentColor }}>
@@ -65,7 +65,7 @@ const ThemePreview = () => {
           </p>
         </div>
         <div
-          className="rounded-xl p-6"
+          className="p-6 rounded-xl"
           style={{ backgroundColor: selectedTheme.accentColor + "10" }}
         >
           <p style={{ color: selectedTheme.accentColor }}>
@@ -97,11 +97,44 @@ const ThemePreview = () => {
     </div>
   );
 
+  const RightCardContent = (
+    <div className="space-y-4">
+      <div
+        className="p-6 rounded-xl"
+        style={{ backgroundColor: selectedTheme.accentColor + "10" }}
+      >
+        <h3 className="mb-4 text-xl font-semibold">Th eme Features</h3>
+        <ul className="space-y-2 list-inside list-desc">
+          <li>Responsive Design</li>
+          <li> Dark and Light modes</li>
+          <li>custom color schemes</li>
+        </ul>
+
+        <Button
+          variant={"outline"}
+          className="w-full h-12 text-lg font-medium"
+          style={{
+            borderColor: selectedTheme.accentColor,
+            color: selectedTheme.fontColor,
+          }}
+        >
+          Explore Features
+        </Button>
+      </div>
+    </div>
+  );
+
   return (
-    <>
-      {LeftCardContent}
-      {MainCardContent}
-    </>
+    <div
+      className="flex w-full h-screen"
+      style={{
+        backgroundColor: selectedTheme.backgroundColor,
+        color: selectedTheme.accentColor,
+        fontFamily: selectedTheme.fontFamily,
+      }}
+    >
+      <div className="flex-grow overflow-y-auto"></div>
+    </div>
   );
 };
 
