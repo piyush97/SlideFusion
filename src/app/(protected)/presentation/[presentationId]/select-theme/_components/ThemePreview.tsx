@@ -7,6 +7,7 @@ import { useAnimation } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { redirect, useParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
+import ThemeCard from "./ThemeCard";
 
 const ThemePreview = () => {
   const router = useRouter();
@@ -150,6 +151,9 @@ const ThemePreview = () => {
             <ArrowLeft className="w-5 h-5 mr-2" />
             Back
           </Button>
+          <div className="relative flex items-center justify-center flex-grow w-full">
+            <ThemeCard />
+          </div>
         </div>
       </div>
     </div>
