@@ -83,7 +83,7 @@ const ThemePreview = () => {
           className="w-full h-12 text-lg font-medium"
           style={buttonStyle}
         >
-          Secondarybutton
+          Secondary button
         </Button>
       </div>
     </div>
