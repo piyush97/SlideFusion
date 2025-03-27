@@ -5,7 +5,7 @@ import {
   itemVariant,
 } from "@/global/constants";
 import { usePromptStore } from "@/store/usePromptStore";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import RecentPrompts from "../GenerateAI/RecentPrompts";
 
 type Props = {

@@ -1,16 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import { containerVariants, itemVariant } from "@/global/constants";
 import useScratchStore from "@/store/useScratchStore";
-import { motion } from "framer-motion";
 import { ChevronLeft, RotateCcw } from "lucide-react";
+import { motion } from "motion/react";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import CardList from "../Common/CardList";
@@ -113,7 +113,7 @@ const ScratchPage = ({ onBack }: { onBack: () => void }) => {
                 ) : (
                   Array.from(
                     { length: outlines.length },
-                    (_, index) => index + 1,
+                    (_, index) => index + 1
                   ).map((number) => (
                     <SelectItem
                       className="font-semibold"

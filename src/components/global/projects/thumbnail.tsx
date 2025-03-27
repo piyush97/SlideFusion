@@ -24,7 +24,7 @@ const Thumbnail = ({ slide, theme }: Props) => {
       {slide ? (
         <div className="scale-[0.5] origin-top-left w-[200%] h-[200%] overflow-hidden"></div>
       ) : (
-        <div className="w-full h-full bg-gray-400 flex justify-center items-center">
+        <div className="flex items-center justify-center w-full h-full bg-gray-400">
           <Image className="w-6 h-6 text-gray-500" />
         </div>
       )}

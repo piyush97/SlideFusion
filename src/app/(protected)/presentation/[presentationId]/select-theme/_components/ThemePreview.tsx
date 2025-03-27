@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Theme } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
-import { useAnimation } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
+import { useAnimation } from "motion/react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ThemeCard from "./ThemeCard";
@@ -20,7 +20,7 @@ const ThemePreview = () => {
     if (project?.slides) {
       router.push(`/presentation/${params.presentationId}`);
     }
-  }, [project]);
+  }, [params.presentationId, project, router]);
 
   useEffect(() => {
     controls.start("visible");

@@ -4,8 +4,9 @@ import Projects from "@/components/global/projects";
 
 const DashboardPage = async () => {
   const { data: projects } = await getAllProjects();
+
   return (
-    <div className="w-full flex flex-col gap-6 relative md:p-0 p-4">
+    <div className="relative flex flex-col w-full gap-6 p-4 md:p-0">
       <div className="flex flex-col-reverse items-start w-full gap-6 sm:flex-row sm:justify-between sm:items-center">
         <div className="flex flex-col item-start">
           <h1 className="text-4xl font-semibold dark:text-primary backdrop-blur-lg">

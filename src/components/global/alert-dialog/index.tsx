@@ -1,5 +1,7 @@
 import {
   AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
@@ -7,8 +9,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { AlertDialogCancel } from "@radix-ui/react-alert-dialog";
 import { Loader2 } from "lucide-react";
 
 type Props = {
@@ -33,29 +33,29 @@ const AlertDialogBox = ({
   return (
     <AlertDialog open={open} onOpenChange={handleOpen}>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
-      <AlertDialogHeader>
-        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-        <AlertDialogDescription>{description}</AlertDialogDescription>
-      </AlertDialogHeader>
-      <AlertDialogFooter>
-        <AlertDialogCancel>
-          <Button
-            variant="destructive"
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogDescription>{description}</AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction
             onClick={onClick}
-            className={`${className} `}
+            className={className}
+            disabled={loading}
           >
             {loading ? (
               <>
-                <Loader2 className="animate-spin" />
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                 Loading...
               </>
             ) : (
               "Continue"
             )}
-          </Button>
-        </AlertDialogCancel>
-      </AlertDialogFooter>
-      <AlertDialogContent></AlertDialogContent>
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
     </AlertDialog>
   );
 };
