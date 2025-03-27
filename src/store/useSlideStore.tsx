@@ -22,18 +22,18 @@ const defaultTheme: Theme = {
   type: "light",
 };
 
-export const useSlideStore = create(
-  persist<SlideState>(
+export const useSlideStore = create<SlideState>()(
+  persist(
     (set) => ({
       slides: [],
-      setSlides: (slides) => set({ slides }),
+      setSlides: (slides: Slide[]) => set({ slides }),
       project: null,
-      setProject: (project) => set({ project }),
+      setProject: (project: Project | null) => set({ project }),
       currentTheme: defaultTheme,
       setCurrentTheme: (theme: Theme) => set({ currentTheme: theme }),
     }),
     {
       name: "slides-storage",
-    },
-  ),
+    }
+  )
 );

@@ -5,8 +5,8 @@ import { Theme } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { useAnimation } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
-import { redirect, useParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import ThemeCard from "./ThemeCard";
 
 const ThemePreview = () => {
@@ -18,13 +18,18 @@ const ThemePreview = () => {
 
   useEffect(() => {
     if (project?.slides) {
-      redirect(`/presentation/${params.presentationId}`);
+      router.push(`/presentation/${params.presentationId}`);
     }
   }, [project]);
 
   useEffect(() => {
     controls.start("visible");
   }, [controls, selectedTheme]);
+
+  const buttonStyle = {
+    backgroundColor: selectedTheme.accentColor,
+    color: selectedTheme.fontColor,
+  };
 
   const LeftCardContent = (
     <div className="space-y-4">
@@ -43,13 +48,7 @@ const ThemePreview = () => {
           <li>Preview and Publish</li>
         </ol>
       </div>
-      <Button
-        className="w-full h-12 text-lg font-medium"
-        style={{
-          backgroundColor: selectedTheme.accentColor,
-          color: selectedTheme.accentColor,
-        }}
-      >
+      <Button className="w-full h-12 text-lg font-medium" style={buttonStyle}>
         Get Started
       </Button>
     </div>
@@ -76,22 +75,13 @@ const ThemePreview = () => {
         </div>
       </div>
       <div className="flex flex-wrap gap-4">
-        <Button
-          className="w-full h-12 text-lg font-medium"
-          style={{
-            backgroundColor: selectedTheme.accentColor,
-            color: selectedTheme.accentColor,
-          }}
-        >
+        <Button className="w-full h-12 text-lg font-medium" style={buttonStyle}>
           Primary button
         </Button>
         <Button
           variant="outline"
           className="w-full h-12 text-lg font-medium"
-          style={{
-            backgroundColor: selectedTheme.accentColor,
-            color: selectedTheme.accentColor,
-          }}
+          style={buttonStyle}
         >
           Secondarybutton
         </Button>
@@ -152,7 +142,30 @@ const ThemePreview = () => {
             Back
           </Button>
           <div className="relative flex items-center justify-center flex-grow w-full">
-            <ThemeCard />
+            <ThemeCard
+              title="Quick Start"
+              description="Get up and running in no time"
+              content={LeftCardContent}
+              variant="left"
+              theme={selectedTheme}
+              controls={controls}
+            />
+            <ThemeCard
+              title="Main Features"
+              description="Explore the main features of this theme"
+              content={MainCardContent}
+              variant="main"
+              theme={selectedTheme}
+              controls={controls}
+            />
+            <ThemeCard
+              title="Theme Features"
+              description="Discover additional features"
+              content={RightCardContent}
+              variant="right"
+              theme={selectedTheme}
+              controls={controls}
+            />
           </div>
         </div>
       </div>
