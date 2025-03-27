@@ -18,7 +18,7 @@ const DashboardPage = async () => {
         </div>
       </div>
 
-      {projects && projects?.length > 0 ? (
+      {projects && projects.length > 0 ? (
         <Projects projects={projects} />
       ) : (
         <NotFound />
