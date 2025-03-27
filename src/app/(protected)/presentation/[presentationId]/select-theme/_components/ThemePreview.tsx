@@ -20,7 +20,7 @@ const ThemePreview = () => {
     if (project?.slides) {
       router.push(`/presentation/${params.presentationId}`);
     }
-  }, [project]);
+  }, [params.presentationId, project, router]);
 
   useEffect(() => {
     controls.start("visible");
