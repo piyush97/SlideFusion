@@ -1,3 +1,5 @@
+"use client"
+
 import { getProjectById } from "@/actions/project";
 import { themes } from "@/global/constants";
 import { useSlideStore } from "@/store/useSlideStore";
@@ -45,7 +47,7 @@ const Page = () => {
       </div>
     );
 
-  return <DndProvider>{/* Your component content */}</DndProvider>;
+  return <></>;
 };
 
 export default Page;

@@ -1,6 +1,7 @@
 import { OutlineCard } from "@/lib/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+
 type OutlineStore = {
   outlines: OutlineCard[];
   addOutline: (outline: OutlineCard) => void;
@@ -8,8 +9,8 @@ type OutlineStore = {
   resetOutlines: () => void;
 };
 
-const useScratchStore = create(
-  persist<OutlineStore>(
+const useScratchStore = create<OutlineStore>()(
+  persist(
     (set) => ({
       outlines: [],
       addOutline: (outline: OutlineCard) =>
@@ -19,8 +20,8 @@ const useScratchStore = create(
     }),
     {
       name: "scratch-store",
-    },
-  ),
+    }
+  )
 );
 
 export default useScratchStore;

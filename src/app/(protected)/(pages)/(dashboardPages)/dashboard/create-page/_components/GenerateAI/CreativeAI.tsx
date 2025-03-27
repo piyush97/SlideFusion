@@ -89,7 +89,6 @@ const CreativeAI = ({ onBack }: Props) => {
       });
     }
     setIsGenerating(false);
-    resetCards();
   };
 
   const handleGenerate = async () => {
@@ -104,7 +103,7 @@ const CreativeAI = ({ onBack }: Props) => {
     try {
       const res = await createProject(
         currentAIPrompt,
-        outlines.slice(0, noOfCards),
+        outlines.slice(0, noOfCards)
       );
 
       if (res.status !== 200 || !res.data) {
@@ -139,28 +138,28 @@ const CreativeAI = ({ onBack }: Props) => {
 
   return (
     <motion.div
-      className="space-y-6 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+      className="w-full max-w-4xl px-4 mx-auto space-y-6 sm:px-6 lg:px-8"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
     >
       <Button onClick={onBack} variant="outline" className="mb-4">
-        <ChevronLeft className="mr-2 h-4" />
+        <ChevronLeft className="h-4 mr-2" />
       </Button>
-      <motion.div variants={itemVariant} className="text-center space-y-2">
+      <motion.div variants={itemVariant} className="space-y-2 text-center">
         <h1 className="text-4xl font-bold text-primary">
           Generate with <span className="text-vivid">Creative AI</span>
         </h1>
         <p className="text-secondary">What would you like to create?</p>
       </motion.div>
       <motion.div
-        className="bg-primary/10 p-4 rounded-xl"
+        className="p-4 bg-primary/10 rounded-xl"
         variants={itemVariant}
       >
-        <div className="flex flex-col sm:flex-row justify-between gap-3 items-center rounded-xl">
+        <div className="flex flex-col items-center justify-between gap-3 sm:flex-row rounded-xl">
           <Input
             placeholder="Enter prompt and add to the cards..."
-            className="text-base sm:text-xl border-0 focus-visible:ring-0 shadow-none p-0 bg-transparent flex-grow"
+            className="flex-grow p-0 text-base bg-transparent border-0 shadow-none sm:text-xl focus-visible:ring-0"
             value={currentAIPrompt || ""}
             onChange={(e) => {
               setCurrentAIPrompt(e.target.value);
@@ -172,7 +171,7 @@ const CreativeAI = ({ onBack }: Props) => {
               value={noOfCards.toString()}
               onValueChange={(value) => setNoOfCards(parseInt(value))}
             >
-              <SelectTrigger className="w-fit gap-2 font-semibold shadow-xl">
+              <SelectTrigger className="gap-2 font-semibold shadow-xl w-fit">
                 <SelectValue placeholder="Select number of Cards" />
               </SelectTrigger>
               <SelectContent className="w-fit">
@@ -191,7 +190,7 @@ const CreativeAI = ({ onBack }: Props) => {
                       >
                         {num} Card{num > 1 ? "s" : ""}
                       </SelectItem>
-                    ),
+                    )
                   )
                 )}
               </SelectContent>
@@ -207,9 +206,9 @@ const CreativeAI = ({ onBack }: Props) => {
           </div>
         </div>
       </motion.div>
-      <div className="w-full flex justify-center items-center">
+      <div className="flex items-center justify-center w-full">
         <Button
-          className="font-medium text-lg flex gap-2 items-center"
+          className="flex items-center gap-2 text-lg font-medium"
           onClick={generateOutline}
           disabled={isGenerating}
         >
@@ -247,7 +246,7 @@ const CreativeAI = ({ onBack }: Props) => {
         >
           {isGenerating ? (
             <>
-              <Loader2 className="animate-spin mr-2" /> Generating...
+              <Loader2 className="mr-2 animate-spin" /> Generating...
             </>
           ) : (
             "Generate"

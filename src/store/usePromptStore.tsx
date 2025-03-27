@@ -1,26 +1,27 @@
 import { OutlineCard } from "@/lib/types";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
+
 type Page = "create" | "creative-ai" | "create-scratch";
 
 type Prompt = {
   id: string;
   createdAt: string;
   title: string;
-  outlines: OutlineCard[] | [];
+  outlines: OutlineCard[];
 };
 
 type PromptStore = {
   page: Page;
   setPage: (page: Page) => void;
-  prompts: Prompt[] | [];
+  prompts: Prompt[];
   addPrompt: (prompt: Prompt) => void;
   removePrompt: (id: string) => void;
 };
 
 export const usePromptStore = create<PromptStore>()(
   devtools(
-    persist<PromptStore>(
+    persist(
       (set) => ({
         page: "create",
         setPage: (page: Page) => set({ page }),

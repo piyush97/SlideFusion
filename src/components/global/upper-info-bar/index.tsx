@@ -14,14 +14,14 @@ type Props = {
 const UpperInfoBar = ({ user }: Props) => {
   return (
     <header className="sticky top-0 z-[10] flex shrink-0 flex-wrap items-center gap-2  bg-background p-4 justify-between">
-      <SidebarTrigger className="ml-" />
-      <Separator orientation="vertical" className="mr-2 h-4" />
+      <SidebarTrigger className="ml-2 z-[20]" />
+      <Separator orientation="vertical" className="h-4 mr-2" />
       <div className="w-full max-w-[95%] flex items-center justify-between gap-4 flex-wrap">
         <SearchBar />
         <ThemeSwitcher />
       </div>
-      <div className="flex flex-wrap gap-4 items-center justify-end">
-        <Button className="bg-primary-80 rounded-lg hover:bg-background-80 text-primary font-semibold cursor-not-allowed">
+      <div className="flex flex-wrap items-center justify-end gap-4">
+        <Button className="font-semibold rounded-lg cursor-not-allowed bg-primary-80 hover:bg-background-80 text-primary">
           <Upload />
           Import
         </Button>

@@ -106,10 +106,10 @@ const ProjectCard = ({
       </div>
       <div className="w-full">
         <div className="space-y-1">
-          <h3 className="font-semibold text-base text-primary line-clamp-1">
+          <h3 className="text-base font-semibold text-primary line-clamp-1">
             {title}
           </h3>
-          <div className="flex w-full justify-between items-center gap-2">
+          <div className="flex items-center justify-between w-full gap-2">
             <p
               className="text-sm text-muted-foreground"
               suppressHydrationWarning
@@ -119,7 +119,7 @@ const ProjectCard = ({
             {isDeleted ? (
               <AlertDialogBox
                 description="This will recover your project and restore your data"
-                className="bg-green-500 text-white dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700"
+                className="text-white bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700"
                 loading={loading}
                 open={open}
                 onClick={handleRecover}
@@ -137,7 +137,7 @@ const ProjectCard = ({
             ) : (
               <AlertDialogBox
                 description="This will delete your project and remove it from the list"
-                className="bg-red-500 text-white dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700"
+                className="text-white bg-red-500 dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700"
                 loading={loading}
                 open={open}
                 onClick={handleDelete}
