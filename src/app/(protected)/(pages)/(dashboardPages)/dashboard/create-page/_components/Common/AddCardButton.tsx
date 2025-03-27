@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 
 type Props = {
@@ -13,7 +13,7 @@ const AddCardButton = ({ onAddCard }: Props) => {
 
   return (
     <motion.div
-      className="w-full relative overflow-hidden"
+      className="relative w-full overflow-hidden"
       initial={{ height: "0.5rem" }}
       animate={{
         height: showGap ? "2rem" : "0.5rem",
@@ -36,9 +36,9 @@ const AddCardButton = ({ onAddCard }: Props) => {
               variant="outline"
               size="sm"
               onClick={onAddCard}
-              className="rounded-full h-8 w-8 p-0 bg-primary hover:bg-primary"
+              className="w-8 h-8 p-0 rounded-full bg-primary hover:bg-primary"
             >
-              <Plus className="h-4 w-4 text-black" />
+              <Plus className="w-4 h-4 text-black" />
             </Button>
             <div className="w-[40%] h-[1px] bg-primary" />
           </motion.div>

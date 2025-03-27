@@ -1,16 +1,18 @@
 "use client";
+
 import { deleteProject, recoverProject } from "@/actions/project";
 import { Button } from "@/components/ui/button";
-import { itemVariant, ROUTES, themes } from "@/global/constants";
+import { ROUTES, itemVariant, themes } from "@/global/constants";
 import { timeAgo } from "@/lib/utils";
 import { useSlideStore } from "@/store/useSlideStore";
 import { JsonValue } from "@prisma/client/runtime/library";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import AlertDialogBox from "../alert-dialog";
 import Thumbnail from "./thumbnail";
+
 type Props = {
   projectId: string;
   isDeleted?: boolean;

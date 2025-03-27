@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card as UICard } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { OutlineCard } from "@/lib/types";
-import { motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
+import { motion } from "motion/react";
 import { useRef } from "react";
 
 type Props = {
@@ -59,7 +59,9 @@ const Card = ({
         draggable
       >
         <UICard
-          className={`p-4 cursor-grab active:cursor-grabbing bg-primary-90 ${isEditing || isSelected ? "border-primary bg-transparent" : ""}`}
+          className={`p-4 cursor-grab active:cursor-grabbing bg-primary-90 ${
+            isEditing || isSelected ? "border-primary bg-transparent" : ""
+          }`}
           onClick={onCardClick}
           onDoubleClick={onCardDoubleClick}
         >
@@ -76,7 +78,11 @@ const Card = ({
             ) : (
               <div className="flex items-center gap-2">
                 <span
-                  className={`text-base sm:text-lg py-1 px-4 rounded-xl bg-primary-20 ${isEditing || isSelected ? "bg-secondary-90 dark:text-black" : ""}`}
+                  className={`text-base sm:text-lg py-1 px-4 rounded-xl bg-primary-20 ${
+                    isEditing || isSelected
+                      ? "bg-secondary-90 dark:text-black"
+                      : ""
+                  }`}
                 >
                   {card.order}
                 </span>

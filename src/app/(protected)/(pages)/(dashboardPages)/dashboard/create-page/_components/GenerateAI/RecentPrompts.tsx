@@ -4,7 +4,7 @@ import { containerVariants, itemVariant } from "@/global/constants";
 import { timeAgo } from "@/lib/utils";
 import { useCreativeAIStore } from "@/store/useCreativeAIStore";
 import { usePromptStore } from "@/store/usePromptStore";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { toast } from "sonner";
 
 const RecentPrompts = () => {
