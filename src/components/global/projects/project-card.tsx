@@ -6,7 +6,7 @@ import { timeAgo } from "@/lib/utils";
 import { useSlideStore } from "@/store/useSlideStore";
 import { JsonValue } from "@prisma/client/runtime/library";
 import { motion } from "framer-motion";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import AlertDialogBox from "../alert-dialog";
@@ -32,6 +32,7 @@ const ProjectCard = ({
   const [open, setOpen] = useState(false);
 
   const { setSlides } = useSlideStore();
+  const router = useRouter();
 
   const theme = themes.find((theme) => theme.name === themeName) || themes[0];
   const handleNavigation = () => {
@@ -56,8 +57,8 @@ const ProjectCard = ({
         return;
       }
       setOpen(false);
-      router.reload();
-      toast.success("Project recovered successfully");
+      router.refresh();
+      toast.success("Project deleted successfully");
     } catch (error) {
       console.error(error);
       toast.error("Something is wrong, please try again later");
@@ -80,7 +81,7 @@ const ProjectCard = ({
         return;
       }
       setOpen(false);
-      router.reload();
+      router.refresh();
       toast.success("Project recovered successfully");
     } catch (error) {
       console.error(error);

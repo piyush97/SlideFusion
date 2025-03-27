@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Theme } from "@/lib/types";
 import { AnimationControls, motion } from "framer-motion";
+import Image from "next/image";
 import React from "react";
 
 type Props = {
@@ -116,6 +117,16 @@ const ThemeCard = ({
             </div>
             {content}
           </CardContent>
+          <div className="relative w-full overflow-hidden rounded-r-lg md:w-1/2 h-80 md:h-auto">
+            <Image
+              src="https://images.unsplash.com/photo-1636690513351-0af1763f6237?q=80&w=4582&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              alt="Theme Preview"
+              layout="fill"
+              objectFit="cover"
+              className="transition-transform duration-500 hover:scale-110"
+              priority
+            />
+          </div>
         </div>
       </Card>
     </motion.div>
