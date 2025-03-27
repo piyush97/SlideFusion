@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Theme } from "@/lib/types";
 import { AnimationControls, motion } from "framer-motion";
 import React from "react";
@@ -97,7 +97,27 @@ const ThemeCard = ({
           backgroundColor: theme.slideBackgroundColor,
           border: `1px solid ${theme.accentColor}20`,
         }}
-      ></Card>
+      >
+        <div className="flex flex-col md:flex-row">
+          <CardContent className="flex-1 p-8 space-y-6">
+            <div className="space-y-3">
+              <h2
+                className="text-3xl font-bold tracking-tight"
+                style={{ color: theme.accentColor }}
+              >
+                {title}
+              </h2>
+              <p
+                className="text-lg"
+                style={{ color: `${theme.accentColor}90` }}
+              >
+                {description}
+              </p>
+            </div>
+            {content}
+          </CardContent>
+        </div>
+      </Card>
     </motion.div>
   );
 };
