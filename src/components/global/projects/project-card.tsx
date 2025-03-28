@@ -93,7 +93,7 @@ const ProjectCard = ({
 
   return (
     <motion.div
-      className={`group w-full flex flex-col gap-y-3 rounded-xl p-3 transition-colors ${
+      className={`group w-full flex flex-col gap-y-3 rounded-xl p-3 transition-colors bg-background-20 ${
         !isDeleted && "hover:bg-muted/50"
       }`}
       variants={itemVariant}

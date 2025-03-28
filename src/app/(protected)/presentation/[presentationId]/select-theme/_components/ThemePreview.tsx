@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { themes } from "@/global/constants";
 import { Theme } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { ArrowLeft } from "lucide-react";
@@ -8,6 +9,7 @@ import { useAnimation } from "motion/react";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ThemeCard from "./ThemeCard";
+import ThemePicker from "./ThemePicker";
 
 const ThemePreview = () => {
   const router = useRouter();
@@ -29,6 +31,11 @@ const ThemePreview = () => {
   const buttonStyle = {
     backgroundColor: selectedTheme.accentColor,
     color: selectedTheme.fontColor,
+  };
+
+  const applyTheme = (theme: Theme) => {
+    setSelectedTheme(theme);
+    setCurrentTheme(theme);
   };
 
   const LeftCardContent = (
@@ -169,6 +176,11 @@ const ThemePreview = () => {
           </div>
         </div>
       </div>
+      <ThemePicker
+        selectedTheme={selectedTheme}
+        themes={themes}
+        onThemeSelect={applyTheme}
+      />
     </div>
   );
 };
