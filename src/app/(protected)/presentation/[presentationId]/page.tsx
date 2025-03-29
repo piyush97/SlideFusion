@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { getProjectById } from "@/actions/project";
 import { themes } from "@/global/constants";
@@ -7,6 +7,7 @@ import { Loader2 } from "lucide-react";
 import { redirect, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import { toast } from "sonner";
 
 const Page = () => {
@@ -25,7 +26,7 @@ const Page = () => {
         }
 
         const findTheme = themes.find(
-          (theme) => theme.name === res?.data.themeName,
+          (theme) => theme.name === res?.data.themeName
         );
 
         setCurrentTheme(findTheme || themes[0]);
@@ -47,7 +48,13 @@ const Page = () => {
       </div>
     );
 
-  return <></>;
+  return (
+    <DndProvider backend={HTML5Backend}>
+      <div className="flex flex-col w-full h-full">
+        <div className="flex-1 overflow-hidden">{/* <Presentation /> */}</div>
+      </div>
+    </DndProvider>
+  );
 };
 
 export default Page;

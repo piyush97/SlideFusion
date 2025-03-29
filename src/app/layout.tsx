@@ -36,12 +36,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           suppressHydrationWarning // for clerk to work in future
         >
-          <ThemeProvider
-            attribute={"class"}
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider attribute={"class"} defaultTheme="dark" enableSystem>
             {children}
             <Toaster />
           </ThemeProvider>
