@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { toast } from "sonner";
+import Navbar from "./_components/Navbar/Navbar";
 
 const Page = () => {
   const { setSlides, setProject, setCurrentTheme } = useSlideStore();
@@ -50,8 +51,11 @@ const Page = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="flex flex-col w-full h-full">
-        <div className="flex-1 overflow-hidden">{/* <Presentation /> */}</div>
+      <div className="flex flex-col min-h-screen">
+        <Navbar
+          presentationId={params.presentationId as string}
+          title="test-prop-title"
+        />
       </div>
     </DndProvider>
   );
