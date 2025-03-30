@@ -52,7 +52,10 @@ const Page = () => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="flex flex-col min-h-screen">
-        <Navbar presentationId="" />
+        <Navbar
+          presentationId={params.presentationId as string}
+          title="test-prop-title"
+        />
       </div>
     </DndProvider>
   );
