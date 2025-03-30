@@ -12,19 +12,27 @@ type Props = {
 };
 
 const Layout = async ({ children }: Props) => {
-  const recentProjects = await getRecentProjects();
-  const checkUser = await onAuthenticateUser();
+  const recentProjectsResponse = await getRecentProjects();
+  const userResponse = await onAuthenticateUser();
 
-  if (!checkUser?.user) redirect(ROUTES.signin);
+  if (
+    !userResponse.status ||
+    userResponse.status !== 200 ||
+    !userResponse.data?.user
+  ) {
+    redirect(ROUTES.signin);
+  }
+
+  const recentProjects = recentProjectsResponse.data || [];
 
   return (
     <SidebarProvider>
       <AppSidebar
-        recentProjects={recentProjects.data || []}
-        user={checkUser.user}
+        recentProjects={recentProjects}
+        user={userResponse.data.user}
       />
       <SidebarInset>
-        <UpperInfoBar user={checkUser.user} />
+        <UpperInfoBar user={userResponse.data.user} />
         <div className="p-4">{children}</div>
       </SidebarInset>
     </SidebarProvider>

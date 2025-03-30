@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { containerVariants, itemVariant } from "@/global/constants";
+import { handleApiError } from "@/lib/errorHandling";
 import { OutlineCard } from "@/lib/types";
 import { useCreativeAIStore } from "@/store/useCreativeAIStore";
 import { usePromptStore } from "@/store/usePromptStore";
@@ -35,6 +36,9 @@ const CreativeAI = ({ onBack }: Props) => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
   const [editText, setEditText] = useState<string>("");
+  // Track cooldown for rate limiting
+  const [cooldownSeconds, setCooldownSeconds] = useState(0);
+  const [cooldownActive, setCooldownActive] = useState(false);
 
   const router = useRouter();
 
@@ -60,6 +64,26 @@ const CreativeAI = ({ onBack }: Props) => {
     setCurrentAIPrompt("");
   };
 
+  // Cooldown timer effect
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (cooldownActive && cooldownSeconds > 0) {
+      timer = setInterval(() => {
+        setCooldownSeconds((prev) => {
+          const newValue = prev - 1;
+          if (newValue <= 0) {
+            setCooldownActive(false);
+          }
+          return newValue;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [cooldownActive, cooldownSeconds]);
+
   const generateOutline = async () => {
     if (currentAIPrompt === "") {
       toast.error("Error", {
@@ -67,67 +91,94 @@ const CreativeAI = ({ onBack }: Props) => {
       });
       return;
     }
-    setIsGenerating(true);
 
-    const res = await generateCreativePrompt(currentAIPrompt);
-    if (res.status === 200 && res?.data?.outlines) {
-      const cardsData: OutlineCard[] = [];
-      res.data?.outlines?.map((outline: string, idx: number) => {
-        const newCard = {
-          id: uuidv4(),
-          title: outline,
-          order: idx + 1,
-        };
-        cardsData.push(newCard);
-      });
-      addMultipleOutlines(cardsData);
-      setNoOfCards(cardsData.length);
-      toast.success("Outline generated successfully");
-    } else {
-      toast.error("Error", {
-        description: "Failed to generate outline",
-      });
-    }
-    setIsGenerating(false);
-  };
-
-  const handleGenerate = async () => {
-    setIsGenerating(true);
-    if (outlines.length === 0) {
-      toast.error("Error", {
-        description:
-          "Failed to generate outline, Please add at least on card to generate slides",
+    if (cooldownActive) {
+      toast.error("Rate limit in effect", {
+        description: `Please wait ${cooldownSeconds} seconds before trying again.`,
       });
       return;
     }
+
+    setIsGenerating(true);
+
+    try {
+      const res = await generateCreativePrompt(currentAIPrompt);
+
+      const success = handleApiError(res, {
+        defaultMessage: "Failed to generate outline",
+        onRateLimit: (seconds) => {
+          setCooldownSeconds(seconds);
+          setCooldownActive(true);
+        },
+        onComplete: () => setIsGenerating(false),
+      });
+
+      if (success && res.data?.outlines) {
+        const cardsData: OutlineCard[] = [];
+        res.data.outlines.map((outline: string, idx: number) => {
+          const newCard = {
+            id: uuidv4(),
+            title: outline,
+            order: idx + 1,
+          };
+          cardsData.push(newCard);
+        });
+        addMultipleOutlines(cardsData);
+        setNoOfCards(cardsData.length);
+        toast.success("Outline generated successfully");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error", {
+        description: "Failed to generate outline",
+      });
+      setIsGenerating(false);
+    }
+  };
+
+  const handleGenerate = async () => {
+    if (outlines.length === 0) {
+      toast.error("Error", {
+        description:
+          "Failed to generate outline, Please add at least one card to generate slides",
+      });
+      return;
+    }
+
+    setIsGenerating(true);
+
     try {
       const res = await createProject(
         currentAIPrompt,
         outlines.slice(0, noOfCards)
       );
 
-      if (res.status !== 200 || !res.data) {
-        throw new Error("Failed to generate outline");
-      }
-      router.push(`/presentation/${res.data.id}/select-theme`);
-      setProject(res.data);
-
-      addPrompt({
-        id: uuidv4(),
-        title: currentAIPrompt || outlines?.[0]?.title,
-        outlines: outlines,
-        createdAt: new Date().toISOString(),
+      const success = handleApiError(res, {
+        defaultMessage: "Failed to create project",
+        onComplete: () => setIsGenerating(false),
       });
 
-      toast.success("Project Created successfully");
-      setCurrentAIPrompt("");
-      resetOutlines();
+      if (success && res.data) {
+        router.push(`/presentation/${res.data.id}/select-theme`);
+        setProject(res.data);
+
+        addPrompt({
+          id: uuidv4(),
+          title: currentAIPrompt || outlines?.[0]?.title,
+          outlines: outlines,
+          createdAt: new Date().toISOString(),
+        });
+
+        toast.success("Project Created successfully");
+        setCurrentAIPrompt("");
+        resetOutlines();
+      }
     } catch (error) {
       console.error(error);
       toast.error("Error", {
-        description: "Failed to generate outline",
+        description:
+          error instanceof Error ? error.message : "Failed to create project",
       });
-    } finally {
       setIsGenerating(false);
     }
   };
@@ -210,11 +261,15 @@ const CreativeAI = ({ onBack }: Props) => {
         <Button
           className="flex items-center gap-2 text-lg font-medium"
           onClick={generateOutline}
-          disabled={isGenerating}
+          disabled={isGenerating || cooldownActive}
         >
           {isGenerating ? (
             <>
               <Loader2 className="mr-2 animate-spin" /> Generating...
+            </>
+          ) : cooldownActive ? (
+            <>
+              <Loader2 className="mr-2" /> Cooldown: {cooldownSeconds}s
             </>
           ) : (
             "Generate Outline"

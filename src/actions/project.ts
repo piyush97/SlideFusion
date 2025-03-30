@@ -1,20 +1,25 @@
 "use server";
 
+import {
+  createErrorResponse,
+  createSuccessResponse,
+  handleServerActionError,
+} from "@/lib/apiUtils";
 import { client } from "@/lib/prisma";
-import { OutlineCard } from "@/lib/types";
+import { ApiResponse, OutlineCard } from "@/lib/types";
 import { onAuthenticateUser } from "./user";
 
-export const getAllProjects = async () => {
+export const getAllProjects = async (): Promise<ApiResponse> => {
   try {
     const checkUser = await onAuthenticateUser();
 
-    if (!checkUser || checkUser.status !== 200 || !checkUser.user) {
-      return { status: 403, error: "User Not Authenticated" };
+    if (!checkUser || checkUser.status !== 200 || !checkUser.data?.user) {
+      return createErrorResponse("User not authenticated", 403);
     }
 
-    const projects = await client?.project.findMany({
+    const projects = await client.project.findMany({
       where: {
-        userId: checkUser.user.id,
+        userId: checkUser.data.user.id,
         isDeleted: false,
       },
       orderBy: {
@@ -22,28 +27,31 @@ export const getAllProjects = async () => {
       },
     });
 
-    if (projects?.length === 0) {
-      return { status: 404, error: "No Projects Found" };
+    if (projects.length === 0) {
+      return createErrorResponse("No projects found", 404);
     }
 
-    return { status: 200, data: projects };
+    return createSuccessResponse(projects);
   } catch (error) {
-    console.error("Error", error);
-    return { status: 500, error: "Internal Server Error" };
+    return handleServerActionError(error, "Failed to fetch projects");
   }
 };
 
-export const getRecentProjects = async () => {
+export const getRecentProjects = async (): Promise<ApiResponse> => {
   try {
-    const user = await onAuthenticateUser();
+    const userResponse = await onAuthenticateUser();
 
-    if (!user || user.status !== 200 || !user.user) {
-      return { status: 403, error: "User Not Authenticated" };
+    if (
+      !userResponse ||
+      userResponse.status !== 200 ||
+      !userResponse.data?.user
+    ) {
+      return createErrorResponse("User not authenticated", 403);
     }
 
-    const projects = await client?.project.findMany({
+    const projects = await client.project.findMany({
       where: {
-        userId: user.user.id,
+        userId: userResponse.data.user.id,
         isDeleted: false,
       },
       orderBy: {
@@ -52,26 +60,35 @@ export const getRecentProjects = async () => {
       take: 5,
     });
 
-    if (projects?.length === 0) {
-      return { status: 404, error: "No Projects Found" };
+    if (projects.length === 0) {
+      return createErrorResponse("No projects found", 404);
     }
 
-    return { status: 200, data: projects };
+    return createSuccessResponse(projects);
   } catch (error) {
-    console.error("Error", error);
-    return { status: 500, error: "Internal Server Error" };
+    return handleServerActionError(error, "Failed to fetch recent projects");
   }
 };
 
-export const recoverProject = async (projectId: string) => {
+export const recoverProject = async (
+  projectId: string
+): Promise<ApiResponse> => {
   try {
-    const user = await onAuthenticateUser();
-
-    if (!user || user.status !== 200 || !user.user) {
-      return { status: 403, error: "User Not Authenticated" };
+    if (!projectId) {
+      return createErrorResponse("Project ID is required", 400);
     }
 
-    const project = await client?.project.update({
+    const userResponse = await onAuthenticateUser();
+
+    if (
+      !userResponse ||
+      userResponse.status !== 200 ||
+      !userResponse.data?.user
+    ) {
+      return createErrorResponse("User not authenticated", 403);
+    }
+
+    const project = await client.project.update({
       where: {
         id: projectId,
       },
@@ -81,25 +98,34 @@ export const recoverProject = async (projectId: string) => {
     });
 
     if (!project) {
-      return { status: 404, error: "Project Not Found" };
+      return createErrorResponse("Project not found", 404);
     }
 
-    return { status: 200, data: project };
+    return createSuccessResponse(project);
   } catch (error) {
-    console.error("Error", error);
-    return { status: 500, error: "Internal Server Error" };
+    return handleServerActionError(error, "Failed to recover project");
   }
 };
 
-export const deleteProject = async (projectId: string) => {
+export const deleteProject = async (
+  projectId: string
+): Promise<ApiResponse> => {
   try {
-    const user = await onAuthenticateUser();
-
-    if (!user || user.status !== 200 || !user.user) {
-      return { status: 403, error: "User Not Authenticated" };
+    if (!projectId) {
+      return createErrorResponse("Project ID is required", 400);
     }
 
-    const project = await client?.project.update({
+    const userResponse = await onAuthenticateUser();
+
+    if (
+      !userResponse ||
+      userResponse.status !== 200 ||
+      !userResponse.data?.user
+    ) {
+      return createErrorResponse("User not authenticated", 403);
+    }
+
+    const project = await client.project.update({
       where: {
         id: projectId,
       },
@@ -109,72 +135,87 @@ export const deleteProject = async (projectId: string) => {
     });
 
     if (!project) {
-      return { status: 404, error: "Project Not Found" };
+      return createErrorResponse("Project not found", 404);
     }
 
-    return { status: 200, data: project };
+    return createSuccessResponse(project);
   } catch (error) {
-    console.error("Error", error);
-    return { status: 500, error: "Internal Server Error" };
+    return handleServerActionError(error, "Failed to delete project");
   }
 };
 
-export const createProject = async (title: string, outlines: OutlineCard[]) => {
+export const createProject = async (
+  title: string,
+  outlines: OutlineCard[]
+): Promise<ApiResponse> => {
   try {
-    if (!title || !outlines || outlines.length === 0)
-      return { status: 400, error: "Titles and Outlines are required" };
+    if (!title || !outlines || outlines.length === 0) {
+      return createErrorResponse("Title and outlines are required", 400);
+    }
 
     const allOutlines = outlines.map((outline) => outline.title);
 
-    const user = await onAuthenticateUser();
+    const userResponse = await onAuthenticateUser();
 
-    if (!user || user.status !== 200 || !user.user) {
-      return { status: 403, error: "User Not Authenticated" };
+    if (
+      !userResponse ||
+      userResponse.status !== 200 ||
+      !userResponse.data?.user
+    ) {
+      return createErrorResponse("User not authenticated", 403);
     }
 
-    const project = await client?.project.create({
+    const project = await client.project.create({
       data: {
         title,
         outlines: allOutlines,
         createdAt: new Date(),
         updatedAt: new Date(),
-        userId: user.user.id,
+        userId: userResponse.data.user.id,
         isDeleted: false,
       },
     });
 
     if (!project) {
-      return { status: 500, error: "Failed to create project" };
+      return createErrorResponse("Failed to create project", 500);
     }
 
-    return { status: 200, data: project };
+    return createSuccessResponse(project);
   } catch (error) {
-    console.error("Error", error);
-    return { status: 500, error: "Internal Server Error" };
+    return handleServerActionError(error, "Failed to create project");
   }
 };
 
-export const getProjectById = async (projectId: string) => {
+export const getProjectById = async (
+  projectId: string
+): Promise<ApiResponse> => {
   try {
-    const user = await onAuthenticateUser();
-
-    if (!user || user.status !== 200 || !user.user) {
-      return { status: 403, error: "User Not Authenticated" };
+    if (!projectId) {
+      return createErrorResponse("Project ID is required", 400);
     }
 
-    const project = await client?.project.findUnique({
+    const userResponse = await onAuthenticateUser();
+
+    if (
+      !userResponse ||
+      userResponse.status !== 200 ||
+      !userResponse.data?.user
+    ) {
+      return createErrorResponse("User not authenticated", 403);
+    }
+
+    const project = await client.project.findUnique({
       where: {
         id: projectId,
       },
     });
 
     if (!project) {
-      return { status: 404, error: "Project Not Found" };
+      return createErrorResponse("Project not found", 404);
     }
 
-    return { status: 200, data: project };
+    return createSuccessResponse(project);
   } catch (error) {
-    console.error("Error", error);
-    return { status: 500, error: "Internal Server Error" };
+    return handleServerActionError(error, "Failed to fetch project");
   }
 };

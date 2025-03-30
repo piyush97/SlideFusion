@@ -3,6 +3,7 @@
 import { deleteProject, recoverProject } from "@/actions/project";
 import { Button } from "@/components/ui/button";
 import { ROUTES, itemVariant, themes } from "@/global/constants";
+import { handleApiError } from "@/lib/errorHandling";
 import { timeAgo } from "@/lib/utils";
 import { useSlideStore } from "@/store/useSlideStore";
 import { JsonValue } from "@prisma/client/runtime/library";
@@ -52,18 +53,23 @@ const ProjectCard = ({
 
     try {
       const response = await deleteProject(projectId);
-      if (response.status !== 200) {
-        toast.error(
-          `Something is wrong, please try again later: ${response.error}`
-        );
-        return;
+
+      const success = handleApiError(response, {
+        defaultMessage: "Failed to delete project",
+        onComplete: () => setLoading(false),
+      });
+
+      if (success) {
+        setOpen(false);
+        router.refresh();
+        toast.success("Project deleted successfully");
       }
-      setOpen(false);
-      router.refresh();
-      toast.success("Project deleted successfully");
     } catch (error) {
       console.error(error);
-      toast.error("Something is wrong, please try again later");
+      toast.error("Something went wrong", {
+        description: "Failed to delete project, please try again later",
+      });
+      setLoading(false);
     }
   };
 
@@ -76,18 +82,23 @@ const ProjectCard = ({
     }
     try {
       const response = await recoverProject(projectId);
-      if (response.status !== 200) {
-        toast.error(
-          `Something is wrong, please try again later: ${response.error}`
-        );
-        return;
+
+      const success = handleApiError(response, {
+        defaultMessage: "Failed to recover project",
+        onComplete: () => setLoading(false),
+      });
+
+      if (success) {
+        setOpen(false);
+        router.refresh();
+        toast.success("Project recovered successfully");
       }
-      setOpen(false);
-      router.refresh();
-      toast.success("Project recovered successfully");
     } catch (error) {
       console.error(error);
-      toast.error("Something is wrong, please try again later");
+      toast.error("Something went wrong", {
+        description: "Failed to recover project, please try again later",
+      });
+      setLoading(false);
     }
   };
 

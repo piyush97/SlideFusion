@@ -1,12 +1,18 @@
 "use server";
+import {
+  createErrorResponse,
+  createSuccessResponse,
+  handleServerActionError,
+} from "@/lib/apiUtils";
 import { client } from "@/lib/prisma";
+import { ApiResponse } from "@/lib/types";
 import { currentUser } from "@clerk/nextjs/server";
 
-export const onAuthenticateUser = async () => {
+export const onAuthenticateUser = async (): Promise<ApiResponse> => {
   try {
     const user = await currentUser();
     if (!user) {
-      return { status: 403 };
+      return createErrorResponse("User not authenticated", 403);
     }
 
     const userExist = await client.user.findUnique({
@@ -21,11 +27,12 @@ export const onAuthenticateUser = async () => {
         },
       },
     });
+
     if (userExist) {
-      return { status: 200, user: userExist };
+      return createSuccessResponse({ user: userExist }, 200);
     }
 
-    const newUser = await client?.user.create({
+    const newUser = await client.user.create({
       data: {
         clerkId: user.id,
         email: user.emailAddresses[0].emailAddress,
@@ -33,11 +40,13 @@ export const onAuthenticateUser = async () => {
         profileImage: user.imageUrl,
       },
     });
+
     if (newUser) {
-      return { status: 201, user: newUser };
+      return createSuccessResponse({ user: newUser }, 201);
     }
+
+    return createErrorResponse("Failed to create or authenticate user", 500);
   } catch (error) {
-    console.error("Error", error);
-    return { status: 500, error: "Internal Server Error" };
+    return handleServerActionError(error, "Authentication failed");
   }
 };

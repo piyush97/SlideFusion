@@ -1,5 +1,24 @@
 import { Prisma } from "@prisma/client";
 
+/**
+ * API Response Types
+ */
+export interface ApiResponse<T = any> {
+  status: number;
+  error?: string;
+  data?: T;
+}
+
+export interface ApiError {
+  status: number;
+  error: string;
+}
+
+export interface ApiSuccess<T> {
+  status: number;
+  data: T;
+}
+
 export type PrismaUser = Prisma.UserGetPayload<{
   include: { PurchasedProjects: true };
 }>;

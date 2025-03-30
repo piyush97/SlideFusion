@@ -14,7 +14,6 @@ import Navbar from "./_components/Navbar/Navbar";
 const Page = () => {
   const { setSlides, setProject, setCurrentTheme } = useSlideStore();
   const params = useParams();
-  // const { setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -22,41 +21,51 @@ const Page = () => {
       try {
         const res = await getProjectById(params?.presentationId as string);
         if (res.status !== 200 || !res.data) {
-          toast.error("Failed to fetch project");
+          toast.error(res.error || "Failed to fetch project");
           redirect("/dashboard");
+          return;
         }
 
-        const findTheme = themes.find(
-          (theme) => theme.name === res?.data.themeName
-        );
+        const slides = res.data.slides;
+        const themeName = res.data.themeName;
 
-        setCurrentTheme(findTheme || themes[0]);
+        if (!slides || !slides.length) {
+          toast.error("No slides found in this project");
+          redirect("/dashboard");
+          return;
+        }
+
+        setSlides(slides);
         setProject(res.data);
-        setSlides(JSON.parse(JSON.stringify(res?.data.slides)));
-      } catch (error) {
-        console.error(error);
-        toast.error("Failed to fetch project");
-      } finally {
+
+        const theme = themes.find((t) => t.name === themeName) || themes[0];
+        setCurrentTheme(theme);
+
         setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching project:", error);
+        toast.error("Failed to load project", {
+          description: "Please try again or contact support",
+        });
+        redirect("/dashboard");
       }
     })();
-  }, []);
+  }, [params?.presentationId, setCurrentTheme, setProject, setSlides]);
 
-  if (isLoading)
+  if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      <div className="flex items-center justify-center w-full h-screen">
+        <Loader2 className="w-6 h-6 mr-2 animate-spin" />
+        <span>Loading presentation...</span>
       </div>
     );
+  }
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="flex flex-col min-h-screen">
-        <Navbar
-          presentationId={params.presentationId as string}
-          title="test-prop-title"
-        />
-      </div>
+      <main className="min-h-screen bg-background">
+        <Navbar />
+      </main>
     </DndProvider>
   );
 };
