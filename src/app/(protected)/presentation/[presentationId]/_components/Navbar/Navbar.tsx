@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useSlideStore } from "@/store/useSlideStore";
-import { Home, Share } from "lucide-react";
+import { Home, Play, Share } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -53,7 +53,17 @@ const Navbar = ({ presentationId, title }: Props) => {
         >
           <Share className="w-4 h-4" />
         </Button>
+        {/* <SellTemplate /> */}
+        <Button
+          variant="default"
+          className="flex items-center gap-2"
+          onClick={() => setIsPresentationMode(true)}
+        >
+          <Play className="w-4 h-4" />
+          <span className="hidden sm:inline">Present</span>
+        </Button>
       </div>
+      {/* {isPresentationMode && <PresentationMode />} */}
     </nav>
   );
 };
