@@ -67,6 +67,9 @@ const Page = () => {
           }}
         >
           <LayoutPreview />
+          <div className="flex-1 pr-16 ml-64">
+            {/* <Editor isEditable={} /> */}
+          </div>
         </div>
       </div>
     </DndProvider>
