@@ -11,6 +11,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { toast } from "sonner";
 import Navbar from "./_components/Navbar/Navbar";
 import LayoutPreview from "./_components/editor-sidebar/leftSidebar/LayoutPreview";
+import Editor from "./_components/editor/Editor";
 
 const Page = () => {
   const { setSlides, setProject, currentTheme, setCurrentTheme } =
@@ -68,7 +69,7 @@ const Page = () => {
         >
           <LayoutPreview />
           <div className="flex-1 pr-16 ml-64">
-            {/* <Editor isEditable={} /> */}
+            <Editor isEditable={true} />
           </div>
         </div>
       </div>
