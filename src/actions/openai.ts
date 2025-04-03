@@ -125,7 +125,7 @@ const replaceImagePlaceholders = async (layout: Slide) => {
   for (const component of imageComponents) {
     console.log("🟢 Generating image for component:", component.alt);
     component.content = await generateImageUrl(
-      component.alt || "Placeholder Image",
+      component.alt || "Placeholder Image"
     );
   }
 };
@@ -154,7 +154,7 @@ The output must be an array of JSON objects.
         className: "p-8 mx-auto flex justify-center items-center min-h-[200px]",
         content: {},
       },
-    ],
+    ]
   )}
 
 8.The content property of each LAYOUTS TYPE should start with “column” and within the columns content property you can use any  of the CONTENT TYPES I provided above. Resizable-column, column and other multi element contents should be an array because you can have more elements inside them nested. Static elements like title and paragraph should have content set to a string.Here is an example of what 1 layout with 1 column with 1 title inside would look like:
@@ -321,11 +321,33 @@ ${JSON.stringify([
 
     let jsonResponse;
     try {
-      jsonResponse = JSON.parse(responseContent.replace(/```json|```/g, ""));
+      // More robust JSON extraction and parsing
+      const jsonContent = responseContent.trim();
+      let jsonString = jsonContent;
+
+      // Try to extract JSON if it's wrapped in text
+      const jsonMatch = jsonContent.match(/\[[\s\S]*\]/);
+      if (jsonMatch) {
+        jsonString = jsonMatch[0];
+      }
+
+      console.log("🟢 Attempting to parse JSON");
+      jsonResponse = JSON.parse(jsonString);
+
+      if (!Array.isArray(jsonResponse)) {
+        throw new Error("Response is not an array as expected");
+      }
+
       await Promise.all(jsonResponse.map(replaceImagePlaceholders));
     } catch (error) {
-      console.log("🔴 ERROR:", error);
-      throw new Error("Invalid JSON format received from AI");
+      console.log("🔴 ERROR parsing JSON:", error);
+      console.log("🔴 Raw response content:", responseContent);
+
+      // Return error instead of throwing to allow graceful handling
+      return {
+        status: 400,
+        error: "Invalid JSON format received from AI. Please try again.",
+      };
     }
 
     console.log("🟢 Layouts generated successfully");
@@ -374,7 +396,13 @@ export const generateLayouts = async (projectId: string, theme: string) => {
     const layouts = await generateLayoutsJson(project.outlines);
 
     if (layouts.status !== 200) {
-      return layouts;
+      // Better error logging and returning the specific error
+      console.log(`🔴 Error in generateLayoutsJson: ${layouts.error}`);
+      return {
+        status: layouts.status,
+        error: layouts.error || "Failed to generate layouts",
+        data: [], // Return empty array to avoid null errors
+      };
     }
 
     await client.project.update({
