@@ -1,3 +1,4 @@
+"use client";
 import { containerVariants } from "@/global/constants";
 import { Project } from "@prisma/client";
 import * as motion from "motion/react-client";
