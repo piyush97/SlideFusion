@@ -41,16 +41,20 @@ const ThemePicker = ({ selectedTheme, themes, onThemeSelect }: Props) => {
         currentTheme.name
       );
 
-      if (res.status !== 200 && !res?.data) {
-        throw new Error("Failed to generate layouts");
+      if (res.status !== 200 || !res?.data || res?.data.length === 0) {
+        throw new Error(res.error || "Failed to generate layouts");
       }
 
       toast.success("Layouts generated successfully");
       router.push(`/presentation/${project?.id}`);
       setSlides(res.data);
     } catch (error) {
-      toast.error("Failed to generate layouts");
-      console.error(error);
+      console.error("Error generating layouts:", error);
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Failed to generate layouts. Please try again."
+      );
     } finally {
       setLoading(false);
     }

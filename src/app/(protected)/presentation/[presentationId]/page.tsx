@@ -10,9 +10,12 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { toast } from "sonner";
 import Navbar from "./_components/Navbar/Navbar";
+import LayoutPreview from "./_components/editor-sidebar/leftSidebar/LayoutPreview";
+import Editor from "./_components/editor/Editor";
 
 const Page = () => {
-  const { setSlides, setProject, setCurrentTheme } = useSlideStore();
+  const { setSlides, setProject, currentTheme, setCurrentTheme } =
+    useSlideStore();
   const params = useParams();
   // const { setTheme } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
@@ -56,6 +59,19 @@ const Page = () => {
           presentationId={params.presentationId as string}
           title="test-prop-title"
         />
+        <div
+          className="flex flex-1 pt-16 overflow-hidden"
+          style={{
+            color: currentTheme.accentColor,
+            fontFamily: currentTheme.fontFamily,
+            backgroundColor: currentTheme.backgroundColor,
+          }}
+        >
+          <LayoutPreview />
+          <div className="flex-1 pr-16 ml-64">
+            <Editor isEditable={true} />
+          </div>
+        </div>
       </div>
     </DndProvider>
   );
