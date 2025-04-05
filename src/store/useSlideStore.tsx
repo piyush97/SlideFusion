@@ -1,4 +1,4 @@
-import { Slide, Theme } from "@/lib/types";
+import { ContentItem, Slide, Theme } from "@/lib/types";
 import { Project } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
@@ -27,12 +27,18 @@ interface SlideState {
   setSlides: (slides: Slide[]) => void;
   setProject: (project: Project | null) => void;
   setCurrentTheme: (theme: Theme) => void;
+  setCurrentSlide: (index: number) => void;
 
   // Slide management actions
   getOrderedSlides: () => Slide[];
   reorderSlides: (fromIndex: number, toIndex: number) => void;
   removeSlide: (slideId: string) => void;
   addSlideAtIndex: (slide: Slide, index: number) => void;
+  updateContentItem: (
+    slideId: string,
+    contentId: string,
+    newContent: string | string[] | string[][]
+  ) => void;
 }
 
 // Create the slide store with persistence
@@ -49,6 +55,7 @@ export const useSlideStore = create<SlideState>()(
       setSlides: (slides: Slide[]) => set({ slides }),
       setProject: (project: Project | null) => set({ project }),
       setCurrentTheme: (theme: Theme) => set({ currentTheme: theme }),
+      setCurrentSlide: (index: number) => set({ currentSlide: index }),
 
       // Slide management actions
       getOrderedSlides: () => {
@@ -93,6 +100,52 @@ export const useSlideStore = create<SlideState>()(
           });
 
           return { slides: newSlides, currentSlide: index };
+        });
+      },
+
+      updateContentItem: (
+        slideId: string,
+        contentId: string,
+        newContent: string | string[] | string[][]
+      ) => {
+        set((state) => {
+          // Find the slide by ID
+          const updatedSlides = state.slides.map((slide) => {
+            if (slide.id !== slideId) return slide;
+
+            // Define the recursive update function
+            const updateContentRecursively = (
+              item: ContentItem
+            ): ContentItem => {
+              if (item.id === contentId) {
+                return { ...item, content: newContent };
+              }
+
+              if (
+                Array.isArray(item.content) &&
+                item.content.every((i) => typeof i !== "string")
+              ) {
+                return {
+                  ...item,
+                  content: item.content.map((subItem) =>
+                    typeof subItem !== "string"
+                      ? updateContentRecursively(subItem as ContentItem)
+                      : subItem
+                  ),
+                };
+              }
+
+              return item;
+            };
+
+            // Apply the update to the slide content
+            return {
+              ...slide,
+              content: updateContentRecursively(slide.content),
+            };
+          });
+
+          return { slides: updatedSlides };
         });
       },
     }),
