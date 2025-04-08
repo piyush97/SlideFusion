@@ -64,15 +64,40 @@ const Content: React.FC<Props> = React.memo(
             >
               {content.content.length > 0
                 ? (content.content as ContentItem[]).map(
-                    (subItem: ContentItem, index: number) => (
-                      <React.Fragment key={subItem.id || `item-${index}`}>
+                    (subItem: ContentItem, subIndex: number) => (
+                      <React.Fragment key={subItem.id || `item-${subIndex}`}>
                         {!isPreview &&
                           !subItem.restrictToDrop &&
                           subIndex === 0 &&
-                          isEditable && <DropZone />}
+                          isEditable && (
+                            <DropZone
+                              index={0}
+                              parentId={content.id}
+                              slideId={slideId || ""}
+                            />
+                          )}
+                        <MasterRecursiveComponent
+                          content={subItem}
+                          onContentChange={onContentChange}
+                          isPreview={isPreview}
+                          isEditable={isEditable}
+                          slideId={slideId}
+                          index={subIndex}
+                        />
+                        {!isPreview &&
+                          !subItem.restrictToDrop &&
+                          isEditable && (
+                            <DropZone
+                              index={subIndex + 1}
+                              parentId={content.id}
+                              slideId={slideId || ""}
+                            />
+                          )}
                       </React.Fragment>
                     )
                   )
+                : isEditable
+                ? ""
                 : ""}
             </motion.div>
           );
