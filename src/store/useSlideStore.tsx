@@ -39,6 +39,12 @@ interface SlideState {
     contentId: string,
     newContent: string | string[] | string[][]
   ) => void;
+  addComponentInSlide: (
+    slideId: string,
+    component: ContentItem,
+    parentId: string,
+    index: number
+  ) => void;
 }
 
 // Create the slide store with persistence
@@ -142,6 +148,55 @@ export const useSlideStore = create<SlideState>()(
             return {
               ...slide,
               content: updateContentRecursively(slide.content),
+            };
+          });
+
+          return { slides: updatedSlides };
+        });
+      },
+      addComponentInSlide(
+        slideId: string,
+        component: ContentItem,
+        parentId: string,
+        index: number
+      ) {
+        set((state) => {
+          const updatedSlides = state.slides.map((slide) => {
+            if (slide.id !== slideId) return slide;
+
+            const addComponentRecursively = (
+              item: ContentItem
+            ): ContentItem => {
+              if (item.id === parentId) {
+                const newComponent = { ...component, id: uuidv4() };
+                const updatedContent =
+                  Array.isArray(item.content) && item.content.length > 0
+                    ? [...(item.content as ContentItem[]), newComponent]
+                    : [newComponent];
+
+                return { ...item, content: updatedContent };
+              }
+
+              if (
+                Array.isArray(item.content) &&
+                item.content.every((i) => typeof i !== "string")
+              ) {
+                return {
+                  ...item,
+                  content: item.content.map((subItem) =>
+                    typeof subItem !== "string"
+                      ? addComponentRecursively(subItem as ContentItem)
+                      : subItem
+                  ),
+                };
+              }
+
+              return item;
+            };
+
+            return {
+              ...slide,
+              content: addComponentRecursively(slide.content),
             };
           });
 
