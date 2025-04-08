@@ -1,5 +1,10 @@
 "use client";
-import { Heading1 } from "@/components/global/editor/components/Headings";
+import {
+  Heading1,
+  Heading2,
+  Heading3,
+  Heading4,
+} from "@/components/global/editor/components/Headings";
 import { ContentItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
@@ -50,8 +55,29 @@ const Content: React.FC<Props> = React.memo(
     switch (content.type) {
       case "heading1":
         return (
-          <motion.div className="w-full h-full">
+          <motion.div className="w-full h-full" {...animateProps}>
             <Heading1 {...commonProps} />
+          </motion.div>
+        );
+
+      case "heading2":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <Heading2 {...commonProps} />
+          </motion.div>
+        );
+
+      case "heading3":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <Heading3 {...commonProps} />
+          </motion.div>
+        );
+
+      case "heading4":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <Heading4 {...commonProps} />
           </motion.div>
         );
 
@@ -62,64 +88,52 @@ const Content: React.FC<Props> = React.memo(
               className={cn("w-full h-full flex flex-col", content.className)}
               {...animateProps}
             >
-              {content.content.length > 0
-                ? (content.content as ContentItem[]).map(
-                    (subItem: ContentItem, subIndex: number) => (
-                      <React.Fragment key={subItem.id || `item-${subIndex}`}>
-                        {!isPreview &&
-                          !subItem.restrictToDrop &&
-                          subIndex === 0 &&
-                          isEditable && (
-                            <DropZone
-                              index={0}
-                              parentId={content.id}
-                              slideId={slideId || ""}
-                            />
-                          )}
-                        <MasterRecursiveComponent
-                          content={subItem}
-                          onContentChange={onContentChange}
-                          isPreview={isPreview}
-                          isEditable={isEditable}
-                          slideId={slideId}
-                          index={subIndex}
+              {content.content.length > 0 ? (
+                (content.content as ContentItem[]).map(
+                  (subItem: ContentItem, subIndex: number) => (
+                    <React.Fragment key={subItem.id || `item-${subIndex}`}>
+                      {!isPreview &&
+                        !subItem.restrictToDrop &&
+                        subIndex === 0 &&
+                        isEditable && (
+                          <DropZone
+                            index={0}
+                            parentId={content.id}
+                            slideId={slideId || ""}
+                          />
+                        )}
+                      <MasterRecursiveComponent
+                        content={subItem}
+                        onContentChange={onContentChange}
+                        isPreview={isPreview}
+                        isEditable={isEditable}
+                        slideId={slideId}
+                        index={subIndex}
+                      />
+                      {!isPreview && !subItem.restrictToDrop && isEditable && (
+                        <DropZone
+                          index={subIndex + 1}
+                          parentId={content.id}
+                          slideId={slideId || ""}
                         />
-                        {!isPreview &&
-                          !subItem.restrictToDrop &&
-                          isEditable && (
-                            <DropZone
-                              index={subIndex + 1}
-                              parentId={content.id}
-                              slideId={slideId || ""}
-                            />
-                          )}
-                      </React.Fragment>
-                    )
+                      )}
+                    </React.Fragment>
                   )
-                : isEditable
-                ? ""
-                : ""}
+                )
+              ) : isEditable ? (
+                <DropZone
+                  index={0}
+                  parentId={content.id}
+                  slideId={slideId || ""}
+                />
+              ) : null}
             </motion.div>
           );
         }
         return null;
 
-      case "row":
-        return (
-          <motion.div className="flex w-full h-full gap-2" {...animateProps}>
-            {content.content.map((item, index) => (
-              <Content
-                key={index}
-                content={item}
-                onContentChange={onContentChange}
-                isPreview={isPreview}
-                isEditable={isEditable}
-                slideId={slideId}
-                index={index}
-              />
-            ))}
-          </motion.div>
-        );
+      default:
+        return null;
     }
   }
 );
