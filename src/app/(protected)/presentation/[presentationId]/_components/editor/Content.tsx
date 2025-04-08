@@ -1,8 +1,10 @@
 "use client";
 import { Heading1 } from "@/components/global/editor/components/Headings";
 import { ContentItem } from "@/lib/types";
+import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import React, { useCallback } from "react";
+import DropZone from "./DropZone";
 
 type Props = {
   content: ContentItem;
@@ -50,6 +52,47 @@ const Content: React.FC<Props> = React.memo(
         return (
           <motion.div className="w-full h-full">
             <Heading1 {...commonProps} />
+          </motion.div>
+        );
+
+      case "column":
+        if (Array.isArray(content.content)) {
+          return (
+            <motion.div
+              className={cn("w-full h-full flex flex-col", content.className)}
+              {...animateProps}
+            >
+              {content.content.length > 0
+                ? (content.content as ContentItem[]).map(
+                    (subItem: ContentItem, index: number) => (
+                      <React.Fragment key={subItem.id || `item-${index}`}>
+                        {!isPreview &&
+                          !subItem.restrictToDrop &&
+                          subIndex === 0 &&
+                          isEditable && <DropZone />}
+                      </React.Fragment>
+                    )
+                  )
+                : ""}
+            </motion.div>
+          );
+        }
+        return null;
+
+      case "row":
+        return (
+          <motion.div className="flex w-full h-full gap-2" {...animateProps}>
+            {content.content.map((item, index) => (
+              <Content
+                key={index}
+                content={item}
+                onContentChange={onContentChange}
+                isPreview={isPreview}
+                isEditable={isEditable}
+                slideId={slideId}
+                index={index}
+              />
+            ))}
           </motion.div>
         );
     }
