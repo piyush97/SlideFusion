@@ -4,7 +4,9 @@ import {
   Heading2,
   Heading3,
   Heading4,
+  Title,
 } from "@/components/global/editor/components/Headings";
+import Paragraph from "@/components/global/editor/components/Paragraph";
 import { ContentItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
@@ -78,6 +80,20 @@ const Content: React.FC<Props> = React.memo(
         return (
           <motion.div className="w-full h-full" {...animateProps}>
             <Heading4 {...commonProps} />
+          </motion.div>
+        );
+
+      case "title":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <Title {...commonProps} />
+          </motion.div>
+        );
+
+      case "paragraph":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <Paragraph {...commonProps} />
           </motion.div>
         );
 
