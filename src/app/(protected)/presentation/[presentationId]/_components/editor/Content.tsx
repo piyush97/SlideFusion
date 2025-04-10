@@ -7,6 +7,7 @@ import {
   Title,
 } from "@/components/global/editor/components/Headings";
 import Paragraph from "@/components/global/editor/components/Paragraph";
+import TableComponent from "@/components/global/editor/components/TableComponent";
 import { ContentItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
@@ -94,6 +95,13 @@ const Content: React.FC<Props> = React.memo(
         return (
           <motion.div className="w-full h-full" {...animateProps}>
             <Paragraph {...commonProps} />
+          </motion.div>
+        );
+
+      case "table":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <TableComponent />
           </motion.div>
         );
 
