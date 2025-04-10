@@ -101,7 +101,19 @@ const Content: React.FC<Props> = React.memo(
       case "table":
         return (
           <motion.div className="w-full h-full" {...animateProps}>
-            <TableComponent />
+            <TableComponent
+              content={content.content as string[][]}
+              onChange={(newContent) =>
+                onContentChange(
+                  newContent !== null ? newContent : "",
+                  content.id
+                )
+              }
+              isPreview={isPreview}
+              isEditable={isEditable}
+              initialColumnSize={content.initialColumns}
+              initialRowSize={content.initialRows}
+            />
           </motion.div>
         );
 
