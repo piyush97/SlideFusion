@@ -1,4 +1,5 @@
 "use client";
+import ColumnComponent from "@/components/global/editor/components/ColumnComponent";
 import {
   Heading1,
   Heading2,
@@ -116,6 +117,15 @@ const Content: React.FC<Props> = React.memo(
             />
           </motion.div>
         );
+
+      case "resizable-column":
+        if (Array.isArray(content.content)) {
+          return (
+            <motion.div className="w-full h-full" {...animateProps}>
+              <ColumnComponent />
+            </motion.div>
+          );
+        }
 
       case "column":
         if (Array.isArray(content.content)) {
