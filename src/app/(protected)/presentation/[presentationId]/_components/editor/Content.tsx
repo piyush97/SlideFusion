@@ -7,6 +7,7 @@ import {
   Heading4,
   Title,
 } from "@/components/global/editor/components/Headings";
+import ImageComponent from "@/components/global/editor/components/ImageComponent";
 import Paragraph from "@/components/global/editor/components/Paragraph";
 import TableComponent from "@/components/global/editor/components/TableComponent";
 import { ContentItem } from "@/lib/types";
@@ -122,10 +123,25 @@ const Content: React.FC<Props> = React.memo(
         if (Array.isArray(content.content)) {
           return (
             <motion.div className="w-full h-full" {...animateProps}>
-              <ColumnComponent />
+              <ColumnComponent
+                content={content.content as ContentItem[]}
+                onContentChange={onContentChange}
+                className={content.className}
+                isPreview={isPreview}
+                isEditable={isEditable}
+                slideId={slideId || ""}
+              />
             </motion.div>
           );
         }
+        return null;
+
+      case "image":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <ImageComponent />
+          </motion.div>
+        );
 
       case "column":
         if (Array.isArray(content.content)) {
