@@ -139,7 +139,15 @@ const Content: React.FC<Props> = React.memo(
       case "image":
         return (
           <motion.div className="w-full h-full" {...animateProps}>
-            <ImageComponent />
+            <ImageComponent
+              src={content.content as string}
+              alt={content.alt || "image"}
+              className={content.className}
+              isPreview={isPreview}
+              contentId={content.id}
+              onContentChange={onContentChange}
+              isEditable={isEditable}
+            />
           </motion.div>
         );
 
