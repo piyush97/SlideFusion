@@ -34,7 +34,10 @@ const ImageComponent = ({
       />
       {!isPreview && isEditable && (
         <div className="absolute top-0 left-0 hidden group-hover:block">
-          <UploadImage />
+          <UploadImage
+            contentId={contentId}
+            onContentChange={onContentChange}
+          />
         </div>
       )}
     </div>
