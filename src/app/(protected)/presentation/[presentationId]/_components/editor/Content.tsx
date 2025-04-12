@@ -1,5 +1,6 @@
 "use client";
 import BlockQuote from "@/components/global/editor/components/BlockQuote";
+import CalloutBox from "@/components/global/editor/components/CalloutBox";
 import ColumnComponent from "@/components/global/editor/components/ColumnComponent";
 import {
   Heading1,
@@ -195,6 +196,18 @@ const Content: React.FC<Props> = React.memo(
               onChange={(newItems) => onContentChange(newItems, content.id)}
               className={content.className}
             />
+          </motion.div>
+        );
+
+      case "calloutBox":
+        return (
+          <motion.div className={cn("w-full h-full ")} {...animateProps}>
+            <CalloutBox
+              type={content.callOutType || "info"}
+              className={content.className}
+            >
+              <Paragraph {...commonProps} />
+            </CalloutBox>
           </motion.div>
         );
 
