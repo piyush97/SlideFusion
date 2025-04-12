@@ -1,6 +1,7 @@
 "use client";
 import BlockQuote from "@/components/global/editor/components/BlockQuote";
 import CalloutBox from "@/components/global/editor/components/CalloutBox";
+import CodeBlock from "@/components/global/editor/components/CodeBlock";
 import ColumnComponent from "@/components/global/editor/components/ColumnComponent";
 import {
   Heading1,
@@ -16,6 +17,7 @@ import NumberedList, {
 } from "@/components/global/editor/components/NumberedList";
 import Paragraph from "@/components/global/editor/components/Paragraph";
 import TableComponent from "@/components/global/editor/components/TableComponent";
+import TableOfContents from "@/components/global/editor/components/TableOfContents";
 import { ContentItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
@@ -208,6 +210,31 @@ const Content: React.FC<Props> = React.memo(
             >
               <Paragraph {...commonProps} />
             </CalloutBox>
+          </motion.div>
+        );
+
+      case "codeBlock":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <CodeBlock
+              code={content.code}
+              language={content.language}
+              onChange={(newCode) => onContentChange(newCode, content.id)}
+              className={content.className}
+            />
+          </motion.div>
+        );
+
+      case "tableOfContents":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <TableOfContents
+              items={content.content as string[]}
+              onItemClick={(id) => {
+                console.log(`Navigate to section: ${id}`);
+              }}
+              className={content.className}
+            />
           </motion.div>
         );
 
