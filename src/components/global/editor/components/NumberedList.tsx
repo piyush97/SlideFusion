@@ -163,4 +163,91 @@ export const BulletList: React.FC<Props> = ({
   );
 };
 
+export const TodoList: React.FC<Props> = ({
+  items,
+  onChange,
+  className,
+  isEditable = true,
+}) => {
+  const { currentTheme } = useSlideStore();
+
+  const handleChange = (index: number, value: string) => {
+    if (isEditable) {
+      const newItems = [...items];
+      newItems[index] =
+        value.startsWith("[ ] ") || value.startsWith("[x] ")
+          ? value
+          : `[ ] ${value}`;
+      onChange(newItems);
+    }
+  };
+
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const updatedItems = [...items];
+      updatedItems.splice(index + 1, 0, "[ ] ");
+      onChange(updatedItems);
+      setTimeout(() => {
+        const nextInput = document.querySelector(
+          `li:nth-child(${index + 2}) input`
+        ) as HTMLInputElement;
+        if (nextInput) nextInput.focus();
+      }, 0);
+    } else if (
+      e.key === "Backspace" &&
+      items[index] === "[ ] " &&
+      items.length > 1
+    ) {
+      e.preventDefault();
+      const updatedItems = [...items];
+      updatedItems.splice(index, 1);
+      onChange(updatedItems);
+    }
+  };
+
+  return (
+    <ul
+      className={cn("space-y-1", className)}
+      style={{ color: currentTheme.fontColor }}
+    >
+      {items.map((item, index) => (
+        <li key={index} className="flex items-center space-x-2">
+          <input
+            type="checkbox"
+            checked={item.startsWith("[x] ")}
+            onChange={() => {
+              if (isEditable) {
+                const newItems = [...items];
+                newItems[index] = item.startsWith("[x]")
+                  ? item.replace("[x] ", "[ ] ")
+                  : item.replace("[ ] ", "[x] ");
+                onChange(newItems);
+              }
+            }}
+            disabled={!isEditable}
+            className="form-checkbox"
+          />
+          <ListItem
+            item={item.replace(/^\[[ x]\] /, "")}
+            index={index}
+            onChange={(i, value) => {
+              handleChange(
+                index,
+                `${item.startsWith("[x] ") ? "[x] " : "[ ] "}${value}`
+              );
+            }}
+            onKeyDown={handleKeyDown}
+            isEditable={isEditable}
+            fontColor={currentTheme.fontColor}
+          />
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 export default NumberedList;

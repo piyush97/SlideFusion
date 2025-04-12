@@ -11,6 +11,7 @@ import {
 import ImageComponent from "@/components/global/editor/components/ImageComponent";
 import NumberedList, {
   BulletList,
+  TodoList,
 } from "@/components/global/editor/components/NumberedList";
 import Paragraph from "@/components/global/editor/components/Paragraph";
 import TableComponent from "@/components/global/editor/components/TableComponent";
@@ -179,6 +180,17 @@ const Content: React.FC<Props> = React.memo(
         return (
           <motion.div className="w-full h-full" {...animateProps}>
             <BulletList
+              items={content.content as string[]}
+              onChange={(newItems) => onContentChange(newItems, content.id)}
+              className={content.className}
+            />
+          </motion.div>
+        );
+
+      case "todoList":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <TodoList
               items={content.content as string[]}
               onChange={(newItems) => onContentChange(newItems, content.id)}
               className={content.className}
