@@ -1,4 +1,5 @@
 "use client";
+import BlockQuote from "@/components/global/editor/components/BlockQuote";
 import ColumnComponent from "@/components/global/editor/components/ColumnComponent";
 import {
   Heading1,
@@ -8,6 +9,9 @@ import {
   Title,
 } from "@/components/global/editor/components/Headings";
 import ImageComponent from "@/components/global/editor/components/ImageComponent";
+import NumberedList, {
+  BulletList,
+} from "@/components/global/editor/components/NumberedList";
 import Paragraph from "@/components/global/editor/components/Paragraph";
 import TableComponent from "@/components/global/editor/components/TableComponent";
 import { ContentItem } from "@/lib/types";
@@ -147,6 +151,37 @@ const Content: React.FC<Props> = React.memo(
               contentId={content.id}
               onContentChange={onContentChange}
               isEditable={isEditable}
+            />
+          </motion.div>
+        );
+
+      case "blockquote":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <BlockQuote>
+              <Paragraph {...commonProps} />
+            </BlockQuote>
+          </motion.div>
+        );
+
+      case "numberedList":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <NumberedList
+              items={content.content as string[]}
+              onChange={(newItems) => onContentChange(newItems, content.id)}
+              className={content.className}
+            />
+          </motion.div>
+        );
+
+      case "bulletedList":
+        return (
+          <motion.div className="w-full h-full" {...animateProps}>
+            <BulletList
+              items={content.content as string[]}
+              onChange={(newItems) => onContentChange(newItems, content.id)}
+              className={content.className}
             />
           </motion.div>
         );
