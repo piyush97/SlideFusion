@@ -2,6 +2,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSlideStore } from "@/store/useSlideStore";
 import { useEffect, useState } from "react";
+import DraggableSlidePreview from "./DraggableSlidePreview";
 
 type Props = {};
 
@@ -39,14 +40,14 @@ const LayoutPreview = (props: Props) => {
               </span>
             </div>
             {/* TODO: After editor */}
-            {/* {slides?.map((slide, index) => (
+            {slides?.map((slide, index) => (
               <DraggableSlidePreview
                 key={slide.id || index}
                 slide={slide}
                 index={index}
                 moveSlide={moveSlide}
               />
-            ))} */}
+            ))}
           </div>
         )}
       </ScrollArea>
