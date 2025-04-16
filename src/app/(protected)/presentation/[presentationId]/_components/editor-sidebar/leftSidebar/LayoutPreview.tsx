@@ -17,8 +17,12 @@ const LayoutPreview = (props: Props) => {
     }
   }, []);
 
+  const moveSlide = (dragIndex: number, hoverIndex: number) => {
+    reorderSlides(dragIndex, hoverIndex);
+  };
+
   return (
-    <div className="fixed left-0 w-64 h-full overflow-y-auto border-r top-20">
+    <div className="fixed left-0 h-full overflow-y-auto border-r w-72 top-20">
       <ScrollArea className="w-full h-full" suppressHydrationWarning>
         {loading ? (
           <div className="flex flex-col w-full px-4 space-y-6">

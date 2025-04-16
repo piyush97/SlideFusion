@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { useSlideStore } from "@/store/useSlideStore";
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
+import ScaledPreview from "./ScaledPreview";
 
 type Props = {
   slide: Slide;
@@ -49,7 +50,11 @@ const DraggableSlidePreview = ({ slide, index, moveSlide }: Props) => {
       onClick={() => setCurrentSlide(index)}
     >
       <div className="relative pl-2 mb-4">
-        <ScaledPreview slide={slide} />
+        <ScaledPreview
+          slide={slide}
+          isActive={index === currentSlide}
+          index={index}
+        />
       </div>
     </div>
   );
