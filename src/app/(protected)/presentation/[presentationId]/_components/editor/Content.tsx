@@ -3,6 +3,7 @@ import BlockQuote from "@/components/global/editor/components/BlockQuote";
 import CalloutBox from "@/components/global/editor/components/CalloutBox";
 import CodeBlock from "@/components/global/editor/components/CodeBlock";
 import ColumnComponent from "@/components/global/editor/components/ColumnComponent";
+import Divider from "@/components/global/editor/components/Divider";
 import {
   Heading1,
   Heading2,
@@ -235,6 +236,16 @@ const Content: React.FC<Props> = React.memo(
               }}
               className={content.className}
             />
+          </motion.div>
+        );
+
+      case "divider":
+        return (
+          <motion.div
+            className={cn("w-full h-full border-b", content.className)}
+            {...animateProps}
+          >
+            <Divider className={content.className} />
           </motion.div>
         );
 
