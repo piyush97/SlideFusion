@@ -57,7 +57,7 @@ const Page = () => {
       <div className="flex flex-col min-h-screen">
         <Navbar
           presentationId={params.presentationId as string}
-          title="test-prop-title"
+          title="Presentation Editor"
         />
         <div
           className="flex flex-1 pt-16 overflow-hidden"
