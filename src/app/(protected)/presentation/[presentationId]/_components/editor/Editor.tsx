@@ -1,4 +1,5 @@
 "use client";
+import { updateSlides } from "@/actions/project";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -11,7 +12,7 @@ import { LayoutSlides, Slide } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useSlideStore } from "@/store/useSlideStore";
 import { EllipsisVertical, Trash } from "lucide-react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { v4 } from "uuid";
 import { MasterRecursiveComponent } from "./Content";
@@ -161,6 +162,7 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
 
 const Editor = ({ isEditable }: Props) => {
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const autoSaveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const {
     currentSlide,
     getOrderedSlides,
@@ -222,6 +224,31 @@ const Editor = ({ isEditable }: Props) => {
   useEffect(() => {
     if (typeof window !== "undefined") setLoading(false);
   }, []);
+
+  const saveSlides = useCallback(() => {
+    if (isEditable && project) {
+      (async () => {
+        await updateSlides(project.id, JSON.parse(JSON.stringify(slides)));
+      })();
+    }
+  }, [slides, isEditable, project]);
+
+  useEffect(() => {
+    if (autoSaveTimeoutRef.current) {
+      clearTimeout(autoSaveTimeoutRef.current);
+    }
+    if (isEditable) {
+      autoSaveTimeoutRef.current = setTimeout(() => {
+        console.log("Auto-saving...");
+        saveSlides();
+      }, 2000);
+    }
+    return () => {
+      if (autoSaveTimeoutRef.current) {
+        clearTimeout(autoSaveTimeoutRef.current);
+      }
+    };
+  }, [slides, isEditable, project]);
 
   return (
     <div className="flex flex-col flex-1 h-full max-w-3xl px-4 mx-auto mb-20">
