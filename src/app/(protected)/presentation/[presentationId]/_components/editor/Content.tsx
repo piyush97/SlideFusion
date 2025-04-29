@@ -42,7 +42,7 @@ const Content: React.FC<Props> = React.memo(
     content,
     onContentChange,
     isPreview = false,
-    isEditable = false,
+    isEditable = true,
     slideId,
     index,
   }) => {
@@ -317,18 +317,8 @@ export const MasterRecursiveComponent: React.FC<Props> = React.memo(
     isPreview = false,
     isEditable = true,
   }) => {
-    if (isPreview) {
-      return (
-        <Content
-          content={content}
-          onContentChange={onContentChange}
-          isPreview={isPreview}
-          isEditable={isEditable}
-          slideId={slideId}
-          index={index}
-        />
-      );
-    }
+    // When in preview mode, we should still respect the isEditable flag
+    // but ensure it's properly respected (readOnly is controlled by isPreview separately)
     return (
       <React.Fragment>
         <Content

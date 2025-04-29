@@ -41,7 +41,7 @@ export const DropZone: React.FC<DropZoneProps> = ({
   isEditable,
 }) => {
   const [{ isOver, canDrop }, dropRef] = useDrop({
-    accept: ["SLIDE", "layout"],
+    accept: ["SLIDE", "LAYOUT"],
     drop: (item: {
       type: string;
       layoutType: string;
@@ -93,7 +93,7 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
 }) => {
   const ref = useRef(null);
 
-  const [isDragging] = useDrag({
+  const [{ isDragging }, drag] = useDrag({
     type: "SLIDE",
     item: { index, type: "SLIDE" },
     collect: (monitor) => ({
@@ -102,18 +102,30 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
     canDrag: isEditable,
   });
 
+  drag(ref);
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, drop] = useDrop({
+    accept: ["SLIDE", "LAYOUT"],
+    hover(item: { index: number; type: string }) {
+      if (!ref.current || !isEditable) return;
+      const dragIndex = item.index;
+      const hoverIndex = index;
+
+      if (item.type === "SLIDE") {
+        if (dragIndex === hoverIndex) {
+          return;
+        }
+        moveSlide(dragIndex, hoverIndex);
+        item.index = hoverIndex;
+      }
+    },
+  });
+
+  drag(drop(ref));
+
   const { currentSlide, setCurrentSlide, currentTheme, updateContentItem } =
     useSlideStore();
-
-  const handleContentChange = (
-    contentId: string,
-    newContent: string | string[] | string[][]
-  ) => {
-    console.log("content changed", slide, contentId, newContent);
-    if (isEditable) {
-      updateContentItem(slide.id, contentId, newContent);
-    }
-  };
 
   return (
     <div
@@ -135,7 +147,12 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
           isEditable={isEditable}
           isPreview={false}
           slideId={slide.id}
-          onContentChange={() => handleContentChange}
+          onContentChange={(newContent, contentId) => {
+            console.log("content changed", slide, contentId, newContent);
+            if (isEditable) {
+              updateContentItem(slide.id, contentId, newContent);
+            }
+          }}
         />
       </div>
       {isEditable && (
@@ -173,6 +190,7 @@ const Editor = ({ isEditable }: Props) => {
     reorderSlides,
   } = useSlideStore();
   const [loading, setLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
 
   const orderedSlides = getOrderedSlides();
   const moveSlide = (dragIndex: number, hoverIndex: number) => {
@@ -228,7 +246,9 @@ const Editor = ({ isEditable }: Props) => {
   const saveSlides = useCallback(() => {
     if (isEditable && project) {
       (async () => {
+        setIsSaving(true);
         await updateSlides(project.id, JSON.parse(JSON.stringify(slides)));
+        setIsSaving(false);
       })();
     }
   }, [slides, isEditable, project]);
@@ -251,7 +271,38 @@ const Editor = ({ isEditable }: Props) => {
   }, [slides, isEditable, project, saveSlides]);
 
   return (
-    <div className="flex flex-col flex-1 h-full max-w-3xl px-4 mx-auto mb-20">
+    <div className="relative flex flex-col flex-1 h-full max-w-3xl px-4 mx-auto mb-20">
+      {isEditable && (
+        <div
+          className={`absolute top-0 right-0 transition-opacity duration-300 z-10 ${
+            isSaving ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div className="flex items-center px-3 py-1 text-green-800 bg-green-100 rounded-md shadow-sm">
+            <svg
+              className="w-4 h-4 mr-2 animate-spin"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            <span className="text-sm">Saving...</span>
+          </div>
+        </div>
+      )}
       {loading ? (
         <div className="flex flex-col w-full px-4 space-y-6">
           <Skeleton className="w-full h-52" />
