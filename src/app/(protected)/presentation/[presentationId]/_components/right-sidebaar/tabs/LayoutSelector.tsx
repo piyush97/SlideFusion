@@ -11,8 +11,7 @@ const LayoutSelector = (props: Props) => {
       className="h-[400px]"
       style={{ backgroundColor: currentTheme.slideBackgroundColor }}
     >
-      {" "}
-      LayoutSelector
+      <div className="p-4"></div>
     </ScrollArea>
   );
 };
