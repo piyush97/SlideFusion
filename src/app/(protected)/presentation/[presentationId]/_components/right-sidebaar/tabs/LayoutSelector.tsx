@@ -3,6 +3,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { layouts } from "@/global/constants";
 import { Layout } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
+import { useDrag } from "react-dnd";
 
 const DraggableLayoutItem = ({
   component,
@@ -11,7 +12,26 @@ const DraggableLayoutItem = ({
   name,
   type,
 }: Layout) => {
-  return <div>DraggableLayoutItem</div>;
+  const { currentTheme } = useSlideStore();
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "layout",
+    item: { type, layoutType, component },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+  return (
+    <div
+      ref={drag as unknown as React.LegacyRef<HTMLDivElement>}
+      style={{
+        opacity: isDragging ? 0.5 : 1,
+        backgroundColor: currentTheme.slideBackgroundColor,
+      }}
+      className="border"
+    >
+      <LayoutPreviewItem />
+    </div>
+  );
 };
 
 const LayoutSelector = () => {
