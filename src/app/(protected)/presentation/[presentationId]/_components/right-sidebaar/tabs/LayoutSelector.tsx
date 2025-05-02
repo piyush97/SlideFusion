@@ -4,6 +4,7 @@ import { layouts } from "@/global/constants";
 import { Layout } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { useDrag } from "react-dnd";
+import LayoutPreviewItem from "./components/LayoutPreviewItem";
 
 const DraggableLayoutItem = ({
   component,
@@ -29,7 +30,12 @@ const DraggableLayoutItem = ({
       }}
       className="border"
     >
-      <LayoutPreviewItem />
+      <LayoutPreviewItem
+        name={name}
+        Icon={icon}
+        type={type}
+        component={component}
+      />
     </div>
   );
 };
