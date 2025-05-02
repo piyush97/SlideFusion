@@ -14,9 +14,15 @@ import {
 import {
   BulletListComponent,
   CalloutBoxComponent,
+  Heading1,
+  Heading2,
+  Heading3,
+  Heading4,
   NumberedListComponent,
   Paragraph,
   ResizableColumn,
+  Table,
+  Title,
   TodoListComponent,
 } from "@/lib/slideComponents";
 import {
@@ -35,17 +41,7 @@ import {
   TwoImageColumns,
 } from "@/lib/slideLayouts";
 import { ComponentGroup, LayoutGroup, Theme } from "@/lib/types";
-import { Title } from "@radix-ui/react-dialog";
-import {
-  Heading1,
-  Heading2,
-  Heading3,
-  Heading4,
-  Home,
-  LayoutTemplate,
-  SettingsIcon,
-  Table,
-} from "lucide-react";
+import { Home, LayoutTemplate, SettingsIcon } from "lucide-react";
 
 export const APP_NAME = "SlideFusion - AI based Presentation Tool";
 export const APP_DESCRIPTION =
