@@ -325,6 +325,13 @@ const Editor = ({ isEditable }: Props) => {
                   handleDelete={() => handleDelete(slide.id)}
                   isEditable={isEditable}
                 />
+                {isEditable && (
+                  <DropZone
+                    index={index + 1}
+                    onDrop={handleDrop}
+                    isEditable={isEditable}
+                  />
+                )}
               </React.Fragment>
             ))}
           </div>
