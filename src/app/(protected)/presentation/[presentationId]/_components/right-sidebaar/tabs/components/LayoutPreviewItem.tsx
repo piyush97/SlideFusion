@@ -28,7 +28,12 @@ const LayoutPreviewItem = ({
         "hover:scale-105 transform",
         isSelected && "ring-2 ring-blue-500"
       )}
-    ></button>
+    >
+      <div className="w-full aspect-[16/9] rounded-md border bg-gray-100 dark:bg-gray-700 p-2 shadow-sm hover:shadow-md transition-shadow duration-200">
+        <Icon />
+      </div>
+      <span className="text-xs font-medium text-gray-500">{name}</span>
+    </button>
   );
 };
 

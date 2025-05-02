@@ -28,7 +28,7 @@ const DraggableLayoutItem = ({
         opacity: isDragging ? 0.5 : 1,
         backgroundColor: currentTheme.slideBackgroundColor,
       }}
-      className="border"
+      className="border rounded-lg"
     >
       <LayoutPreviewItem
         name={name}
@@ -50,8 +50,7 @@ const LayoutSelector = () => {
       <div className="p-4">
         {layouts.map((group) => (
           <div key={group.name} className="mb-6">
-            {/* Fixed typo: mb-b -> mb-6 (or use your preferred margin) */}
-            <h3 className="mb-3 text-sm font-medium">{group.name}</h3>
+            <h3 className="my-4 text-sm font-medium">{group.name}</h3>
             <div className="grid grid-cols-3 gap-2">
               {group.layouts.map((layout) => (
                 <DraggableLayoutItem key={layout.layoutType} {...layout} />
