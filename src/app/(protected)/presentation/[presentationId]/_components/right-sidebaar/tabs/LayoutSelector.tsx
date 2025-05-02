@@ -15,7 +15,7 @@ const DraggableLayoutItem = ({
 }: Layout) => {
   const { currentTheme } = useSlideStore();
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: "layout",
+    type: "LAYOUT",
     item: { type, layoutType, component },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),

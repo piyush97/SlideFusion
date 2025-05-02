@@ -66,10 +66,11 @@ export const DropZone: React.FC<DropZoneProps> = ({
         isOver && canDrop ? "border-green-500 bg-green-100" : "border-gray-300",
         canDrop ? "border-blue-300" : ""
       )}
+      ref={dropRef as unknown as React.RefObject<HTMLDivElement>}
     >
       {isOver && canDrop && (
         <div className="flex items-center justify-center h-full text-green-600">
-          Drop here{" "}
+          Drop here
         </div>
       )}
     </div>
