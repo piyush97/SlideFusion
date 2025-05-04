@@ -1,9 +1,9 @@
 import { updateTheme } from "@/actions/project";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { themes } from "@/global/constants";
 import { Theme } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
-import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
 
