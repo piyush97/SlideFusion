@@ -41,7 +41,7 @@ import {
   TwoImageColumns,
 } from "@/lib/slideLayouts";
 import { ComponentGroup, LayoutGroup, Theme } from "@/lib/types";
-import { Home, LayoutTemplate, SettingsIcon } from "lucide-react";
+import { Home, LayoutTemplate, SettingsIcon, TrashIcon } from "lucide-react";
 
 export const APP_NAME = "SlideFusion - AI based Presentation Tool";
 export const APP_DESCRIPTION =
@@ -50,12 +50,13 @@ export const APP_DESCRIPTION =
 export const ROUTES = {
   home: "/",
   dashboard: "/dashboard",
-  templates: "/templates",
+  templates: "/dashboard/templates",
   settings: "/settings",
   presentation: "/presentation",
   signin: "/signin",
   signup: "/signup",
   signout: "/signout",
+  trash: "/dashboard/trash",
 };
 
 export const DATA = {
@@ -74,6 +75,11 @@ export const DATA = {
       title: "Templates",
       url: ROUTES.templates,
       icon: LayoutTemplate,
+    },
+    {
+      title: "Trash",
+      url: ROUTES.trash,
+      icon: TrashIcon,
     },
     {
       title: "Settings",
