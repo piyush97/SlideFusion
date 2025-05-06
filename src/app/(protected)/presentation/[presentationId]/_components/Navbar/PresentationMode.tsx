@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { useSlideStore } from "@/store/useSlideStore";
-import { ChevronLeft, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MasterRecursiveComponent } from "../editor/Content";
 
 type Props = {
@@ -12,8 +12,39 @@ type Props = {
 const PresentationMode = ({ onClose }: Props) => {
   const { getOrderedSlides, currentTheme } = useSlideStore();
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-
   const slides = getOrderedSlides();
+  const isLastSlide = currentSlideIndex === slides.length - 1;
+
+  const goToPreviousSlide = () => {
+    setCurrentSlideIndex((prevIndex) => Math.max(prevIndex - 1, 0));
+  };
+
+  const goToNextSlide = useCallback(() => {
+    if (currentSlideIndex === slides.length - 1) {
+      onClose();
+    } else {
+      setCurrentSlideIndex((prevIndex) =>
+        Math.min(prevIndex + 1, slides.length - 1)
+      );
+    }
+  }, [currentSlideIndex, onClose, slides.length]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") {
+        goToPreviousSlide();
+      } else if (event.key === "ArrowRight") {
+        goToNextSlide();
+      } else if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [slides.length, onClose, goToNextSlide]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
@@ -61,10 +92,16 @@ const PresentationMode = ({ onClose }: Props) => {
           <Button
             variant="outline"
             size="icon"
+            onClick={goToPreviousSlide}
             disabled={currentSlideIndex === 0}
           >
             <ChevronLeft className="w-4 h-4" />
           </Button>
+          {!isLastSlide && (
+            <Button variant="outline" size="icon" onClick={goToNextSlide}>
+              <ChevronRight className="w-4 h-4" />
+            </Button>
+          )}
         </div>
       </div>
     </div>
