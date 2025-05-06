@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
+import { MasterRecursiveComponent } from "@/app/(protected)/presentation/[presentationId]/_components/editor/Content";
 import { Slide, Theme } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Image } from "lucide-react";
@@ -22,7 +23,14 @@ const Thumbnail = ({ slide, theme }: Props) => {
       }}
     >
       {slide ? (
-        <div className="scale-[0.5] origin-top-left w-[200%] h-[200%] overflow-hidden"></div>
+        <div className="scale-[0.5] origin-top-left w-[200%] h-[200%] overflow-hidden">
+          <MasterRecursiveComponent
+            content={slide.content}
+            isPreview={true}
+            slideId={slide.id}
+            onContentChange={() => {}}
+          />
+        </div>
       ) : (
         <div className="flex items-center justify-center w-full h-full bg-gray-400">
           <Image className="w-6 h-6 text-gray-500" />
