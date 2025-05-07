@@ -229,3 +229,61 @@ export const updateTheme = async (projectId: string, theme: string) => {
     return { status: 500, error: "Internal Server Error" };
   }
 };
+
+export const deleteAllProjects = async (projectsIds: string[]) => {
+  try {
+    if (!projectsIds || projectsIds.length === 0) {
+      return { status: 400, error: "Project IDs are required" };
+    }
+
+    const user = await onAuthenticateUser();
+
+    if (!user || user.status !== 200 || !user.user) {
+      return { status: 403, error: "User Not Authenticated" };
+    }
+
+    const deletedProjects = await client?.project.deleteMany({
+      where: {
+        id: { in: projectsIds },
+        userId: user.user.id,
+      },
+    });
+
+    if (!deletedProjects) {
+      return { status: 404, error: "Projects Not Found" };
+    }
+    return { status: 200, data: deletedProjects };
+  } catch (error) {
+    console.error("Error", error);
+    return { status: 500, error: "Internal Server Error" };
+  }
+};
+
+export const getDeletedProjects = async () => {
+  try {
+    const user = await onAuthenticateUser();
+
+    if (!user || user.status !== 200 || !user.user) {
+      return { status: 403, error: "User Not Authenticated" };
+    }
+
+    const deletedProjects = await client?.project.findMany({
+      where: {
+        userId: user.user.id,
+        isDeleted: true,
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+
+    if (deletedProjects?.length === 0) {
+      return { status: 404, error: "No Deleted Projects Found" };
+    }
+
+    return { status: 200, data: deletedProjects };
+  } catch (error) {
+    console.error("Error", error);
+    return { status: 500, error: "Internal Server Error" };
+  }
+};
