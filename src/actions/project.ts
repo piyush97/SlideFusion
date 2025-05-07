@@ -258,3 +258,32 @@ export const deleteAllProjects = async (projectsIds: string[]) => {
     return { status: 500, error: "Internal Server Error" };
   }
 };
+
+export const getDeletedProjects = async () => {
+  try {
+    const user = await onAuthenticateUser();
+
+    if (!user || user.status !== 200 || !user.user) {
+      return { status: 403, error: "User Not Authenticated" };
+    }
+
+    const deletedProjects = await client?.project.findMany({
+      where: {
+        userId: user.user.id,
+        isDeleted: true,
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+
+    if (deletedProjects?.length === 0) {
+      return { status: 404, error: "No Deleted Projects Found" };
+    }
+
+    return { status: 200, data: deletedProjects };
+  } catch (error) {
+    console.error("Error", error);
+    return { status: 500, error: "Internal Server Error" };
+  }
+};

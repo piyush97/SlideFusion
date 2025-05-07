@@ -30,12 +30,18 @@ const DeleteAllButton = ({ Projects }: Props) => {
 
       if (res.status !== 200) {
         toast.error(`Something is wrong, please try again later: ${res.error}`);
+        setOpen(false);
         return;
       }
+      router.refresh();
+      setOpen(false);
       toast.success("All projects deleted successfully");
     } catch (error) {
       console.error("Error deleting all projects", error);
       toast.error("Something went wrong, please try again later");
+    } finally {
+      setOpen(false);
+      setLoading(false);
     }
   };
 
