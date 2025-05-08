@@ -50,13 +50,13 @@ export const APP_DESCRIPTION =
 export const ROUTES = {
   home: "/",
   dashboard: "/dashboard",
-  templates: "/dashboard/templates",
+  templates: "/templates",
   settings: "/settings",
   presentation: "/presentation",
   signin: "/signin",
   signup: "/signup",
   signout: "/signout",
-  trash: "/dashboard/trash",
+  trash: "/trash",
 };
 
 export const DATA = {

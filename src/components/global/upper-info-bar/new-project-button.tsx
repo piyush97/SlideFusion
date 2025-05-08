@@ -8,9 +8,9 @@ const NewProjectButton = ({ user }: { user: User }) => {
   const router = useRouter();
   return (
     <Button
-      className="rounded-lg font-semibold"
+      className="font-semibold rounded-lg"
       disabled={!user.subscription}
-      onClick={() => router.push("/dashboard/create-page")}
+      onClick={() => router.push("/create-page")}
     >
       <Plus />
       New Project

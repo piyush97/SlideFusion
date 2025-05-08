@@ -2,7 +2,7 @@ import { onAuthenticateUser } from "@/actions/user";
 
 type Props = {};
 
-const Page = (props: Props) => {
+const Page = async (props: Props) => {
   const checkUser = await onAuthenticateUser();
 
   return (
