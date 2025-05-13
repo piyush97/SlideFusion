@@ -8,18 +8,30 @@ import {
 } from "@/components/ui/sidebar";
 import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import { User } from "@prisma/client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const NavFooter = ({ prismaUser }: { prismaUser: User }) => {
+  const router = useRouter();
+
   const { isLoaded, isSignedIn, user } = useUser();
   const [loading, setLoading] = useState(false);
   if (!isLoaded || !isSignedIn) return null;
-
   const handleUpgrading = async () => {
     setLoading(true);
     try {
       const res = await buySubscription(prismaUser.id);
-    } catch (error) {}
+      if (res?.status !== 200) {
+        throw new Error("Failed to upgrade subscription");
+      }
+      router.push(res.url);
+    } catch (error) {
+      console.error("Error upgrading subscription:", error);
+      toast.error("Failed to upgrade subscription. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
