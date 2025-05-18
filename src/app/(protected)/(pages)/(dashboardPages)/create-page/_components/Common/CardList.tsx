@@ -24,7 +24,7 @@ const CardList = ({
   editingCard,
   selectedCard,
   editText,
-  addOutline,
+  // addOutline, // Removing unused parameter
   onEditChange,
   onCardSelect,
   onCardDoubleClick,
