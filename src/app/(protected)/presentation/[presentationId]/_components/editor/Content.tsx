@@ -44,7 +44,7 @@ const Content: React.FC<Props> = React.memo(
     isPreview = false,
     isEditable = true,
     slideId,
-    index,
+    // index is unused in this scope
   }) => {
     const handleChange = useCallback(
       (e: React.ChangeEvent<HTMLTextAreaElement>) => {

@@ -9,7 +9,7 @@ type Props = {
   index: number;
 };
 
-const ScaledPreview = ({ slide, isActive, index }: Props) => {
+const ScaledPreview = ({ slide, isActive }: Props) => {
   const { currentTheme } = useSlideStore();
 
   return (

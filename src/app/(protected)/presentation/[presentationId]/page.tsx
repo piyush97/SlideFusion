@@ -44,7 +44,7 @@ const Page = () => {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [params?.presentationId, setCurrentTheme, setProject, setSlides]);
 
   if (isLoading)
     return (
