@@ -3,6 +3,8 @@ import NotFound from "@/components/global/not-found";
 import Projects from "@/components/global/projects";
 import DeleteAllButton from "./_components/DeleteAllButton";
 
+export const dynamic = "force-dynamic";
+
 const Page = async () => {
   const deletedProjects = await getDeletedProjects();
   if (!deletedProjects.data) return <NotFound />;

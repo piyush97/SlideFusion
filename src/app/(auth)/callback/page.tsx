@@ -2,6 +2,8 @@ import { onAuthenticateUser } from "@/actions/user";
 import { ROUTES } from "@/global/constants";
 import { redirect } from "next/navigation";
 
+export const dynamic = "force-dynamic";
+
 const AuthCallbackPage = async () => {
   const auth = await onAuthenticateUser();
   if (!auth) {

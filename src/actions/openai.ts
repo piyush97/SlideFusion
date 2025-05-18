@@ -95,9 +95,15 @@ const generateImageUrl = async (prompt: string): Promise<string> => {
       n: 1,
       size: "1024x1024",
     });
-    console.log("🟢 Image generated successfully:", dalleResponse.data[0]?.url);
+    if (dalleResponse.data && dalleResponse.data.length > 0) {
+      console.log(
+        "🟢 Image generated successfully:",
+        dalleResponse.data[0]?.url
+      );
+      return dalleResponse.data[0]?.url || "https://via.placeholder.com/1024";
+    }
 
-    return dalleResponse.data[0]?.url || "https://via.placeholder.com/1024";
+    return "https://via.placeholder.com/1024";
   } catch (error) {
     console.error("Failed to generate image:", error);
     return "https://via.placeholder.com/1024";

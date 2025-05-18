@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 const Page = async () => {
   return (
     <div className="relative flex-col gap-6 div">
