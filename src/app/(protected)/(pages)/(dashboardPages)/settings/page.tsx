@@ -1,10 +1,4 @@
-import { onAuthenticateUser } from "@/actions/user";
-
-type Props = {};
-
-const Page = async (props: Props) => {
-  const checkUser = await onAuthenticateUser();
-
+const Page = async () => {
   return (
     <div className="relative flex-col gap-6 div">
       <div className="flex items-center justify-between">

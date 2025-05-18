@@ -4,9 +4,7 @@ import { useSlideStore } from "@/store/useSlideStore";
 import { useEffect, useState } from "react";
 import DraggableSlidePreview from "./DraggableSlidePreview";
 
-type Props = {};
-
-const LayoutPreview = (props: Props) => {
+const LayoutPreview = () => {
   const { reorderSlides, getOrderedSlides } = useSlideStore();
   const slides = getOrderedSlides();
   const [loading, setLoading] = useState(true);

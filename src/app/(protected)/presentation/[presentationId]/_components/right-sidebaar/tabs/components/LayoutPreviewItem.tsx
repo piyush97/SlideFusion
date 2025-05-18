@@ -11,14 +11,7 @@ type Props = {
   component?: LayoutSlides;
 };
 
-const LayoutPreviewItem = ({
-  name,
-  Icon,
-  onClick,
-  isSelected,
-  type,
-  component,
-}: Props) => {
+const LayoutPreviewItem = ({ name, Icon, onClick, isSelected }: Props) => {
   return (
     <button
       onClick={onClick}

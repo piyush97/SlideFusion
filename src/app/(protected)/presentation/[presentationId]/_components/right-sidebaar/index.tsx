@@ -13,9 +13,7 @@ import LayoutSelector from "./tabs/LayoutSelector";
 import ComponentCard from "./tabs/components/ComponentPreview";
 import ThemePicker from "./tabs/components/ThemePicker";
 
-type Props = {};
-
-const EditorSidebar = (props: Props) => {
+const EditorSidebar = () => {
   const { currentTheme } = useSlideStore();
 
   return (

@@ -157,8 +157,8 @@ export const useSlideStore = create<SlideState>()(
       addComponentInSlide(
         slideId: string,
         component: ContentItem,
-        parentId: string,
-        index: number
+        parentId: string
+        // Removing the unused index parameter
       ) {
         set((state) => {
           const updatedSlides = state.slides.map((slide) => {
