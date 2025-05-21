@@ -1,5 +1,4 @@
 export const dynamic = "force-dynamic";
-export const runtime = "edge"; // Required for Cloudflare Pages
 
 const Page = async () => {
   return (

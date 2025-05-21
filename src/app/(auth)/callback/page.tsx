@@ -3,7 +3,6 @@ import { ROUTES } from "@/global/constants";
 import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
-export const runtime = "edge"; // Required for Cloudflare Pages
 
 const AuthCallbackPage = async () => {
   const auth = await onAuthenticateUser();

@@ -1,12 +1,7 @@
-import { setupDevPlatform } from "@cloudflare/next-on-pages/next-dev";
 import type { NextConfig } from "next";
 
-// Use an immediately invoked async function to allow top-level await
-if (process.env.NODE_ENV === "development") {
-  (async () => {
-    await setupDevPlatform();
-  })();
-}
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
+initOpenNextCloudflareForDev();
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,

@@ -2,7 +2,6 @@ export const dynamic = "force-dynamic"; // to remove cache
 import { client } from "@/lib/prisma";
 import crypto from "crypto";
 import { NextRequest } from "next/server";
-export const runtime = "edge"; // Required for Cloudflare Pages
 
 export async function POST(req: NextRequest) {
   try {
