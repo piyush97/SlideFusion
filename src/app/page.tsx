@@ -132,7 +132,7 @@ const testimonials = [
   },
 ];
 
-const Index = () => {
+const Page = () => {
   // Simplified component without unused variables
 
   useEffect(() => {
@@ -180,21 +180,21 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col min-h-screen">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-24 md:pt-32 pb-16 md:pb-24 overflow-hidden">
+      <section className="relative pt-24 pb-16 overflow-hidden md:pt-32 md:pb-24">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent -z-10" />
         <div className="container px-4 md:px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="grid items-center grid-cols-1 gap-8 md:grid-cols-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               className="flex flex-col gap-6 text-center md:text-left"
             >
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tighter">
+              <h1 className="text-4xl font-bold leading-tight tracking-tighter md:text-5xl lg:text-6xl">
                 Create Stunning Presentations with{" "}
                 <span className="gradient-text">AI-Powered</span> SlideFusion
               </h1>
@@ -202,14 +202,14 @@ const Index = () => {
                 Transform your ideas into professional presentations in minutes.
                 Save time, impress your audience, and pitch with confidence.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <Button size="lg" className="font-medium text-base">
+              <div className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start">
+                <Button size="lg" className="text-base font-medium">
                   Get Started Free
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="font-medium text-base"
+                  className="text-base font-medium"
                 >
                   See how it works
                 </Button>
@@ -221,25 +221,25 @@ const Index = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative aspect-video overflow-hidden rounded-xl shadow-2xl">
-                <div className="absolute inset-0 bg-gradient-to-br from-slide-blue/90 to-slide-purple/90 z-10" />
+              <div className="relative overflow-hidden shadow-2xl aspect-video rounded-xl">
+                <div className="absolute inset-0 z-10 bg-gradient-to-br from-slide-blue/90 to-slide-purple/90" />
                 <div className="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=2620&q=80')] bg-cover bg-center" />
                 <div className="absolute inset-0 z-20 flex items-center justify-center p-8">
-                  <div className="w-full bg-white/20 backdrop-blur-sm rounded-lg p-4 shadow-lg">
-                    <div className="h-6 w-full flex items-center gap-2 mb-3">
-                      <div className="w-3 h-3 rounded-full bg-red-400" />
-                      <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                      <div className="w-3 h-3 rounded-full bg-green-400" />
-                      <div className="h-3 w-2/3 bg-white/30 rounded-full ml-4" />
+                  <div className="w-full p-4 rounded-lg shadow-lg bg-white/20 backdrop-blur-sm">
+                    <div className="flex items-center w-full h-6 gap-2 mb-3">
+                      <div className="w-3 h-3 bg-red-400 rounded-full" />
+                      <div className="w-3 h-3 bg-yellow-400 rounded-full" />
+                      <div className="w-3 h-3 bg-green-400 rounded-full" />
+                      <div className="w-2/3 h-3 ml-4 rounded-full bg-white/30" />
                     </div>
-                    <div className="space-y-2 mb-3">
-                      <div className="h-8 bg-white/30 rounded-md w-3/4" />
-                      <div className="h-20 bg-white/20 rounded-md" />
+                    <div className="mb-3 space-y-2">
+                      <div className="w-3/4 h-8 rounded-md bg-white/30" />
+                      <div className="h-20 rounded-md bg-white/20" />
                     </div>
                     <div className="grid grid-cols-3 gap-2">
-                      <div className="h-24 bg-white/20 rounded-md" />
-                      <div className="h-24 bg-white/20 rounded-md" />
-                      <div className="h-24 bg-white/20 rounded-md" />
+                      <div className="h-24 rounded-md bg-white/20" />
+                      <div className="h-24 rounded-md bg-white/20" />
+                      <div className="h-24 rounded-md bg-white/20" />
                     </div>
                   </div>
                 </div>
@@ -247,7 +247,7 @@ const Index = () => {
 
               {/* Floating Elements */}
               <motion.div
-                className="absolute -top-12 -right-8 w-24 h-24 bg-yellow-300/20 rounded-full backdrop-blur-md z-0"
+                className="absolute z-0 w-24 h-24 rounded-full -top-12 -right-8 bg-yellow-300/20 backdrop-blur-md"
                 animate={{
                   y: [0, 15, 0],
                   opacity: [0.5, 0.8, 0.5],
@@ -258,7 +258,7 @@ const Index = () => {
                 }}
               />
               <motion.div
-                className="absolute -bottom-8 -left-8 w-20 h-20 bg-primary/20 rounded-full backdrop-blur-md z-0"
+                className="absolute z-0 w-20 h-20 rounded-full -bottom-8 -left-8 bg-primary/20 backdrop-blur-md"
                 animate={{
                   y: [0, -15, 0],
                   opacity: [0.5, 0.8, 0.5],
@@ -277,26 +277,26 @@ const Index = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 md:mt-24 text-center"
+            className="grid grid-cols-2 gap-4 mt-16 text-center md:grid-cols-4 md:mt-24"
           >
             <div className="p-6 glass-card">
-              <div className="text-3xl font-bold mb-2">3000+</div>
+              <div className="mb-2 text-3xl font-bold">3000+</div>
               <div className="text-sm text-muted-foreground">
                 Presentations Created
               </div>
             </div>
             <div className="p-6 glass-card">
-              <div className="text-3xl font-bold mb-2">98%</div>
+              <div className="mb-2 text-3xl font-bold">98%</div>
               <div className="text-sm text-muted-foreground">
                 Customer Satisfaction
               </div>
             </div>
             <div className="p-6 glass-card">
-              <div className="text-3xl font-bold mb-2">80%</div>
+              <div className="mb-2 text-3xl font-bold">80%</div>
               <div className="text-sm text-muted-foreground">Time Saved</div>
             </div>
             <div className="p-6 glass-card">
-              <div className="text-3xl font-bold mb-2">150+</div>
+              <div className="mb-2 text-3xl font-bold">150+</div>
               <div className="text-sm text-muted-foreground">
                 Template Designs
               </div>
@@ -308,17 +308,17 @@ const Index = () => {
       {/* Features Section */}
       <section id="features" className="py-16 md:py-24">
         <div className="container px-4 md:px-6">
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
+          <div className="mb-12 text-center md:mb-16">
+            <h2 className="mb-4 text-3xl font-bold md:text-4xl gradient-text">
               Powerful Features for Stunning Presentations
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="max-w-3xl mx-auto text-lg text-muted-foreground">
               Our AI-powered tools streamline the presentation creation process,
               giving you more time to focus on what matters: your message.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {features.map((feature, index) => (
               <motion.div
                 key={index}
@@ -328,10 +328,10 @@ const Index = () => {
                 transition={{ duration: 0.5, delay: feature.delay }}
                 className="feature-card"
               >
-                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                  <feature.icon className="h-6 w-6 text-primary" />
+                <div className="flex items-center justify-center w-12 h-12 mb-4 rounded-lg bg-primary/10">
+                  <feature.icon className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
+                <h3 className="mb-2 text-lg font-semibold">{feature.title}</h3>
                 <p className="text-sm text-muted-foreground">
                   {feature.description}
                 </p>
@@ -344,17 +344,17 @@ const Index = () => {
       {/* How It Works */}
       <section id="how-it-works" className="py-16 md:py-24 bg-muted/30">
         <div className="container px-4 md:px-6">
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
+          <div className="mb-12 text-center md:mb-16">
+            <h2 className="mb-4 text-3xl font-bold md:text-4xl gradient-text">
               How SlideFusion Works
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="max-w-3xl mx-auto text-lg text-muted-foreground">
               Creating professional presentations has never been this simple.
               Follow these steps to transform your ideas into compelling slides.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             {howItWorks.map((step, index) => (
               <motion.div
                 key={index}
@@ -364,11 +364,11 @@ const Index = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="relative"
               >
-                <div className="text-6xl font-bold text-primary/10 absolute -top-6 left-0">
+                <div className="absolute left-0 text-6xl font-bold text-primary/10 -top-6">
                   {step.number}
                 </div>
-                <div className="pt-6 relative">
-                  <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
+                <div className="relative pt-6">
+                  <h3 className="mb-3 text-xl font-semibold">{step.title}</h3>
                   <p className="text-muted-foreground">{step.description}</p>
                 </div>
               </motion.div>
@@ -381,13 +381,13 @@ const Index = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="mt-16 relative aspect-video overflow-hidden rounded-xl shadow-2xl mx-auto max-w-4xl"
+            className="relative max-w-4xl mx-auto mt-16 overflow-hidden shadow-2xl aspect-video rounded-xl"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-slide-blue/90 to-slide-purple/90 z-10" />
+            <div className="absolute inset-0 z-10 bg-gradient-to-br from-slide-blue/90 to-slide-purple/90" />
             <div className="absolute inset-0 opacity-40 bg-[url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-1.2.1&auto=format&fit=crop&w=2620&q=80')] bg-cover bg-center" />
             <div className="absolute inset-0 z-20 flex items-center justify-center">
-              <div className="h-20 w-20 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors">
-                <div className="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-white border-b-8 border-b-transparent ml-1" />
+              <div className="flex items-center justify-center w-20 h-20 transition-colors rounded-full cursor-pointer bg-white/20 backdrop-blur-md hover:bg-white/30">
+                <div className="w-0 h-0 ml-1 border-t-8 border-b-8 border-t-transparent border-l-12 border-l-white border-b-transparent" />
               </div>
             </div>
           </motion.div>
@@ -397,17 +397,17 @@ const Index = () => {
       {/* Testimonials */}
       <section id="testimonials" className="py-16 md:py-24">
         <div className="container px-4 md:px-6">
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold gradient-text mb-4">
+          <div className="mb-12 text-center md:mb-16">
+            <h2 className="mb-4 text-3xl font-bold md:text-4xl gradient-text">
               What Our Users Say
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="max-w-3xl mx-auto text-lg text-muted-foreground">
               Professionals across industries are saving time and impressing
               their audiences with SlideFusion.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
@@ -415,14 +415,14 @@ const Index = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-card rounded-xl p-6 shadow-sm border"
+                className="p-6 border shadow-sm bg-card rounded-xl"
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="h-12 w-12 rounded-full overflow-hidden">
+                  <div className="w-12 h-12 overflow-hidden rounded-full">
                     <Image
                       src={testimonial.image}
                       alt={testimonial.name}
-                      className="h-full w-full object-cover"
+                      className="object-cover w-full h-full"
                       width={48}
                       height={48}
                     />
@@ -434,7 +434,7 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
-                <p className="text-muted-foreground italic">
+                <p className="italic text-muted-foreground">
                   &ldquo;{testimonial.quote}&rdquo;
                 </p>
               </motion.div>
@@ -447,10 +447,10 @@ const Index = () => {
       <Pricing />
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 relative overflow-hidden">
+      <section className="relative py-16 overflow-hidden md:py-24">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent -z-10" />
         <motion.div
-          className="absolute -top-20 -right-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl z-0"
+          className="absolute z-0 w-64 h-64 rounded-full -top-20 -right-20 bg-primary/10 blur-3xl"
           animate={{
             scale: [1, 1.2, 1],
             opacity: [0.3, 0.5, 0.3],
@@ -460,7 +460,7 @@ const Index = () => {
             duration: 8,
           }}
         />
-        <div className="container px-4 md:px-6 relative z-10">
+        <div className="container relative z-10 px-4 md:px-6">
           <div className="max-w-3xl mx-auto text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -468,23 +468,23 @@ const Index = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              <h2 className="mb-6 text-3xl font-bold md:text-4xl">
                 Ready to Create{" "}
                 <span className="gradient-text">Impressive Presentations</span>{" "}
                 in Minutes?
               </h2>
-              <p className="text-lg text-muted-foreground mb-8">
+              <p className="mb-8 text-lg text-muted-foreground">
                 Join thousands of professionals who are saving time and
                 impressing their audiences with SlideFusion.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="font-medium text-base">
+              <div className="flex flex-col justify-center gap-4 sm:flex-row">
+                <Button size="lg" className="text-base font-medium">
                   Get Started Free
                 </Button>
                 <Button
                   size="lg"
                   variant="outline"
-                  className="font-medium text-base"
+                  className="text-base font-medium"
                 >
                   Schedule a Demo
                 </Button>
@@ -499,4 +499,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Page;
