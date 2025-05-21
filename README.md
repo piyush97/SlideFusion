@@ -122,6 +122,23 @@ yarn build
 bun build
 ```
 
+## ☁️ Cloudflare Pages Deployment
+
+This project is configured for deployment to Cloudflare Pages. For detailed instructions, see:
+
+[Cloudflare Pages Deployment Guide](./CLOUDFLARE_DEPLOYMENT.md)
+
+```bash
+# Automated deployment script (recommended)
+npm run deploy
+
+# Preview locally
+npm run preview-cf
+
+# Troubleshooting script
+npm run cf-troubleshoot
+```
+
 ## 🐳 Docker Support
 
 This project includes Docker support for easy deployment:
