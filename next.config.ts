@@ -35,6 +35,27 @@ const nextConfig: NextConfig = {
     serverActions: {
       allowedOrigins: ["*"],
     },
+    // Add Turbopack configuration
+    turbo: {
+      rules: {
+        // Define loaders for specific file extensions if needed
+        ".svg": ["file"],
+      },
+      // Configure Turbopack's resolver
+      resolveAlias: {
+        // Map imports to different modules if needed
+      },
+    },
+  },
+  // Support for environment variables from .dev.vars
+  env: {
+    NEXTJS_ENV: process.env.NEXTJS_ENV,
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL:
+      process.env.NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL,
+    NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL:
+      process.env.NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL,
   },
   // Add webpack configuration for optimizing bundle size
   webpack: (config, { dev, isServer }) => {
