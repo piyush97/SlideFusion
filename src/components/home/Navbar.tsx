@@ -105,10 +105,14 @@ export function Navbar() {
               Pricing
             </a>
             <div className="flex flex-col gap-2 pt-2">
-              <Button variant="outline" className="w-full">
-                Sign In
-              </Button>
-              <Button className="w-full">Sign Up</Button>
+              <Link href="/signin">
+                <Button variant="outline" className="w-full">
+                  Sign In
+                </Button>
+              </Link>
+              <Link href="/signup">
+                <Button className="w-full">Sign Up</Button>
+              </Link>
             </div>
           </nav>
         </div>
