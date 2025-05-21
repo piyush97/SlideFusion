@@ -37,13 +37,10 @@ const nextConfig: NextConfig = {
     },
     // Add Turbopack configuration
     turbo: {
+      // Updated Turbopack configuration using proper rules API
       rules: {
         // Define loaders for specific file extensions if needed
         ".svg": ["file"],
-      },
-      // Configure Turbopack's resolver
-      resolveAlias: {
-        // Map imports to different modules if needed
       },
     },
   },
