@@ -122,14 +122,62 @@ yarn build
 bun build
 ```
 
-## 🐳 Docker Support
+For comprehensive deployment options and instructions, see:
 
-This project includes Docker support for easy deployment:
+[Deployment Guide](./DEPLOYMENT.md)
+
+## ☁️ Cloudflare Pages Deployment
+
+This project is configured for deployment to Cloudflare Pages. For detailed instructions, see:
+
+[Cloudflare Pages Deployment Guide](./CLOUDFLARE_DEPLOYMENT.md)
 
 ```bash
-docker build -t slidefusion .
-docker run -p 3000:3000 slidefusion
+# Automated deployment script (recommended)
+npm run deploy
+
+# Preview locally
+npm run preview-cf
+
+# Troubleshooting script
+npm run cf-troubleshoot
 ```
+
+## 🐳 Docker Support
+
+This project includes Docker support for easy deployment with bun:
+
+```bash
+# Build the Docker image
+npm run docker:build
+
+# Run the Docker container
+npm run docker:run
+
+# Or use Docker Compose
+npm run docker:compose
+
+# Build and run in one command
+npm run docker
+```
+
+For detailed Docker deployment instructions, see:
+
+[Docker Deployment Guide](./DOCKER_DEPLOYMENT.md)
+
+You can also use the script directly:
+
+```bash
+./docker-build.sh build  # Build the image
+./docker-build.sh run    # Run a container
+./docker-build.sh compose  # Run with Docker Compose
+./docker-build.sh all    # Build and run
+```
+
+Make sure you have a `.env` file with the required environment variables:
+- `CLERK_PUBLISHABLE_KEY`
+- `CLERK_SECRET_KEY`
+- `DATABASE_URL`
 
 ## 📝 License
 
