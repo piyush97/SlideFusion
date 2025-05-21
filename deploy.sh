@@ -32,7 +32,7 @@ fi
 # If no large files were found, proceed with deployment
 echo "✅ No large files found, proceeding with deployment..."
 echo "🚀 Deploying to Cloudflare Pages..."
-npx wrangler pages deploy $TEMP_DIR --project-name=slidefusion --config=wrangler.jsonc
+npx wrangler pages deploy $TEMP_DIR --project-name=slidefusion
 
 # Clean up
 echo "🧹 Cleaning up temporary directory..."
