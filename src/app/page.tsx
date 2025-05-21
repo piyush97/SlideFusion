@@ -15,6 +15,7 @@ import {
   Users,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
 // Define feature items
 const features = [
@@ -203,16 +204,20 @@ const Page = () => {
                 Save time, impress your audience, and pitch with confidence.
               </p>
               <div className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start">
-                <Button size="lg" className="text-base font-medium">
-                  Get Started Free
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-base font-medium"
-                >
-                  See how it works
-                </Button>
+                <Link href="/signin">
+                  <Button size="lg" className="text-base font-medium">
+                    Get Started Free
+                  </Button>
+                </Link>
+                <a href="#how-it-works">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="text-base font-medium"
+                  >
+                    See how it works
+                  </Button>
+                </a>
               </div>
             </motion.div>
             <motion.div
@@ -478,16 +483,20 @@ const Page = () => {
                 impressing their audiences with SlideFusion.
               </p>
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <Button size="lg" className="text-base font-medium">
-                  Get Started Free
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-base font-medium"
-                >
-                  Schedule a Demo
-                </Button>
+                <Link href="/signin">
+                  <Button size="lg" className="text-base font-medium">
+                    Get Started Free
+                  </Button>
+                </Link>
+                <a href="mailto:business@piyushmehta.com">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="text-base font-medium"
+                  >
+                    Schedule a Demo
+                  </Button>
+                </a>
               </div>
             </motion.div>
           </div>

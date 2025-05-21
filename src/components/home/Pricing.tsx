@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
+import Link from "next/link";
 
 const tiers = [
   {
@@ -122,14 +123,39 @@ export function Pricing() {
                   </ul>
                 </CardContent>
                 <CardFooter>
-                  <Button
-                    className={`w-full ${
-                      tier.popular ? "" : "variant-outline"
-                    }`}
-                    variant={tier.popular ? "default" : "outline"}
-                  >
-                    {tier.buttonText}
-                  </Button>
+                  {tier.buttonText === "Start Free Trial" ||
+                  tier.buttonText === "Get Started" ? (
+                    <Button
+                      className={`w-full ${
+                        tier.popular ? "" : "variant-outline"
+                      }`}
+                      variant={tier.popular ? "default" : "outline"}
+                      asChild
+                    >
+                      <Link href="/dashboard">{tier.buttonText}</Link>
+                    </Button>
+                  ) : tier.buttonText === "Contact Sales" ? (
+                    <Button
+                      className={`w-full ${
+                        tier.popular ? "" : "variant-outline"
+                      }`}
+                      variant={tier.popular ? "default" : "outline"}
+                      asChild
+                    >
+                      <Link href="mailto:business@piyushmehta.com">
+                        {tier.buttonText}
+                      </Link>
+                    </Button>
+                  ) : (
+                    <Button
+                      className={`w-full ${
+                        tier.popular ? "" : "variant-outline"
+                      }`}
+                      variant={tier.popular ? "default" : "outline"}
+                    >
+                      {tier.buttonText}
+                    </Button>
+                  )}
                 </CardFooter>
               </Card>
             </motion.div>
