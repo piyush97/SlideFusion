@@ -102,6 +102,7 @@ The Docker build uses a multi-stage process:
 1. **Environment variables missing**: Ensure your `.env` file is properly set up with all required variables.
 
 2. **Build errors**: If you encounter build errors, try running without Bun's frozen lockfile:
+
    ```bash
    docker build -t slidefusion:debug --progress=plain .
    ```

@@ -37,10 +37,10 @@ jobs:
         run: |
           # Create a list of files larger than 25MB
           find .next -type f -size +25M > large_files.txt
-          
+
           # Skip webpack cache files as they'll be excluded during deployment
           grep -v "cache/webpack" large_files.txt > actionable_large_files.txt
-          
+
           # If there are any non-webpack cache large files, fail the build
           if [ -s actionable_large_files.txt ]; then
             echo "Found files exceeding Cloudflare's 25MB limit:"
@@ -53,7 +53,7 @@ jobs:
         run: |
           # Create a temporary directory for deployment
           mkdir -p .cloudflare-deploy
-          
+
           # Copy .next directory, excluding webpack cache
           rsync -av --progress .next/ .cloudflare-deploy/ --exclude cache/webpack
 

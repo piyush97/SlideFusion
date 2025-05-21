@@ -24,6 +24,7 @@ npm run deploy
 ```
 
 This script:
+
 - Builds the Next.js application
 - Removes webpack cache files that exceed size limits
 - Checks for other large files
