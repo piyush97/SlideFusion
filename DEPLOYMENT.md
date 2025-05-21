@@ -6,31 +6,46 @@ This guide covers deployment options for SlideFusion in various environments.
 
 SlideFusion supports multiple deployment options:
 
-1. **Cloudflare Pages** - Recommended for production
+1. **Vercel** - Recommended for production
 2. **Docker** - Good for consistent environments and CI/CD pipelines
 3. **Standalone Server** - Traditional Node.js deployment
 4. **Local Development** - For development and testing
 
-## 1. Cloudflare Pages Deployment
+## 1. Vercel Deployment
 
-Cloudflare Pages provides a globally distributed, serverless platform ideal for Next.js applications.
+Vercel is the recommended platform for deploying Next.js applications, providing a seamless experience with zero configuration.
 
 ### Automated Deployment
 
-The easiest way to deploy to Cloudflare Pages:
+The easiest way to deploy to Vercel:
 
 ```bash
-npm run deploy
+npm run deploy      # Deploy to preview environment
+npm run deploy:prod # Deploy to production
 ```
 
-This script:
+### Manual Deployment with Vercel Dashboard
 
-- Builds the Next.js application
-- Removes webpack cache files that exceed size limits
-- Checks for other large files
-- Deploys to Cloudflare Pages
+1. Push your code to a Git repository (GitHub, GitLab, or Bitbucket)
+2. Import your project in the Vercel dashboard at https://vercel.com/new
+3. Configure the following settings:
+   - Framework Preset: Next.js
+   - Build Command: `next build`
+   - Output Directory: `.next`
+4. Configure environment variables in the Vercel dashboard
+5. Deploy!
 
-For detailed instructions, see [Cloudflare Pages Deployment Guide](./CLOUDFLARE_DEPLOYMENT.md).
+### Environment Variables
+
+The following environment variables should be configured in your Vercel project:
+
+```
+NEXTJS_ENV=production
+DATABASE_URL=your_database_connection_string
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+CLERK_SECRET_KEY=your_clerk_secret_key
+OPENAI_API_KEY=your_openai_api_key
+```
 
 ## 2. Docker Deployment
 

@@ -42,22 +42,6 @@ An AI-powered presentation tool that helps you pitch business ideas to prospecti
 - [Radix UI](https://www.radix-ui.com/) - Headless UI components
 - [Shadcn UI](https://ui.shadcn.com/) - Component collection built on Radix
 
-## 🏗️ Project Structure
-
-```
-src/
-├── actions/          # Server actions for API calls
-├── app/              # App Router components and pages
-├── components/       # Reusable UI components
-│   ├── global/       # Application-wide components
-│   └── ui/           # UI component library
-├── global/           # Global constants and configurations
-├── hooks/            # Custom React hooks
-├── lib/              # Utility functions and types
-├── provider/         # Context providers
-└── store/            # Zustand state stores
-```
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -111,6 +95,32 @@ src/
    ```
 
 6. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## 🚀 Deployment
+
+### Vercel Deployment
+
+This project is optimized for deployment on Vercel. To deploy:
+
+1. Push your code to a Git repository (GitHub, GitLab, or Bitbucket)
+2. Connect your repository to Vercel
+3. Configure your environment variables
+4. Deploy!
+
+Alternatively, you can deploy from the command line:
+
+```bash
+# Install Vercel CLI if you haven't already
+npm install -g vercel
+
+# Deploy to preview
+npm run deploy
+
+# Deploy to production
+npm run deploy:prod
+```
+
+For more information, see [DEPLOYMENT.md](DEPLOYMENT.md).
 
 ## 🔧 Building for Production
 
