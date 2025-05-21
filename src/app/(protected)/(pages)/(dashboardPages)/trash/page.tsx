@@ -4,6 +4,7 @@ import Projects from "@/components/global/projects";
 import DeleteAllButton from "./_components/DeleteAllButton";
 
 export const dynamic = "force-dynamic";
+export const runtime = "edge"; // Required for Cloudflare Pages
 
 const Page = async () => {
   const deletedProjects = await getDeletedProjects();

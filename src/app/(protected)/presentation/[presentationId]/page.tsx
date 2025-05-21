@@ -14,6 +14,8 @@ import LayoutPreview from "./_components/editor-sidebar/leftSidebar/LayoutPrevie
 import Editor from "./_components/editor/Editor";
 import EditorSidebar from "./_components/right-sidebaar";
 
+export const runtime = 'edge'; // Required for Cloudflare Pages
+
 const Page = () => {
   const { setSlides, setProject, currentTheme, setCurrentTheme } =
     useSlideStore();

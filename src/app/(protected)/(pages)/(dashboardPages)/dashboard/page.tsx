@@ -1,3 +1,5 @@
+export const runtime = "edge"; // Required for Cloudflare Pages
+
 import { getAllProjects } from "@/actions/project";
 import NotFound from "@/components/global/not-found";
 import Projects from "@/components/global/projects";

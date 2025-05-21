@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import CreatePageSkeleton from "./_components/CreatePageSkeleton";
 import RenderPage from "./_components/RenderPage";
 export const dynamic = "force-dynamic";
+export const runtime = "edge"; // Required for Cloudflare Pages
 
 const Page = async () => {
   // Checking if the user is authenticated and has a subscription
