@@ -47,10 +47,19 @@ jobs:
       - name: Build Next.js
         run: bun run build
         env:
-          # Use placeholder values for CI build
-          DATABASE_URL: "postgresql://test:test@localhost:5432/test"
-          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk_test_placeholder"
-          CLERK_SECRET_KEY: "sk_test_placeholder"
+          # Environment variables for CI build
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+          NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL: "/callback"
+          NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL: "/callback"
+          UPLOADCARE_PUBLIC_KEY: ${{ secrets.UPLOADCARE_PUBLIC_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          LEMON_SQUEEZY_API_KEY: ${{ secrets.LEMON_SQUEEZY_API_KEY }}
+          NEXT_PUBLIC_LEMON_SQUEEZY_API_URL: "https://api.lemonsqueezy.com/v1/"
+          LEMON_SQUEEZY_STORE_ID: ${{ secrets.LEMON_SQUEEZY_STORE_ID }}
+          LEMON_SQUEEZY_VARIANT_ID: ${{ secrets.LEMON_SQUEEZY_VARIANT_ID }}
+          LEMON_SQUEEZY_WEBHOOK_SECRET: ${{ secrets.LEMON_SQUEEZY_WEBHOOK_SECRET }}
 
   docker:
     name: Docker Build
@@ -71,6 +80,12 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            CLERK_PUBLISHABLE_KEY=pk_test_placeholder
-            CLERK_SECRET_KEY=sk_test_placeholder
-            DATABASE_URL=postgresql://test:test@localhost:5432/test
+            CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+            CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }}
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            UPLOADCARE_PUBLIC_KEY=${{ secrets.UPLOADCARE_PUBLIC_KEY }}
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+            LEMON_SQUEEZY_API_KEY=${{ secrets.LEMON_SQUEEZY_API_KEY }}
+            LEMON_SQUEEZY_STORE_ID=${{ secrets.LEMON_SQUEEZY_STORE_ID }}
+            LEMON_SQUEEZY_VARIANT_ID=${{ secrets.LEMON_SQUEEZY_VARIANT_ID }}
+            LEMON_SQUEEZY_WEBHOOK_SECRET=${{ secrets.LEMON_SQUEEZY_WEBHOOK_SECRET }}

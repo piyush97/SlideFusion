@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "source ./load-env.sh && NODE_OPTIONS='--inspect' next dev --turbopack",
-    "dev:webpack": "source ./load-env.sh && NODE_OPTIONS='--inspect' next dev",
+    "dev": "next dev --turbopack",
+    "dev:inspect": "source ./load-env.sh && NODE_OPTIONS='--inspect' next dev",
+    "dev:webpack": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
