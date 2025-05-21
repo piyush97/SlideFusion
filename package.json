@@ -15,7 +15,12 @@
     "check-sizes": "./check-file-sizes.sh",
     "preview": "next build && npx wrangler pages dev .next --config wrangler.jsonc",
     "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
-    "cf-troubleshoot": "./cf-troubleshoot.sh"
+    "cf-troubleshoot": "./cf-troubleshoot.sh",
+    "docker:build": "./docker-build.sh build",
+    "docker:run": "./docker-build.sh run",
+    "docker:compose": "./docker-build.sh compose",
+    "docker:dev": "./docker-build.sh compose:dev",
+    "docker": "./docker-build.sh all"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.19.4",

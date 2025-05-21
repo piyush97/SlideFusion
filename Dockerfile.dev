@@ -1,0 +1,21 @@
+FROM oven/bun:1.2
+
+WORKDIR /app
+
+# Copy package.json and lockfile
+COPY package.json bun.lockb ./
+
+# Install dependencies
+RUN bun install
+
+# Copy the rest of the application
+COPY . .
+
+# Generate Prisma client
+RUN bunx prisma generate
+
+# Expose the development port
+EXPOSE 3000
+
+# Run development server
+CMD ["bun", "run", "dev"]
