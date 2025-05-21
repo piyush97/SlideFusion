@@ -1,8 +1,5 @@
 import type { NextConfig } from "next";
 
-import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
-initOpenNextCloudflareForDev();
-
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
@@ -28,7 +25,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Configure for standalone output (optimized for Cloudflare Pages)
+  // Configure for Vercel deployment
   output: "standalone",
   distDir: ".next", // Make sure the output directory is .next
   experimental: {
@@ -44,7 +41,7 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  // Support for environment variables from .dev.vars
+  // Support for environment variables
   env: {
     NEXTJS_ENV: process.env.NEXTJS_ENV,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
@@ -63,7 +60,6 @@ const nextConfig: NextConfig = {
         maxInitialRequests: 100, // Increased to allow more chunks
         maxAsyncRequests: 100, // Increased to allow more chunks
         minSize: 20000, // 20KB minimum size
-        maxSize: 18000000, // 18MB (well below the 25MB limit of Cloudflare Pages)
         cacheGroups: {
           // React and related packages
           react: {
@@ -111,7 +107,6 @@ const nextConfig: NextConfig = {
             },
             priority: 20,
             minSize: 10000, // 10KB
-            maxSize: 10000000, // 10MB
           },
           default: {
             minChunks: 2,
