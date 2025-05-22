@@ -185,6 +185,7 @@ You can also use the script directly:
 ```
 
 Make sure you have a `.env` file with the required environment variables:
+
 - `CLERK_PUBLISHABLE_KEY`
 - `CLERK_SECRET_KEY`
 - `DATABASE_URL`

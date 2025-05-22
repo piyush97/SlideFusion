@@ -3,6 +3,7 @@ import { Footer } from "@/components/home/Footer";
 import { Navbar } from "@/components/home/Navbar";
 import { Pricing } from "@/components/home/Pricing";
 import { Button } from "@/components/ui/button";
+import { IS_WAITLIST_MODE, WAITLIST_PATH } from "@/global/constants";
 import { motion } from "framer-motion";
 import {
   Image as ImageIcon,
@@ -17,6 +18,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
+
 // Define feature items
 const features = [
   {
@@ -204,9 +206,9 @@ const Page = () => {
                 Save time, impress your audience, and pitch with confidence.
               </p>
               <div className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start">
-                <Link href="/signin">
+                <Link href={IS_WAITLIST_MODE ? WAITLIST_PATH : "/signin"}>
                   <Button size="lg" className="text-base font-medium">
-                    Get Started Free
+                    {IS_WAITLIST_MODE ? "Join Waitlist" : "Sign In"}
                   </Button>
                 </Link>
                 <a href="#how-it-works">
@@ -483,9 +485,9 @@ const Page = () => {
                 impressing their audiences with SlideFusion.
               </p>
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <Link href="/signin">
+                <Link href={IS_WAITLIST_MODE ? WAITLIST_PATH : "/signin"}>
                   <Button size="lg" className="text-base font-medium">
-                    Get Started Free
+                    {IS_WAITLIST_MODE ? "Join Waitlist" : "Sign In"}
                   </Button>
                 </Link>
                 <a href="mailto:business@piyushmehta.com">
