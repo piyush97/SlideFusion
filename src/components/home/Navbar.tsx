@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { IS_WAITLIST_MODE, WAITLIST_PATH } from "@/global/constants";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -47,12 +48,16 @@ export function Navbar() {
 
         <div className="items-center hidden gap-4 md:flex">
           <ThemeToggle />
-          <Link href="/signin">
-            <Button variant="outline">Sign In</Button>{" "}
+          <Link href={IS_WAITLIST_MODE ? WAITLIST_PATH : "/signin"}>
+            <Button variant="outline">
+              {IS_WAITLIST_MODE ? "Join Waitlist" : "Sign In"}
+            </Button>
           </Link>
-          <Link href="/signup">
-            <Button>Sign Up</Button>
-          </Link>
+          {!IS_WAITLIST_MODE && (
+            <Link href="/signup">
+              <Button>Sign Up</Button>
+            </Link>
+          )}
         </div>
 
         {/* Mobile menu button */}
@@ -105,10 +110,16 @@ export function Navbar() {
               Pricing
             </a>
             <div className="flex flex-col gap-2 pt-2">
-              <Button variant="outline" className="w-full">
-                Sign In
-              </Button>
-              <Button className="w-full">Sign Up</Button>
+              <Link href={IS_WAITLIST_MODE ? WAITLIST_PATH : "/signin"}>
+                <Button variant="outline" className="w-full">
+                  {IS_WAITLIST_MODE ? "Join Waitlist" : "Sign In"}
+                </Button>
+              </Link>
+              {!IS_WAITLIST_MODE && (
+                <Link href="/signup">
+                  <Button className="w-full">Sign Up</Button>
+                </Link>
+              )}
             </div>
           </nav>
         </div>

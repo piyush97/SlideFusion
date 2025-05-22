@@ -3,6 +3,7 @@ import { Footer } from "@/components/home/Footer";
 import { Navbar } from "@/components/home/Navbar";
 import { Pricing } from "@/components/home/Pricing";
 import { Button } from "@/components/ui/button";
+import { IS_WAITLIST_MODE, WAITLIST_PATH } from "@/global/constants";
 import { motion } from "framer-motion";
 import {
   Image as ImageIcon,
@@ -15,7 +16,9 @@ import {
   Users,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect } from "react";
+
 // Define feature items
 const features = [
   {
@@ -203,16 +206,20 @@ const Page = () => {
                 Save time, impress your audience, and pitch with confidence.
               </p>
               <div className="flex flex-col justify-center gap-4 sm:flex-row md:justify-start">
-                <Button size="lg" className="text-base font-medium">
-                  Get Started Free
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-base font-medium"
-                >
-                  See how it works
-                </Button>
+                <Link href={IS_WAITLIST_MODE ? WAITLIST_PATH : "/signin"}>
+                  <Button size="lg" className="text-base font-medium">
+                    {IS_WAITLIST_MODE ? "Join Waitlist" : "Sign In"}
+                  </Button>
+                </Link>
+                <a href="#how-it-works">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="text-base font-medium"
+                  >
+                    See how it works
+                  </Button>
+                </a>
               </div>
             </motion.div>
             <motion.div
@@ -478,16 +485,20 @@ const Page = () => {
                 impressing their audiences with SlideFusion.
               </p>
               <div className="flex flex-col justify-center gap-4 sm:flex-row">
-                <Button size="lg" className="text-base font-medium">
-                  Get Started Free
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-base font-medium"
-                >
-                  Schedule a Demo
-                </Button>
+                <Link href={IS_WAITLIST_MODE ? WAITLIST_PATH : "/signin"}>
+                  <Button size="lg" className="text-base font-medium">
+                    {IS_WAITLIST_MODE ? "Join Waitlist" : "Sign In"}
+                  </Button>
+                </Link>
+                <a href="mailto:business@piyushmehta.com">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="text-base font-medium"
+                  >
+                    Schedule a Demo
+                  </Button>
+                </a>
               </div>
             </motion.div>
           </div>

@@ -47,6 +47,17 @@ export const APP_NAME = "SlideFusion - AI based Presentation Tool";
 export const APP_DESCRIPTION =
   "SlideFusion is an AI based Presentation Tool that helps you create engaging presentations.";
 
+/**
+ * Controls whether the application is in waitlist mode
+ * When true, sign in and sign up links will redirect to the waitlist page
+ */
+export const IS_WAITLIST_MODE = true;
+
+/**
+ * The path to redirect to when in waitlist mode
+ */
+export const WAITLIST_PATH = "/waitlist";
+
 export const ROUTES = {
   home: "/",
   dashboard: "/dashboard",
@@ -57,6 +68,7 @@ export const ROUTES = {
   signup: "/signup",
   signout: "/signout",
   trash: "/trash",
+  waitlist: WAITLIST_PATH,
 };
 
 export const DATA = {
