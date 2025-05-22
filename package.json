@@ -17,7 +17,11 @@
     "docker:run": "./docker-build.sh run",
     "docker:compose": "./docker-build.sh compose",
     "docker:dev": "./docker-build.sh compose:dev",
-    "docker": "./docker-build.sh all"
+    "docker": "./docker-build.sh all",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test:e2e": "start-server-and-test dev http://localhost:3000 cypress:run",
+    "test:e2e:ui": "start-server-and-test dev http://localhost:3000 cypress:open"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.19.5",
@@ -88,6 +92,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4.1.7",
+    "@testing-library/cypress": "^10.0.3",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -95,6 +100,7 @@
     "@types/react": "^19.1.4",
     "@types/react-dom": "^19.1.5",
     "autoprefixer": "^10.4.21",
+    "cypress": "^14.4.0",
     "esbuild": "^0.25.4",
     "eslint": "^9.27.0",
     "eslint-config-next": "15.2.1",

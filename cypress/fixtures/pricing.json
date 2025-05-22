@@ -1,0 +1,47 @@
+{
+  "tiers": [
+    {
+      "name": "Free",
+      "description": "Perfect for trying out SlideFusion",
+      "price": "$0",
+      "period": "forever",
+      "features": [
+        "5 presentations",
+        "Basic AI generation",
+        "Standard templates",
+        "Export to PDF",
+        "24-hour support response time"
+      ]
+    },
+    {
+      "name": "Pro",
+      "description": "For professionals and small teams",
+      "price": "$19",
+      "period": "per month",
+      "features": [
+        "Unlimited presentations",
+        "Advanced AI generation",
+        "Premium templates",
+        "Export to PowerPoint & Keynote",
+        "Custom branding",
+        "4-hour support response time"
+      ],
+      "popular": true
+    },
+    {
+      "name": "Enterprise",
+      "description": "For large teams and organizations",
+      "price": "Custom",
+      "period": "contact for details",
+      "features": [
+        "Everything in Pro",
+        "SSO & advanced security",
+        "Team workspaces",
+        "Admin controls",
+        "Usage analytics",
+        "1-hour support response time",
+        "Dedicated account manager"
+      ]
+    }
+  ]
+}
