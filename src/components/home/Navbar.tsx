@@ -32,12 +32,14 @@ export function Navbar() {
           >
             How It Works
           </a>
-          <a
-            href="#testimonials"
-            className="text-sm font-medium transition-colors hover:text-primary"
-          >
-            Testimonials
-          </a>
+          {!IS_WAITLIST_MODE && (
+            <a
+              href="#testimonials"
+              className="text-sm font-medium transition-colors hover:text-primary"
+            >
+              Testimonials
+            </a>
+          )}
           <a
             href="#pricing"
             className="text-sm font-medium transition-colors hover:text-primary"
@@ -95,13 +97,15 @@ export function Navbar() {
             >
               How It Works
             </a>
-            <a
-              href="#testimonials"
-              className="py-2 text-sm font-medium transition-colors hover:text-primary"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Testimonials
-            </a>
+            {!IS_WAITLIST_MODE && (
+              <a
+                href="#testimonials"
+                className="py-2 text-sm font-medium transition-colors hover:text-primary"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Testimonials
+              </a>
+            )}
             <a
               href="#pricing"
               className="py-2 text-sm font-medium transition-colors hover:text-primary"
