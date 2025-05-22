@@ -3,6 +3,10 @@ import { APP_DESCRIPTION, APP_NAME } from "@/global/constants";
 import { ThemeProvider } from "@/provider/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+// Nextjs analytics and speed insights
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -32,6 +36,8 @@ export default function RootLayout({
       appearance={{ baseTheme: dark }}
     >
       <html lang="en" suppressHydrationWarning>
+        <Analytics />
+        <SpeedInsights />
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           suppressHydrationWarning // for clerk to work in future

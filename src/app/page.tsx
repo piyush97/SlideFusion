@@ -280,35 +280,37 @@ const Page = () => {
           </div>
 
           {/* Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="grid grid-cols-2 gap-4 mt-16 text-center md:grid-cols-4 md:mt-24"
-          >
-            <div className="p-6 glass-card">
-              <div className="mb-2 text-3xl font-bold">3000+</div>
-              <div className="text-sm text-muted-foreground">
-                Presentations Created
+          {!IS_WAITLIST_MODE && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="grid grid-cols-2 gap-4 mt-16 text-center md:grid-cols-4 md:mt-24"
+            >
+              <div className="p-6 glass-card">
+                <div className="mb-2 text-3xl font-bold">3000+</div>
+                <div className="text-sm text-muted-foreground">
+                  Presentations Created
+                </div>
               </div>
-            </div>
-            <div className="p-6 glass-card">
-              <div className="mb-2 text-3xl font-bold">98%</div>
-              <div className="text-sm text-muted-foreground">
-                Customer Satisfaction
+              <div className="p-6 glass-card">
+                <div className="mb-2 text-3xl font-bold">98%</div>
+                <div className="text-sm text-muted-foreground">
+                  Customer Satisfaction
+                </div>
               </div>
-            </div>
-            <div className="p-6 glass-card">
-              <div className="mb-2 text-3xl font-bold">80%</div>
-              <div className="text-sm text-muted-foreground">Time Saved</div>
-            </div>
-            <div className="p-6 glass-card">
-              <div className="mb-2 text-3xl font-bold">150+</div>
-              <div className="text-sm text-muted-foreground">
-                Template Designs
+              <div className="p-6 glass-card">
+                <div className="mb-2 text-3xl font-bold">80%</div>
+                <div className="text-sm text-muted-foreground">Time Saved</div>
               </div>
-            </div>
-          </motion.div>
+              <div className="p-6 glass-card">
+                <div className="mb-2 text-3xl font-bold">150+</div>
+                <div className="text-sm text-muted-foreground">
+                  Template Designs
+                </div>
+              </div>
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -402,53 +404,55 @@ const Page = () => {
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="mb-12 text-center md:mb-16">
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl gradient-text">
-              What Our Users Say
-            </h2>
-            <p className="max-w-3xl mx-auto text-lg text-muted-foreground">
-              Professionals across industries are saving time and impressing
-              their audiences with SlideFusion.
-            </p>
-          </div>
+      {!IS_WAITLIST_MODE && (
+        <section id="testimonials" className="py-16 md:py-24">
+          <div className="container px-4 md:px-6">
+            <div className="mb-12 text-center md:mb-16">
+              <h2 className="mb-4 text-3xl font-bold md:text-4xl gradient-text">
+                What Our Users Say
+              </h2>
+              <p className="max-w-3xl mx-auto text-lg text-muted-foreground">
+                Professionals across industries are saving time and impressing
+                their audiences with SlideFusion.
+              </p>
+            </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="p-6 border shadow-sm bg-card rounded-xl"
-              >
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 overflow-hidden rounded-full">
-                    <Image
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="object-cover w-full h-full"
-                      width={48}
-                      height={48}
-                    />
-                  </div>
-                  <div>
-                    <div className="font-semibold">{testimonial.name}</div>
-                    <div className="text-sm text-muted-foreground">
-                      {testimonial.title}
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+              {testimonials.map((testimonial, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="p-6 border shadow-sm bg-card rounded-xl"
+                >
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="w-12 h-12 overflow-hidden rounded-full">
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        className="object-cover w-full h-full"
+                        width={48}
+                        height={48}
+                      />
+                    </div>
+                    <div>
+                      <div className="font-semibold">{testimonial.name}</div>
+                      <div className="text-sm text-muted-foreground">
+                        {testimonial.title}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <p className="italic text-muted-foreground">
-                  &ldquo;{testimonial.quote}&rdquo;
-                </p>
-              </motion.div>
-            ))}
+                  <p className="italic text-muted-foreground">
+                    &ldquo;{testimonial.quote}&rdquo;
+                  </p>
+                </motion.div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Pricing Section */}
       <Pricing />

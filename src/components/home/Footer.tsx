@@ -1,4 +1,5 @@
 import { Facebook, Github, Instagram, Linkedin, Twitter } from "lucide-react";
+import Link from "next/link";
 
 export function Footer() {
   return (
@@ -170,7 +171,9 @@ export function Footer() {
         </div>
         <div className="pt-8 mt-8 text-center border-t">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} SlideFusion. All rights reserved.
+            Made with ❤️ by{" "}
+            <Link href="https://piyushmehta.com">Piyush Mehta </Link> ©{" "}
+            {new Date().getFullYear()} SlideFusion. All rights reserved.
           </p>
         </div>
       </div>
