@@ -15,7 +15,6 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -280,7 +279,7 @@ const Page = () => {
           </div>
 
           {/* Stats */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
@@ -308,7 +307,7 @@ const Page = () => {
                 Template Designs
               </div>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
       </section>
 
@@ -402,7 +401,7 @@ const Page = () => {
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="py-16 md:py-24">
+      {/* <section id="testimonials" className="py-16 md:py-24">
         <div className="container px-4 md:px-6">
           <div className="mb-12 text-center md:mb-16">
             <h2 className="mb-4 text-3xl font-bold md:text-4xl gradient-text">
@@ -448,7 +447,7 @@ const Page = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Pricing Section */}
       <Pricing />
