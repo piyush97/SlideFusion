@@ -1,0 +1,29 @@
+[
+  {
+    "id": "project-1",
+    "title": "Marketing Pitch",
+    "description": "A marketing pitch for a new product launch",
+    "createdAt": "2025-05-15T12:00:00Z",
+    "updatedAt": "2025-05-20T10:30:00Z",
+    "slides": 15,
+    "thumbnail": "/path/to/thumbnail.jpg"
+  },
+  {
+    "id": "project-2",
+    "title": "Product Roadmap",
+    "description": "Roadmap for Q3 2025 product development",
+    "createdAt": "2025-05-10T09:45:00Z",
+    "updatedAt": "2025-05-19T14:20:00Z",
+    "slides": 12,
+    "thumbnail": "/path/to/thumbnail2.jpg"
+  },
+  {
+    "id": "project-3",
+    "title": "Quarterly Results",
+    "description": "Financial results for Q2 2025",
+    "createdAt": "2025-05-05T11:30:00Z",
+    "updatedAt": "2025-05-18T16:15:00Z",
+    "slides": 8,
+    "thumbnail": "/path/to/thumbnail3.jpg"
+  }
+]
