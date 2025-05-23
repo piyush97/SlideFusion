@@ -1,11 +1,11 @@
 "use client";
 
-import { getProjectById } from "@/actions/project";
 import { themes } from "@/global/constants";
+import { api } from "@/lib/api";
 import { useSlideStore } from "@/store/useSlideStore";
 import { Loader2 } from "lucide-react";
 import { redirect, useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { toast } from "sonner";
@@ -18,33 +18,43 @@ const Page = () => {
   const { setSlides, setProject, currentTheme, setCurrentTheme } =
     useSlideStore();
   const params = useParams();
-  // const { setTheme } = useTheme();
-  const [isLoading, setIsLoading] = useState(true);
+
+  // Use tRPC query to fetch project by ID
+  const {
+    data: projectData,
+    isLoading,
+    error,
+  } = api.project.getById.useQuery(
+    { projectId: params?.presentationId as string },
+    {
+      enabled: !!params?.presentationId,
+    }
+  );
 
   useEffect(() => {
-    (async () => {
-      try {
-        const res = await getProjectById(params?.presentationId as string);
-        if (res.status !== 200 || !res.data) {
-          toast.error("Failed to fetch project");
-          redirect("/dashboard");
-        }
-
-        const findTheme = themes.find(
-          (theme) => theme.name === res?.data.themeName
-        );
-
-        setCurrentTheme(findTheme || themes[0]);
-        setProject(res.data);
-        setSlides(JSON.parse(JSON.stringify(res?.data.slides)));
-      } catch (error) {
-        console.error(error);
+    if (projectData) {
+      if (projectData.status !== 200 || !projectData.data) {
         toast.error("Failed to fetch project");
-      } finally {
-        setIsLoading(false);
+        redirect("/dashboard");
+        return;
       }
-    })();
-  }, [params?.presentationId, setCurrentTheme, setProject, setSlides]);
+
+      const findTheme = themes.find(
+        (theme) => theme.name === projectData.data.themeName
+      );
+
+      setCurrentTheme(findTheme || themes[0]);
+      setProject(projectData.data);
+      setSlides(JSON.parse(JSON.stringify(projectData.data.slides)));
+    }
+  }, [projectData, setCurrentTheme, setProject, setSlides]);
+
+  useEffect(() => {
+    if (error) {
+      console.error(error);
+      toast.error("Failed to fetch project");
+    }
+  }, [error]);
 
   if (isLoading)
     return (

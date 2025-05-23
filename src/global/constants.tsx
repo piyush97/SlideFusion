@@ -51,7 +51,8 @@ export const APP_DESCRIPTION =
  * Controls whether the application is in waitlist mode
  * When true, sign in and sign up links will redirect to the waitlist page
  */
-export const IS_WAITLIST_MODE = true;
+export const IS_WAITLIST_MODE: boolean =
+  process.env.NEXT_PUBLIC_IS_WAITLIST === "true";
 
 /**
  * The path to redirect to when in waitlist mode

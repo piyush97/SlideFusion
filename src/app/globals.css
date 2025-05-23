@@ -34,6 +34,34 @@
 
     --radius: 0.5rem;
 
+    /* Background variations */
+    --background-primary: 210 40% 98%;
+    --background-90: 210 40% 95%;
+    --background-80: 210 40% 92%;
+    --background-70: 210 40% 88%;
+    --background-25: 210 40% 96% / 0.25;
+    --background-20: 210 40% 96%;
+
+    /* Primary variations */
+    --primary-10: 217 91% 95%;
+    --primary-20: 217 91% 90%;
+    --primary-80: 217 91% 30%;
+    --primary-90: 217 91% 20%;
+
+    /* Secondary variations */
+    --secondary-90: 210 40% 85%;
+
+    /* Chart colors */
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    /* Creative AI gradient */
+    --creative-ai-gradient: linear-gradient(135deg, #f55c7a 0%, #4f46e5 100%);
+    --Project-Color-Styles-CreativeAI-Gradient: #f55c7a;
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -72,6 +100,34 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
+    /* Dark mode background variations */
+    --background-primary: 222.2 84% 4.9%;
+    --background-90: 222.2 84% 8%;
+    --background-80: 222.2 84% 12%;
+    --background-70: 222.2 84% 16%;
+    --background-25: 222.2 84% 6% / 0.25;
+    --background-20: 222.2 84% 6%;
+
+    /* Dark mode primary variations */
+    --primary-10: 217 91% 85%;
+    --primary-20: 217 91% 80%;
+    --primary-80: 217 91% 40%;
+    --primary-90: 217 91% 30%;
+
+    /* Dark mode secondary variations */
+    --secondary-90: 217.2 32.6% 25%;
+
+    /* Chart colors - same for both modes */
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+
+    /* Creative AI gradient */
+    --creative-ai-gradient: linear-gradient(135deg, #f55c7a 0%, #4f46e5 100%);
+    --Project-Color-Styles-CreativeAI-Gradient: #f55c7a;
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
