@@ -1,11 +1,11 @@
 "use client";
-import { buySubscription } from "@/actions/lemonSqueezy";
 import { Button } from "@/components/ui/button";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { api } from "@/lib/api";
 import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 import { User } from "@prisma/client";
 import { useRouter } from "next/navigation";
@@ -17,20 +17,33 @@ const NavFooter = ({ prismaUser }: { prismaUser: User }) => {
 
   const { isLoaded, isSignedIn, user } = useUser();
   const [loading, setLoading] = useState(false);
+
+  // tRPC mutation
+  const buySubscriptionMutation = api.lemonSqueezy.buySubscription.useMutation({
+    onSuccess: (data) => {
+      if (data.status === 200 && data.url) {
+        router.push(data.url);
+      } else {
+        toast.error("Failed to upgrade subscription. Please try again.");
+      }
+      setLoading(false);
+    },
+    onError: (error) => {
+      console.error("Error upgrading subscription:", error);
+      toast.error("Failed to upgrade subscription. Please try again.");
+      setLoading(false);
+    },
+  });
+
   if (!isLoaded || !isSignedIn) return null;
+
   const handleUpgrading = async () => {
     setLoading(true);
     try {
-      const res = await buySubscription(prismaUser.id);
-      if (res?.status !== 200) {
-        throw new Error("Failed to upgrade subscription");
-      }
-      router.push(res.url);
+      await buySubscriptionMutation.mutateAsync({ userId: prismaUser.id });
     } catch (error) {
+      // Error handling is done in the onError callback
       console.error("Error upgrading subscription:", error);
-      toast.error("Failed to upgrade subscription. Please try again.");
-    } finally {
-      setLoading(false);
     }
   };
 

@@ -1,5 +1,4 @@
 "use client";
-import { updateSlides } from "@/actions/project";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -8,6 +7,7 @@ import {
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
+import { api } from "@/lib/api";
 import { LayoutSlides, Slide } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useSlideStore } from "@/store/useSlideStore";
@@ -193,6 +193,19 @@ const Editor = ({ isEditable }: Props) => {
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
 
+  // tRPC mutation for updating slides
+  const updateSlidesMutation = api.project.updateSlides.useMutation({
+    onSuccess: () => {
+      console.log("Slides updated successfully");
+    },
+    onError: (error) => {
+      console.error("Failed to update slides:", error);
+    },
+    onSettled: () => {
+      setIsSaving(false);
+    },
+  });
+
   const orderedSlides = getOrderedSlides();
   const moveSlide = (dragIndex: number, hoverIndex: number) => {
     if (isEditable) {
@@ -246,13 +259,13 @@ const Editor = ({ isEditable }: Props) => {
 
   const saveSlides = useCallback(() => {
     if (isEditable && project) {
-      (async () => {
-        setIsSaving(true);
-        await updateSlides(project.id, JSON.parse(JSON.stringify(slides)));
-        setIsSaving(false);
-      })();
+      setIsSaving(true);
+      updateSlidesMutation.mutate({
+        projectId: project.id,
+        slides: JSON.parse(JSON.stringify(slides)),
+      });
     }
-  }, [slides, isEditable, project]);
+  }, [slides, isEditable, project, updateSlidesMutation]);
 
   useEffect(() => {
     if (autoSaveTimeoutRef.current) {

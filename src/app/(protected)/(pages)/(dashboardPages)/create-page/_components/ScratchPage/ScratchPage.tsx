@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -8,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { containerVariants, itemVariant } from "@/global/constants";
+import { api } from "@/lib/api";
 import useScratchStore from "@/store/useScratchStore";
 import { ChevronLeft, RotateCcw } from "lucide-react";
 import { motion } from "motion/react";
@@ -15,7 +18,6 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import CardList from "../Common/CardList";
 
-import { createProject } from "@/actions/project";
 import { OutlineCard } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { useRouter } from "next/navigation";
@@ -27,6 +29,23 @@ const ScratchPage = ({ onBack }: { onBack: () => void }) => {
     useScratchStore();
 
   const { setProject } = useSlideStore();
+
+  // tRPC mutation
+  const createProjectMutation = api.project.create.useMutation({
+    onSuccess: (data) => {
+      if (data.status === 200 && data.data) {
+        setProject(data.data);
+        resetOutlines();
+        toast.success("Project created successfully");
+        router.push(`/presentation/${data.data.id}/select-theme`);
+      } else {
+        toast.error("Failed to create project");
+      }
+    },
+    onError: (error) => {
+      toast.error(`Failed to create project: ${error.message}`);
+    },
+  });
 
   const [editingCard, setEditingCard] = useState<string | null>(null);
   const [selectedCard, setSelectedCard] = useState<string | null>(null);
@@ -58,19 +77,15 @@ const ScratchPage = ({ onBack }: { onBack: () => void }) => {
       toast.error("Please add at least one card before generating.");
       return;
     }
-    const res = await createProject(outlines?.[0]?.title, outlines);
 
-    if (res.status !== 200) {
-      toast.error(`${res.status} Failed to create project`);
-      return;
-    }
-    if (res.data) {
-      setProject(res.data);
-      resetOutlines();
-      toast.success("Project created successfully");
-      router.push(`/presentation/${res.data.id}/select-theme`);
-    } else {
-      toast.error("Failed to create project");
+    try {
+      await createProjectMutation.mutateAsync({
+        title: outlines?.[0]?.title,
+        outlines: outlines,
+      });
+    } catch (error) {
+      // Error handling is done in the onError callback
+      console.error("Failed to create project:", error);
     }
   };
 

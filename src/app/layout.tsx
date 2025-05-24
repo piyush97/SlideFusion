@@ -1,6 +1,7 @@
 import { Toaster } from "@/components/ui/sonner";
 import { APP_DESCRIPTION, APP_NAME } from "@/global/constants";
 import { ThemeProvider } from "@/provider/theme-provider";
+import TRPCProvider from "@/provider/trpc-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 // Nextjs analytics and speed insights
@@ -43,7 +44,7 @@ export default function RootLayout({
           suppressHydrationWarning // for clerk to work in future
         >
           <ThemeProvider attribute={"class"} defaultTheme="dark" enableSystem>
-            {children}
+            <TRPCProvider>{children}</TRPCProvider>
             <Toaster />
           </ThemeProvider>
         </body>

@@ -1,8 +1,8 @@
 "use client";
 
-import { deleteProject, recoverProject } from "@/actions/project";
 import { Button } from "@/components/ui/button";
 import { ROUTES, itemVariant, themes } from "@/global/constants";
+import { api } from "@/lib/api";
 import { timeAgo } from "@/lib/utils";
 import { useSlideStore } from "@/store/useSlideStore";
 import { JsonValue } from "@prisma/client/runtime/library";
@@ -36,6 +36,39 @@ const ProjectCard = ({
   const { setSlides } = useSlideStore();
   const router = useRouter();
 
+  // tRPC mutations
+  const utils = api.useUtils();
+  const deleteProjectMutation = api.project.delete.useMutation({
+    onSuccess: () => {
+      utils.project.getAll.invalidate();
+      utils.project.getRecent.invalidate();
+      toast.success("Project deleted successfully");
+      setOpen(false);
+    },
+    onError: (error) => {
+      toast.error(`Error: ${error.message}`);
+    },
+    onSettled: () => {
+      setLoading(false);
+    },
+  });
+
+  const recoverProjectMutation = api.project.recover.useMutation({
+    onSuccess: () => {
+      utils.project.getAll.invalidate();
+      utils.project.getRecent.invalidate();
+      utils.project.getDeleted.invalidate();
+      toast.success("Project recovered successfully");
+      setOpen(false);
+    },
+    onError: (error) => {
+      toast.error(`Error: ${error.message}`);
+    },
+    onSettled: () => {
+      setLoading(false);
+    },
+  });
+
   const theme = themes.find((theme) => theme.name === themeName) || themes[0];
   const handleNavigation = () => {
     setSlides(JSON.parse(JSON.stringify(slideData)));
@@ -43,52 +76,21 @@ const ProjectCard = ({
   };
 
   const handleDelete = async () => {
-    setLoading(true);
     if (!projectId) {
-      setLoading(false);
       toast.error("Error: Project Not found");
       return;
     }
-
-    try {
-      const response = await deleteProject(projectId);
-      if (response.status !== 200) {
-        toast.error(
-          `Something is wrong, please try again later: ${response.error}`
-        );
-        return;
-      }
-      setOpen(false);
-      router.refresh();
-      toast.success("Project deleted successfully");
-    } catch (error) {
-      console.error(error);
-      toast.error("Something is wrong, please try again later");
-    }
+    setLoading(true);
+    deleteProjectMutation.mutate({ projectId });
   };
 
   const handleRecover = async () => {
-    setLoading(true);
     if (!projectId) {
-      setLoading(false);
       toast.error("Error: Project Not found");
       return;
     }
-    try {
-      const response = await recoverProject(projectId);
-      if (response.status !== 200) {
-        toast.error(
-          `Something is wrong, please try again later: ${response.error}`
-        );
-        return;
-      }
-      setOpen(false);
-      router.refresh();
-      toast.success("Project recovered successfully");
-    } catch (error) {
-      console.error(error);
-      toast.error("Something is wrong, please try again later");
-    }
+    setLoading(true);
+    recoverProjectMutation.mutate({ projectId });
   };
 
   return (

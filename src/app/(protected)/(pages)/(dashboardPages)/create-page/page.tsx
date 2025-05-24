@@ -1,28 +1,40 @@
-import { onAuthenticateUser } from "@/actions/user";
-import { redirect } from "next/navigation";
-import { Suspense } from "react";
+"use client";
+
+import { api } from "@/lib/api";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import CreatePageSkeleton from "./_components/CreatePageSkeleton";
 import RenderPage from "./_components/RenderPage";
-export const dynamic = "force-dynamic";
 
-const Page = async () => {
-  // Checking if the user is authenticated and has a subscription
-  // If not, redirect to the sign-in page or dashboard
-  const checkUser = await onAuthenticateUser();
+const Page = () => {
+  const router = useRouter();
+  const { data: checkUser, isLoading } = api.user.authenticate.useQuery();
 
-  if (!checkUser?.user) {
-    redirect("/sign-in");
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!checkUser?.user) {
+      router.push("/sign-in");
+      return;
+    }
+
+    if (!checkUser?.user?.subscription) {
+      router.push("/dashboard");
+      return;
+    }
+  }, [checkUser, isLoading, router]);
+
+  if (isLoading) {
+    return <CreatePageSkeleton />;
   }
 
-  if (!checkUser?.user?.subscription) {
-    redirect("/dashboard");
+  if (!checkUser?.user || !checkUser?.user?.subscription) {
+    return null;
   }
 
   return (
     <main className="w-full h-full pt-6">
-      <Suspense fallback={<CreatePageSkeleton />}>
-        <RenderPage />
-      </Suspense>
+      <RenderPage />
     </main>
   );
 };

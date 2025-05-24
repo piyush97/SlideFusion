@@ -1,6 +1,8 @@
-import { generateLayouts } from "@/actions/openai";
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { api } from "@/lib/api";
 import { Theme } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { Loader2, Wand2 } from "lucide-react";
@@ -22,8 +24,26 @@ const ThemePicker = ({ selectedTheme, themes, onThemeSelect }: Props) => {
   const { project, setSlides, currentTheme } = useSlideStore();
   const [loading, setLoading] = useState(false);
 
+  // tRPC mutation
+  const generateLayoutsMutation = api.openai.generateLayouts.useMutation({
+    onSuccess: (data) => {
+      if (data.status === 200 && data.data && data.data.length > 0) {
+        toast.success("Layouts generated successfully");
+        router.push(`/presentation/${project?.id}`);
+        setSlides(data.data);
+      } else {
+        toast.error("Failed to generate layouts");
+      }
+      setLoading(false);
+    },
+    onError: (error) => {
+      console.error("Error generating layouts:", error);
+      toast.error(`Failed to generate layouts: ${error.message}`);
+      setLoading(false);
+    },
+  });
+
   const handleGenerateLayouts = async () => {
-    setLoading(true);
     if (!selectedTheme) {
       toast.error("Please select a theme");
       return;
@@ -31,32 +51,19 @@ const ThemePicker = ({ selectedTheme, themes, onThemeSelect }: Props) => {
 
     if (project?.id === "") {
       toast.error("Please create a project");
-      setLoading(false);
       router.push("/create-project");
       return;
     }
+
+    setLoading(true);
     try {
-      const res = await generateLayouts(
-        params.presentationId as string,
-        currentTheme.name
-      );
-
-      if (res.status !== 200 || !res?.data || res?.data.length === 0) {
-        throw new Error(res.error || "Failed to generate layouts");
-      }
-
-      toast.success("Layouts generated successfully");
-      router.push(`/presentation/${project?.id}`);
-      setSlides(res.data);
+      await generateLayoutsMutation.mutateAsync({
+        projectId: params.presentationId as string,
+        theme: currentTheme.name,
+      });
     } catch (error) {
+      // Error handling is done in the onError callback
       console.error("Error generating layouts:", error);
-      toast.error(
-        error instanceof Error
-          ? error.message
-          : "Failed to generate layouts. Please try again."
-      );
-    } finally {
-      setLoading(false);
     }
   };
 

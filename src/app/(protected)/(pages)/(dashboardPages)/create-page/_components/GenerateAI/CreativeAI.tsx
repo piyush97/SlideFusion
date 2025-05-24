@@ -1,7 +1,5 @@
 "use client";
 
-import { generateCreativePrompt } from "@/actions/openai";
-import { createProject } from "@/actions/project";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -12,6 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { containerVariants, itemVariant } from "@/global/constants";
+import { api } from "@/lib/api";
 import { OutlineCard } from "@/lib/types";
 import { useCreativeAIStore } from "@/store/useCreativeAIStore";
 import { usePromptStore } from "@/store/usePromptStore";
@@ -37,6 +36,25 @@ const CreativeAI = ({ onBack }: Props) => {
   const [editText, setEditText] = useState<string>("");
 
   const router = useRouter();
+
+  // tRPC mutations
+  const generatePromptMutation =
+    api.openai.generateCreativePrompt.useMutation();
+  const createProjectMutation = api.project.create.useMutation({
+    onSuccess: (data) => {
+      if (data.status === 200 && data.data) {
+        router.push(`/presentation/${data.data.id}/select-theme`);
+        setProject(data.data);
+      } else {
+        toast.error("Failed to create project");
+      }
+      setIsGenerating(false);
+    },
+    onError: (error) => {
+      toast.error(`Failed to create project: ${error.message}`);
+      setIsGenerating(false);
+    },
+  });
 
   const {
     currentAIPrompt,
@@ -69,21 +87,30 @@ const CreativeAI = ({ onBack }: Props) => {
     }
     setIsGenerating(true);
 
-    const res = await generateCreativePrompt(currentAIPrompt);
-    if (res.status === 200 && res?.data?.outlines) {
-      const cardsData: OutlineCard[] = [];
-      res.data?.outlines?.map((outline: string, idx: number) => {
-        const newCard = {
-          id: uuidv4(),
-          title: outline,
-          order: idx + 1,
-        };
-        cardsData.push(newCard);
+    try {
+      const res = await generatePromptMutation.mutateAsync({
+        userPrompt: currentAIPrompt,
       });
-      addMultipleOutlines(cardsData);
-      setNoOfCards(cardsData.length);
-      toast.success("Outline generated successfully");
-    } else {
+      if (res.status === 200 && res?.data?.outlines) {
+        const cardsData: OutlineCard[] = [];
+        res.data?.outlines?.map((outline: string, idx: number) => {
+          const newCard = {
+            id: uuidv4(),
+            title: outline,
+            order: idx + 1,
+          };
+          cardsData.push(newCard);
+        });
+        addMultipleOutlines(cardsData);
+        setNoOfCards(cardsData.length);
+        toast.success("Outline generated successfully");
+      } else {
+        toast.error("Error", {
+          description: "Failed to generate outline",
+        });
+      }
+    } catch (error) {
+      console.error("Error generating outline:", error);
       toast.error("Error", {
         description: "Failed to generate outline",
       });
@@ -92,7 +119,6 @@ const CreativeAI = ({ onBack }: Props) => {
   };
 
   const handleGenerate = async () => {
-    setIsGenerating(true);
     if (outlines.length === 0) {
       toast.error("Error", {
         description:
@@ -100,17 +126,14 @@ const CreativeAI = ({ onBack }: Props) => {
       });
       return;
     }
-    try {
-      const res = await createProject(
-        currentAIPrompt,
-        outlines.slice(0, noOfCards)
-      );
 
-      if (res.status !== 200 || !res.data) {
-        throw new Error("Failed to generate outline");
-      }
-      router.push(`/presentation/${res.data.id}/select-theme`);
-      setProject(res.data);
+    setIsGenerating(true);
+
+    try {
+      await createProjectMutation.mutateAsync({
+        title: currentAIPrompt,
+        outlines: outlines.slice(0, noOfCards),
+      });
 
       addPrompt({
         id: uuidv4(),
@@ -125,9 +148,8 @@ const CreativeAI = ({ onBack }: Props) => {
     } catch (error) {
       console.error(error);
       toast.error("Error", {
-        description: "Failed to generate outline",
+        description: "Failed to generate project",
       });
-    } finally {
       setIsGenerating(false);
     }
   };

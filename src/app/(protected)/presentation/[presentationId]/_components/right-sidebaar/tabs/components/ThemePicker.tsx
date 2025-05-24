@@ -1,7 +1,9 @@
-import { updateTheme } from "@/actions/project";
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { themes } from "@/global/constants";
+import { api } from "@/lib/api";
 import { Theme } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { useTheme } from "next-themes";
@@ -9,8 +11,17 @@ import { toast } from "sonner";
 
 const ThemePicker = () => {
   const { currentTheme, setCurrentTheme, project } = useSlideStore();
-
   const { setTheme } = useTheme();
+
+  // tRPC mutation for updating theme
+  const updateThemeMutation = api.project.updateTheme.useMutation({
+    onSuccess: () => {
+      toast.success("Theme updated successfully");
+    },
+    onError: (error) => {
+      toast.error(`Failed to update theme: ${error.message}`);
+    },
+  });
 
   const handleThemeChange = async (theme: Theme) => {
     if (!project) {
@@ -21,16 +32,10 @@ const ThemePicker = () => {
     setTheme(theme.type);
     setCurrentTheme(theme);
 
-    try {
-      const res = await updateTheme(project.id, theme.name);
-      if (res.status !== 200) {
-        toast.error("Failed to update theme");
-      }
-      toast.success("Theme updated successfully");
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to update theme");
-    }
+    updateThemeMutation.mutate({
+      projectId: project.id,
+      theme: theme.name,
+    });
   };
 
   return (
