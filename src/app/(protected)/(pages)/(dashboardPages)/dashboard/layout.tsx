@@ -1,6 +1,6 @@
 "use client";
 
-import { ROUTES } from "@/global/constants";
+import { ROUTES } from "@/config";
 import { api } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

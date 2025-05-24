@@ -1,6 +1,6 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { IS_WAITLIST_MODE, WAITLIST_PATH } from "./global/constants";
+import { IS_WAITLIST_MODE, WAITLIST_PATH } from "./config";
 
 const isPublicRoute = createRouteMatcher([
   "/signin(.*)",

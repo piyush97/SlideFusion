@@ -3,7 +3,7 @@ import { Footer } from "@/components/home/Footer";
 import { Navbar } from "@/components/home/Navbar";
 import { Pricing } from "@/components/home/Pricing";
 import { Button } from "@/components/ui/button";
-import { IS_WAITLIST_MODE, WAITLIST_PATH } from "@/global/constants";
+import { IS_WAITLIST_MODE, WAITLIST_PATH } from "@/config";
 import { motion } from "framer-motion";
 import {
   Image as ImageIcon,

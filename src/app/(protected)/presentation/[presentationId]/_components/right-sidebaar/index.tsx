@@ -6,7 +6,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { component } from "@/global/constants";
+import { component } from "@/config";
 import { useSlideStore } from "@/store/useSlideStore";
 import { LayoutTemplate, Palette, Type } from "lucide-react";
 import LayoutSelector from "./tabs/LayoutSelector";

@@ -1,6 +1,6 @@
 "use client";
 
-import { themes } from "@/global/constants";
+import { themes } from "@/config";
 import { api } from "@/lib/api";
 import { useSlideStore } from "@/store/useSlideStore";
 import { Loader2 } from "lucide-react";

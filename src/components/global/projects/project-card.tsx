@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ROUTES, itemVariant, themes } from "@/global/constants";
+import { ROUTES, itemVariant, themes } from "@/config";
 import { api } from "@/lib/api";
 import { timeAgo } from "@/lib/utils";
 import { useSlideStore } from "@/store/useSlideStore";

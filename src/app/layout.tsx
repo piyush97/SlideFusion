@@ -1,5 +1,5 @@
 import { Toaster } from "@/components/ui/sonner";
-import { APP_DESCRIPTION, APP_NAME } from "@/global/constants";
+import { APP_DESCRIPTION, APP_NAME } from "@/config";
 import { ThemeProvider } from "@/provider/theme-provider";
 import TRPCProvider from "@/provider/trpc-provider";
 import { ClerkProvider } from "@clerk/nextjs";

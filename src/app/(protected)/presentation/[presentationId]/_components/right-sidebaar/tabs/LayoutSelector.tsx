@@ -1,6 +1,6 @@
 "use client";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { layouts } from "@/global/constants";
+import { layouts } from "@/config";
 import { Layout } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { useDrag } from "react-dnd";

@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { containerVariants, itemVariant } from "@/global/constants";
+import { containerVariants, itemVariant } from "@/config";
 import { api } from "@/lib/api";
 import useScratchStore from "@/store/useScratchStore";
 import { ChevronLeft, RotateCcw } from "lucide-react";

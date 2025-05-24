@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { themes } from "@/global/constants";
+import { themes } from "@/config";
 import { Theme } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { ArrowLeft } from "lucide-react";

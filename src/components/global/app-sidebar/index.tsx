@@ -7,7 +7,7 @@ import {
   SidebarHeader,
   SidebarMenuButton,
 } from "@/components/ui/sidebar";
-import { APP_NAME, DATA } from "@/global/constants";
+import { APP_NAME, DATA } from "@/config";
 import { Project, User } from "@prisma/client";
 import NavFooter from "./nav-footer";
 import NavMenu from "./nav-menu";

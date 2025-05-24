@@ -3,7 +3,7 @@
 import AppSidebar from "@/components/global/app-sidebar";
 import UpperInfoBar from "@/components/global/upper-info-bar";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { ROUTES } from "@/global/constants";
+import { ROUTES } from "@/config";
 import { api } from "@/lib/api";
 import { redirect } from "next/navigation";
 import React from "react";

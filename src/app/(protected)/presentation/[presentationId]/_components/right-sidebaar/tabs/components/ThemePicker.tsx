@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { themes } from "@/global/constants";
+import { themes } from "@/config";
 import { api } from "@/lib/api";
 import { Theme } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";

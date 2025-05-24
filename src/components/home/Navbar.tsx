@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { IS_WAITLIST_MODE, WAITLIST_PATH } from "@/global/constants";
+import { IS_WAITLIST_MODE, WAITLIST_PATH } from "@/config";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
