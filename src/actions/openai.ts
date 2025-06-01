@@ -74,7 +74,9 @@ export const generateCreativePrompt = async (userPrompt: string) => {
   }
 };
 
-const generateImageUrl = async (prompt: string): Promise<string> => {
+export const generateImageUrl = async (prompt: string): Promise<string> => {
+  console.log("🎨 Starting image generation for prompt:", prompt);
+
   try {
     const improvedPrompt = `
     Create a highly realistic, professional image based on the following description. The image should look as if captured in real life, with attention to detail, lighting, and texture.
@@ -90,22 +92,27 @@ const generateImageUrl = async (prompt: string): Promise<string> => {
 
     Example Use Cases: Business presentations, educational slides, professional designs.
   `;
+
+    console.log("🎨 Calling DALL-E API...");
     const dalleResponse = await openai.images.generate({
       prompt: improvedPrompt,
       n: 1,
       size: "1024x1024",
+      model: "dall-e-3",
+      quality: "standard",
     });
+
     if (dalleResponse.data && dalleResponse.data.length > 0) {
-      console.log(
-        "🟢 Image generated successfully:",
-        dalleResponse.data[0]?.url
-      );
-      return dalleResponse.data[0]?.url || "https://via.placeholder.com/1024";
+      const generatedUrl =
+        dalleResponse.data[0]?.url || "https://via.placeholder.com/1024";
+      console.log("🎨 Image generated successfully:", generatedUrl);
+      return generatedUrl;
     }
 
+    console.log("🎨 No image data returned, using placeholder");
     return "https://via.placeholder.com/1024";
   } catch (error) {
-    console.error("Failed to generate image:", error);
+    console.error("🎨 Failed to generate image:", error);
     return "https://via.placeholder.com/1024";
   }
 };
@@ -116,10 +123,16 @@ const findImageComponents = (layout: ContentItem): ContentItem[] => {
     images.push(layout);
   }
   if (Array.isArray(layout.content)) {
-    layout.content.forEach((child) => {
-      images.push(...findImageComponents(child as ContentItem));
+    layout.content.forEach((child: ContentItem | string | string[]) => {
+      if (typeof child === "object" && !Array.isArray(child)) {
+        images.push(...findImageComponents(child as ContentItem));
+      }
     });
-  } else if (layout.content && typeof layout.content === "object") {
+  } else if (
+    layout.content &&
+    typeof layout.content === "object" &&
+    !Array.isArray(layout.content)
+  ) {
     images.push(...findImageComponents(layout.content));
   }
   return images;
@@ -127,12 +140,24 @@ const findImageComponents = (layout: ContentItem): ContentItem[] => {
 
 const replaceImagePlaceholders = async (layout: Slide) => {
   const imageComponents = findImageComponents(layout.content);
-  console.log("🟢 Found image components:", imageComponents);
+  console.log("� Found image components:", imageComponents.length);
+  console.log(
+    "🔍 Image components details:",
+    imageComponents.map((c) => ({ id: c.id, alt: c.alt, content: c.content }))
+  );
+
   for (const component of imageComponents) {
-    console.log("🟢 Generating image for component:", component.alt);
-    component.content = await generateImageUrl(
+    console.log("� Generating image for component:", component.alt);
+    const originalContent = component.content;
+    const generatedUrl = await generateImageUrl(
       component.alt || "Placeholder Image"
     );
+    component.content = generatedUrl;
+    console.log("🔥 Image generation result:", {
+      original: originalContent,
+      generated: generatedUrl,
+      alt: component.alt,
+    });
   }
 };
 
@@ -344,7 +369,31 @@ ${JSON.stringify([
         throw new Error("Response is not an array as expected");
       }
 
+      console.log(
+        "🔍 Generated layouts before image replacement:",
+        jsonResponse.length
+      );
+      console.log(
+        "🔍 Sample layout structure:",
+        JSON.stringify(jsonResponse[0], null, 2)
+      );
+
+      // Count image components before replacement
+      const imageCountBefore = jsonResponse.reduce((count, layout) => {
+        return count + findImageComponents(layout.content).length;
+      }, 0);
+      console.log(
+        "🔍 Total image components found across all layouts:",
+        imageCountBefore
+      );
+
       await Promise.all(jsonResponse.map(replaceImagePlaceholders));
+
+      // Count and log after replacement
+      const imageCountAfter = jsonResponse.reduce((count, layout) => {
+        return count + findImageComponents(layout.content).length;
+      }, 0);
+      console.log("🔍 Image components processed:", imageCountAfter);
     } catch (error) {
       console.log("🔴 ERROR parsing JSON:", error);
       console.log("🔴 Raw response content:", responseContent);
@@ -411,6 +460,20 @@ export const generateLayouts = async (projectId: string, theme: string) => {
       };
     }
 
+    // Generate images for all slides
+    console.log("🟢 Generating images for slides...");
+    try {
+      if (layouts.data && Array.isArray(layouts.data)) {
+        for (const slide of layouts.data) {
+          await replaceImagePlaceholders(slide);
+        }
+        console.log("🟢 Images generated successfully for all slides");
+      }
+    } catch (error) {
+      console.error("🔴 Error generating images:", error);
+      // Continue without failing the entire process
+    }
+
     await client.project.update({
       where: { id: projectId },
       data: { slides: layouts.data, themeName: theme },
@@ -420,5 +483,26 @@ export const generateLayouts = async (projectId: string, theme: string) => {
   } catch (error) {
     console.error("🔴 ERROR:", error);
     return { status: 500, error: "Internal server error", data: [] };
+  }
+};
+
+export const generateImagesForSlide = async (slide: Slide) => {
+  try {
+    console.log("🖼️ Starting image generation for slide:", slide.id);
+
+    // Create a copy of the slide to avoid modifying the original
+    const slideWithImages = JSON.parse(JSON.stringify(slide));
+
+    // Generate images for this slide
+    await replaceImagePlaceholders(slideWithImages);
+
+    console.log("✅ Successfully generated images for slide");
+    return { success: true, slide: slideWithImages };
+  } catch (error) {
+    console.error("❌ Error generating images for slide:", error);
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    };
   }
 };

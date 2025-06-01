@@ -6,7 +6,7 @@ import { SlideComponentFactory } from "./slideComponentFactory";
  */
 export class SlideLayoutFactory {
   /**
-   * Creates a basic slide layout with title and content area
+   * Creates a basic slide layout with title and content area (now includes image)
    */
   static createBasicLayout(
     title: string = "",
@@ -15,6 +15,7 @@ export class SlideLayoutFactory {
     return SlideComponentFactory.createColumn(
       [
         SlideComponentFactory.createTitle(title),
+        SlideComponentFactory.createImage(),
         SlideComponentFactory.createParagraph(),
       ],
       className
@@ -22,7 +23,7 @@ export class SlideLayoutFactory {
   }
 
   /**
-   * Creates a two-column layout
+   * Creates a two-column layout with images
    */
   static createTwoColumnLayout(
     leftContent: ContentItem[] = [],
@@ -34,6 +35,7 @@ export class SlideLayoutFactory {
         ? leftContent
         : [
             SlideComponentFactory.createHeading(3),
+            SlideComponentFactory.createImage(),
             SlideComponentFactory.createParagraph(),
           ];
 
@@ -42,6 +44,7 @@ export class SlideLayoutFactory {
         ? rightContent
         : [
             SlideComponentFactory.createHeading(3),
+            SlideComponentFactory.createImage(),
             SlideComponentFactory.createParagraph(),
           ];
 
@@ -58,7 +61,7 @@ export class SlideLayoutFactory {
   }
 
   /**
-   * Creates a three-column layout
+   * Creates a three-column layout with images
    */
   static createThreeColumnLayout(
     columns: ContentItem[][] = [],
@@ -70,14 +73,17 @@ export class SlideLayoutFactory {
         : [
             [
               SlideComponentFactory.createHeading(3),
+              SlideComponentFactory.createImage(),
               SlideComponentFactory.createParagraph(),
             ],
             [
               SlideComponentFactory.createHeading(3),
+              SlideComponentFactory.createImage(),
               SlideComponentFactory.createParagraph(),
             ],
             [
               SlideComponentFactory.createHeading(3),
+              SlideComponentFactory.createImage(),
               SlideComponentFactory.createParagraph(),
             ],
           ];
@@ -96,7 +102,7 @@ export class SlideLayoutFactory {
   }
 
   /**
-   * Creates a four-column layout
+   * Creates a four-column layout with images
    */
   static createFourColumnLayout(
     columns: ContentItem[][] = [],
@@ -108,18 +114,22 @@ export class SlideLayoutFactory {
         : [
             [
               SlideComponentFactory.createHeading(3),
+              SlideComponentFactory.createImage(),
               SlideComponentFactory.createParagraph(),
             ],
             [
               SlideComponentFactory.createHeading(3),
+              SlideComponentFactory.createImage(),
               SlideComponentFactory.createParagraph(),
             ],
             [
               SlideComponentFactory.createHeading(3),
+              SlideComponentFactory.createImage(),
               SlideComponentFactory.createParagraph(),
             ],
             [
               SlideComponentFactory.createHeading(3),
+              SlideComponentFactory.createImage(),
               SlideComponentFactory.createParagraph(),
             ],
           ];

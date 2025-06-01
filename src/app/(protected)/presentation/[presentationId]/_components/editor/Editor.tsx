@@ -223,7 +223,7 @@ const Editor = ({ isEditable }: Props) => {
     dropIndex: number
   ) => {
     if (!isEditable) return;
-    if (item.type === "layout") {
+    if (item.type === "LAYOUT") {
       addSlideAtIndex(
         {
           ...item.component,

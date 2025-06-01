@@ -45,6 +45,7 @@ interface SlideState {
     parentId: string,
     index: number
   ) => void;
+  updateSlide: (slideId: string, updatedSlide: Slide) => void;
 }
 
 // Create the slide store with persistence
@@ -200,6 +201,14 @@ export const useSlideStore = create<SlideState>()(
             };
           });
 
+          return { slides: updatedSlides };
+        });
+      },
+      updateSlide: (slideId: string, updatedSlide: Slide) => {
+        set((state) => {
+          const updatedSlides = state.slides.map((slide) =>
+            slide.id === slideId ? updatedSlide : slide
+          );
           return { slides: updatedSlides };
         });
       },

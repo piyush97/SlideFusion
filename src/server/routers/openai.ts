@@ -35,7 +35,7 @@ export const openaiRouter = createTRPCRouter({
 
       try {
         const completion = await openai.chat.completions.create({
-          model: "gpt-4.1-nano-2025-04-14",
+          model: "chatgpt-4o-latest",
           messages: [
             {
               role: "system",
