@@ -37,13 +37,13 @@ interface SlideState {
   updateContentItem: (
     slideId: string,
     contentId: string,
-    newContent: string | string[] | string[][]
+    newContent: string | string[] | string[][],
   ) => void;
   addComponentInSlide: (
     slideId: string,
     component: ContentItem,
     parentId: string,
-    index: number
+    index: number,
   ) => void;
   updateSlide: (slideId: string, updatedSlide: Slide) => void;
 }
@@ -113,7 +113,7 @@ export const useSlideStore = create<SlideState>()(
       updateContentItem: (
         slideId: string,
         contentId: string,
-        newContent: string | string[] | string[][]
+        newContent: string | string[] | string[][],
       ) => {
         set((state) => {
           // Find the slide by ID
@@ -122,7 +122,7 @@ export const useSlideStore = create<SlideState>()(
 
             // Define the recursive update function
             const updateContentRecursively = (
-              item: ContentItem
+              item: ContentItem,
             ): ContentItem => {
               if (item.id === contentId) {
                 return { ...item, content: newContent };
@@ -137,7 +137,7 @@ export const useSlideStore = create<SlideState>()(
                   content: item.content.map((subItem) =>
                     typeof subItem !== "string"
                       ? updateContentRecursively(subItem as ContentItem)
-                      : subItem
+                      : subItem,
                   ),
                 };
               }
@@ -158,7 +158,7 @@ export const useSlideStore = create<SlideState>()(
       addComponentInSlide(
         slideId: string,
         component: ContentItem,
-        parentId: string
+        parentId: string,
         // Removing the unused index parameter
       ) {
         set((state) => {
@@ -166,7 +166,7 @@ export const useSlideStore = create<SlideState>()(
             if (slide.id !== slideId) return slide;
 
             const addComponentRecursively = (
-              item: ContentItem
+              item: ContentItem,
             ): ContentItem => {
               if (item.id === parentId) {
                 const newComponent = { ...component, id: uuidv4() };
@@ -187,7 +187,7 @@ export const useSlideStore = create<SlideState>()(
                   content: item.content.map((subItem) =>
                     typeof subItem !== "string"
                       ? addComponentRecursively(subItem as ContentItem)
-                      : subItem
+                      : subItem,
                   ),
                 };
               }
@@ -207,7 +207,7 @@ export const useSlideStore = create<SlideState>()(
       updateSlide: (slideId: string, updatedSlide: Slide) => {
         set((state) => {
           const updatedSlides = state.slides.map((slide) =>
-            slide.id === slideId ? updatedSlide : slide
+            slide.id === slideId ? updatedSlide : slide,
           );
           return { slides: updatedSlides };
         });
@@ -215,6 +215,6 @@ export const useSlideStore = create<SlideState>()(
     }),
     {
       name: "slides-storage",
-    }
-  )
+    },
+  ),
 );

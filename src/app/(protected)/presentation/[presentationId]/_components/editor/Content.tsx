@@ -12,7 +12,7 @@ type Props = {
   content: ContentItem;
   onContentChange: (
     newContent: string | string[] | string[][],
-    contentId: string
+    contentId: string,
   ) => void;
   isPreview?: boolean;
   isEditable?: boolean;
@@ -57,7 +57,7 @@ const Content: React.FC<Props> = React.memo(
 
     // Use factory for all other content types
     return ContentRendererFactory.render(contentProps);
-  }
+  },
 );
 
 Content.displayName = "ContentRenderer";
@@ -84,7 +84,7 @@ export const MasterRecursiveComponent: React.FC<Props> = React.memo(
         index={index}
       />
     );
-  }
+  },
 );
 
 MasterRecursiveComponent.displayName = "MasterRecursiveComponent";

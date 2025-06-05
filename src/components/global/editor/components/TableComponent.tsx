@@ -33,11 +33,11 @@ const TableComponent = ({
   });
 
   const [colSizes, setColSizes] = useState<number[]>(() =>
-    Array(tableData[0].length).fill(0)
+    Array(tableData[0].length).fill(0),
   );
 
   const [rowSizes, setRowSizes] = useState<number[]>(() =>
-    Array(tableData.length).fill(0)
+    Array(tableData.length).fill(0),
   );
 
   const handleResizeColumn = (colIndex: number, newSize: number) => {
@@ -118,10 +118,10 @@ const TableComponent = ({
           initialColumnSize === 2
             ? "min-h-[100px]"
             : initialColumnSize === 3
-            ? "min-h-[150px]"
-            : initialColumnSize === 4
-            ? "min-h-[200px]"
-            : "min-h-[100px]"
+              ? "min-h-[150px]"
+              : initialColumnSize === 4
+                ? "min-h-[200px]"
+                : "min-h-[100px]"
         }`}
         onLayout={(sizes) => setRowSizes(sizes)}
       >

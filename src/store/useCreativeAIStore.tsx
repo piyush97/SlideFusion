@@ -25,6 +25,6 @@ export const useCreativeAIStore = create<CreativeAIStore>()(
     }),
     {
       name: "creative-ai",
-    }
-  )
+    },
+  ),
 );

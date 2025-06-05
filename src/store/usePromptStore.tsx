@@ -33,7 +33,7 @@ export const usePromptStore = create<PromptStore>()(
             prompts: state.prompts.filter((p) => p.id !== id),
           })),
       }),
-      { name: "prompts" }
-    )
-  )
+      { name: "prompts" },
+    ),
+  ),
 );

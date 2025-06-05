@@ -18,7 +18,7 @@ const ScaledPreview = ({ slide, isActive }: Props) => {
         "w-full relative aspect-[16/9] rounded-lg overflow-hidden transition-all duration-200 p-2 ring-2 ring-primary-80 ring-offset-2",
         isActive
           ? "ring-2 ring-blue-500 ring-offset-2"
-          : "hover:ring-2 hover:ring-gray-200 hover:ring-offset-2"
+          : "hover:ring-2 hover:ring-gray-200 hover:ring-offset-2",
       )}
       style={{
         fontFamily: currentTheme.fontFamily,

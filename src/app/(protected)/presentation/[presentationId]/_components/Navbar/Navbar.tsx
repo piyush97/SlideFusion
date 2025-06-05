@@ -16,7 +16,7 @@ const Navbar = ({ presentationId, title }: Props) => {
 
   const handleCopy = () => {
     navigator.clipboard.writeText(
-      `${window.location.origin}/share/${presentationId}`
+      `${window.location.origin}/share/${presentationId}`,
     );
     toast.success("Link copied to clipboard");
   };

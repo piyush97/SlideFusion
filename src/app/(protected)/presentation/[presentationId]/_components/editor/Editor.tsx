@@ -30,7 +30,7 @@ type DropZoneProps = {
       component: LayoutSlides;
       index?: number;
     },
-    dropIndex: number
+    dropIndex: number,
   ) => void;
   isEditable: boolean;
 };
@@ -64,7 +64,7 @@ export const DropZone: React.FC<DropZoneProps> = ({
       className={cn(
         "h-4 my-2 rounded-md transition-all duration-200",
         isOver && canDrop ? "border-green-500 bg-green-100" : "border-gray-300",
-        canDrop ? "border-blue-300" : ""
+        canDrop ? "border-blue-300" : "",
       )}
       ref={dropRef as unknown as React.RefObject<HTMLDivElement>}
     >
@@ -137,7 +137,7 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
         "flex flex-col",
         index === currentSlide ? "ring-2 ring-blue-500 ring-offset-2" : "",
         slide.className,
-        isDragging ? "opacity-50" : "opacity-100"
+        isDragging ? "opacity-50" : "opacity-100",
       )}
       style={{ backgroundImage: currentTheme.gradientBackground }}
       onClick={() => setCurrentSlide(index)}
@@ -220,7 +220,7 @@ const Editor = ({ isEditable }: Props) => {
       component: LayoutSlides;
       index?: number;
     },
-    dropIndex: number
+    dropIndex: number,
   ) => {
     if (!isEditable) return;
     if (item.type === "LAYOUT") {
@@ -230,7 +230,7 @@ const Editor = ({ isEditable }: Props) => {
           id: v4(),
           slideOrder: dropIndex,
         },
-        dropIndex
+        dropIndex,
       );
     } else if (item.type === "SLIDE" && item.index !== undefined) {
       moveSlide(item.index, dropIndex);
@@ -282,7 +282,7 @@ const Editor = ({ isEditable }: Props) => {
         clearTimeout(autoSaveTimeoutRef.current);
       }
     };
-  }, [slides, isEditable, project, saveSlides]);
+  }, [isEditable, saveSlides]);
 
   return (
     <div className="relative flex flex-col flex-1 h-full max-w-3xl px-4 mx-auto mb-20">

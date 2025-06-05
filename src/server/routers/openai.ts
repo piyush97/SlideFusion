@@ -63,7 +63,7 @@ export const openaiRouter = createTRPCRouter({
             console.error(
               "Invalid JSON received:",
               cleanedResponseContent,
-              error
+              error,
             );
             return {
               status: 500,
@@ -83,7 +83,7 @@ export const openaiRouter = createTRPCRouter({
       z.object({
         projectId: z.string(),
         theme: z.string(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       try {

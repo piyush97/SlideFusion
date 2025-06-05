@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic"; // to remove cache
-import { client } from "@/lib/prisma";
 import crypto from "crypto";
+import { client } from "@/lib/prisma";
 import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
     const hmac = crypto.createHmac(
       "sha256",
-      process.env.LEMON_SQUEEZY_WEBHOOK_SECRET!
+      process.env.LEMON_SQUEEZY_WEBHOOK_SECRET!,
     ); // Create HMAC using the secret key
 
     const digest = Buffer.from(hmac.update(rawBody).digest("hex"), "utf8"); // Create HMAC digest
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
         data: buyer,
         status: 200,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Error processing webhook:", error);

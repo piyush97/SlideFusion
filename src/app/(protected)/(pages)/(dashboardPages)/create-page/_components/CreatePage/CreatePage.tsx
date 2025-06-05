@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { containerVariants, CreatePageCard, itemVariant } from "@/config";
+import { CreatePageCard, containerVariants, itemVariant } from "@/config";
 import { usePromptStore } from "@/store/usePromptStore";
 import { motion } from "motion/react";
 import RecentPrompts from "../GenerateAI/RecentPrompts";

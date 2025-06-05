@@ -12,7 +12,7 @@ interface IconProps {
  */
 export function createColumnIcon(
   numberOfColumns: number,
-  withHeading: boolean = false
+  withHeading: boolean = false,
 ): React.FC<IconProps> {
   return function ColumnIcon({ className = "" }: IconProps) {
     return React.createElement(
@@ -41,15 +41,15 @@ export function createColumnIcon(
             }),
             React.createElement("div", {
               className: "w-2/3 h-2 bg-white rounded",
-            })
-          )
-        )
-      )
+            }),
+          ),
+        ),
+      ),
     );
   };
 }
 export function createTextImageIcon(
-  imageFirst: boolean = false
+  imageFirst: boolean = false,
 ): React.FC<IconProps> {
   return function TextImageIcon({ className = "" }: IconProps) {
     const textContent = React.createElement(
@@ -58,7 +58,7 @@ export function createTextImageIcon(
       React.createElement("div", { className: "w-full h-4 bg-white rounded" }),
       React.createElement("div", { className: "w-3/4 h-2 bg-white rounded" }),
       React.createElement("div", { className: "w-full h-2 bg-white rounded" }),
-      React.createElement("div", { className: "w-2/3 h-2 bg-white rounded" })
+      React.createElement("div", { className: "w-2/3 h-2 bg-white rounded" }),
     );
 
     const imageContent = React.createElement("div", {
@@ -73,7 +73,7 @@ export function createTextImageIcon(
         }`,
       },
       imageFirst ? imageContent : textContent,
-      imageFirst ? textContent : imageContent
+      imageFirst ? textContent : imageContent,
     );
   };
 }

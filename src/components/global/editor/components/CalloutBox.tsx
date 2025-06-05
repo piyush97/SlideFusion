@@ -59,7 +59,7 @@ const CalloutBox = ({ type, children, className = "", ...props }: Props) => {
         colors[type].bg,
         colors[type].border,
         colors[type].text,
-        className
+        className,
       )}
       {...props}
     >

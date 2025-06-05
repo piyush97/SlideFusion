@@ -26,7 +26,7 @@ const ThemePreview = () => {
 
   useEffect(() => {
     controls.start("visible");
-  }, [controls, selectedTheme]);
+  }, [controls]);
 
   const buttonStyle = {
     backgroundColor: selectedTheme.accentColor,

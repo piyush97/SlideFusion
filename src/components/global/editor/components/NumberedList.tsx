@@ -53,7 +53,7 @@ const NumberedList: React.FC<Props> = ({
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
-    index: number
+    index: number,
   ) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -62,7 +62,7 @@ const NumberedList: React.FC<Props> = ({
       onChange(updatedItems);
       setTimeout(() => {
         const nextInput = document.querySelector(
-          `li:nth-child(${index + 2}) input`
+          `li:nth-child(${index + 2}) input`,
         ) as HTMLInputElement;
         if (nextInput) nextInput.focus();
       }, 0);
@@ -116,7 +116,7 @@ export const BulletList: React.FC<Props> = ({
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
-    index: number
+    index: number,
   ) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -125,7 +125,7 @@ export const BulletList: React.FC<Props> = ({
       onChange(updatedItems);
       setTimeout(() => {
         const nextInput = document.querySelector(
-          `li:nth-child(${index + 2}) input`
+          `li:nth-child(${index + 2}) input`,
         ) as HTMLInputElement;
         if (nextInput) nextInput.focus();
       }, 0);
@@ -183,7 +183,7 @@ export const TodoList: React.FC<Props> = ({
 
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
-    index: number
+    index: number,
   ) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -192,7 +192,7 @@ export const TodoList: React.FC<Props> = ({
       onChange(updatedItems);
       setTimeout(() => {
         const nextInput = document.querySelector(
-          `li:nth-child(${index + 2}) input`
+          `li:nth-child(${index + 2}) input`,
         ) as HTMLInputElement;
         if (nextInput) nextInput.focus();
       }, 0);
@@ -233,10 +233,10 @@ export const TodoList: React.FC<Props> = ({
           <ListItem
             item={item.replace(/^\[[ x]\] /, "")}
             index={index}
-            onChange={(i, value) => {
+            onChange={(_i, value) => {
               handleChange(
                 index,
-                `${item.startsWith("[x] ") ? "[x] " : "[ ] "}${value}`
+                `${item.startsWith("[x] ") ? "[x] " : "[ ] "}${value}`,
               );
             }}
             onKeyDown={handleKeyDown}

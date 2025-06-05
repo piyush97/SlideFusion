@@ -60,7 +60,7 @@ const ComponentDropZone: React.FC<ComponentDropZoneProps> = ({
         canDrop && !isOver
           ? "border border-gray-300 border-dashed opacity-50"
           : "",
-        className
+        className,
       )}
     >
       {isOver && canDrop && (

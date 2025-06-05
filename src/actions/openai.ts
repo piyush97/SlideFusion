@@ -143,14 +143,14 @@ const replaceImagePlaceholders = async (layout: Slide) => {
   console.log("� Found image components:", imageComponents.length);
   console.log(
     "🔍 Image components details:",
-    imageComponents.map((c) => ({ id: c.id, alt: c.alt, content: c.content }))
+    imageComponents.map((c) => ({ id: c.id, alt: c.alt, content: c.content })),
   );
 
   for (const component of imageComponents) {
     console.log("� Generating image for component:", component.alt);
     const originalContent = component.content;
     const generatedUrl = await generateImageUrl(
-      component.alt || "Placeholder Image"
+      component.alt || "Placeholder Image",
     );
     component.content = generatedUrl;
     console.log("🔥 Image generation result:", {
@@ -185,7 +185,7 @@ The output must be an array of JSON objects.
         className: "p-8 mx-auto flex justify-center items-center min-h-[200px]",
         content: {},
       },
-    ]
+    ],
   )}
 
 8.The content property of each LAYOUTS TYPE should start with “column” and within the columns content property you can use any  of the CONTENT TYPES I provided above. Resizable-column, column and other multi element contents should be an array because you can have more elements inside them nested. Static elements like title and paragraph should have content set to a string.Here is an example of what 1 layout with 1 column with 1 title inside would look like:
@@ -371,11 +371,11 @@ ${JSON.stringify([
 
       console.log(
         "🔍 Generated layouts before image replacement:",
-        jsonResponse.length
+        jsonResponse.length,
       );
       console.log(
         "🔍 Sample layout structure:",
-        JSON.stringify(jsonResponse[0], null, 2)
+        JSON.stringify(jsonResponse[0], null, 2),
       );
 
       // Count image components before replacement
@@ -384,7 +384,7 @@ ${JSON.stringify([
       }, 0);
       console.log(
         "🔍 Total image components found across all layouts:",
-        imageCountBefore
+        imageCountBefore,
       );
 
       await Promise.all(jsonResponse.map(replaceImagePlaceholders));

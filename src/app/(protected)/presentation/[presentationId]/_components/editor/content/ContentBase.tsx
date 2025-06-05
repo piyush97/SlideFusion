@@ -35,7 +35,7 @@ export interface ContentRendererProps {
   content: ContentItem;
   onContentChange: (
     newContent: string | string[] | string[][],
-    contentId: string
+    contentId: string,
   ) => void;
   isPreview?: boolean;
   isEditable?: boolean;
@@ -55,13 +55,13 @@ export interface CommonTextProps {
 export const useCommonTextProps = (
   content: ContentItem,
   onContentChange: ContentRendererProps["onContentChange"],
-  isPreview: boolean = false
+  isPreview: boolean = false,
 ): CommonTextProps => {
   const handleChange = React.useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       onContentChange(e.target.value, content.id);
     },
-    [content.id, onContentChange]
+    [content.id, onContentChange],
   );
 
   return {

@@ -10,7 +10,7 @@ export class SlideLayoutFactory {
    */
   static createBasicLayout(
     title: string = "",
-    className: string = "p-8 mx-auto flex justify-center items-center min-h-[200px]"
+    className: string = "p-8 mx-auto flex justify-center items-center min-h-[200px]",
   ): ContentItem {
     return SlideComponentFactory.createColumn(
       [
@@ -18,7 +18,7 @@ export class SlideLayoutFactory {
         SlideComponentFactory.createImage(),
         SlideComponentFactory.createParagraph(),
       ],
-      className
+      className,
     );
   }
 
@@ -28,7 +28,7 @@ export class SlideLayoutFactory {
   static createTwoColumnLayout(
     leftContent: ContentItem[] = [],
     rightContent: ContentItem[] = [],
-    className: string = "p-4 mx-auto flex justify-center items-center"
+    className: string = "p-4 mx-auto flex justify-center items-center",
   ): ContentItem {
     const defaultLeft =
       leftContent.length > 0
@@ -56,7 +56,7 @@ export class SlideLayoutFactory {
           SlideComponentFactory.createColumn(defaultRight),
         ]),
       ],
-      className
+      className,
     );
   }
 
@@ -65,7 +65,7 @@ export class SlideLayoutFactory {
    */
   static createThreeColumnLayout(
     columns: ContentItem[][] = [],
-    className: string = "p-4 mx-auto flex justify-center items-center"
+    className: string = "p-4 mx-auto flex justify-center items-center",
   ): ContentItem {
     const defaultColumns =
       columns.length === 3
@@ -93,11 +93,11 @@ export class SlideLayoutFactory {
         SlideComponentFactory.createTitle(),
         SlideComponentFactory.createResizableColumn(
           defaultColumns.map((columnContent) =>
-            SlideComponentFactory.createColumn(columnContent)
-          )
+            SlideComponentFactory.createColumn(columnContent),
+          ),
         ),
       ],
-      className
+      className,
     );
   }
 
@@ -106,7 +106,7 @@ export class SlideLayoutFactory {
    */
   static createFourColumnLayout(
     columns: ContentItem[][] = [],
-    className: string = "p-4 mx-auto flex justify-center items-center"
+    className: string = "p-4 mx-auto flex justify-center items-center",
   ): ContentItem {
     const defaultColumns =
       columns.length === 4
@@ -139,11 +139,11 @@ export class SlideLayoutFactory {
         SlideComponentFactory.createTitle(),
         SlideComponentFactory.createResizableColumn(
           defaultColumns.map((columnContent) =>
-            SlideComponentFactory.createColumn(columnContent)
-          )
+            SlideComponentFactory.createColumn(columnContent),
+          ),
         ),
       ],
-      className
+      className,
     );
   }
 
@@ -152,7 +152,7 @@ export class SlideLayoutFactory {
    */
   static createImageColumnLayout(
     numberOfColumns: 2 | 3 | 4,
-    className: string = "p-4 mx-auto flex justify-center items-center"
+    className: string = "p-4 mx-auto flex justify-center items-center",
   ): ContentItem {
     const columns = Array(numberOfColumns)
       .fill(null)
@@ -163,7 +163,7 @@ export class SlideLayoutFactory {
         return SlideLayoutFactory.createTwoColumnLayout(
           columns[0],
           columns[1],
-          className
+          className,
         );
       case 3:
         return SlideLayoutFactory.createThreeColumnLayout(columns, className);
@@ -173,7 +173,7 @@ export class SlideLayoutFactory {
         return SlideLayoutFactory.createTwoColumnLayout(
           columns[0],
           columns[1],
-          className
+          className,
         );
     }
   }
@@ -182,7 +182,7 @@ export class SlideLayoutFactory {
    * Creates a layout with heading and two columns
    */
   static createTwoColumnsWithHeadingsLayout(
-    className: string = "p-4 mx-auto flex justify-center items-center"
+    className: string = "p-4 mx-auto flex justify-center items-center",
   ): ContentItem {
     return SlideComponentFactory.createColumn(
       [
@@ -198,7 +198,7 @@ export class SlideLayoutFactory {
           ]),
         ]),
       ],
-      className
+      className,
     );
   }
 
@@ -207,7 +207,7 @@ export class SlideLayoutFactory {
    */
   static createImageAndTextLayout(
     imageFirst: boolean = true,
-    className: string = "min-h-[200px] p-8 mx-auto flex justify-center items-center"
+    className: string = "min-h-[200px] p-8 mx-auto flex justify-center items-center",
   ): ContentItem {
     const imageColumn = SlideComponentFactory.createColumn([
       SlideComponentFactory.createImage(),
@@ -218,7 +218,7 @@ export class SlideLayoutFactory {
         SlideComponentFactory.createHeading(1),
         SlideComponentFactory.createParagraph(),
       ],
-      "w-full h-full p-8 flex justify-center items-center"
+      "w-full h-full p-8 flex justify-center items-center",
     );
 
     const columns = imageFirst
@@ -227,7 +227,7 @@ export class SlideLayoutFactory {
 
     return SlideComponentFactory.createColumn(
       [SlideComponentFactory.createResizableColumn(columns)],
-      className
+      className,
     );
   }
 
@@ -236,7 +236,7 @@ export class SlideLayoutFactory {
    */
   static createAccentLayout(
     position: "left" | "right",
-    className: string = "p-4 mx-auto flex justify-center items-center"
+    className: string = "p-4 mx-auto flex justify-center items-center",
   ): ContentItem {
     const textContent = [
       SlideComponentFactory.createHeading(1),
@@ -258,7 +258,7 @@ export class SlideLayoutFactory {
 
     return SlideComponentFactory.createColumn(
       [SlideComponentFactory.createResizableColumn(columns)],
-      className
+      className,
     );
   }
 
@@ -268,11 +268,11 @@ export class SlideLayoutFactory {
   static createTableLayout(
     initialRows: number = 2,
     initialColumns: number = 2,
-    className: string = "p-8 mx-auto flex flex-col justify-center items-center min-h-[400px]"
+    className: string = "p-8 mx-auto flex flex-col justify-center items-center min-h-[400px]",
   ): ContentItem {
     return SlideComponentFactory.createColumn(
       [SlideComponentFactory.createTable(initialRows, initialColumns)],
-      className
+      className,
     );
   }
 }

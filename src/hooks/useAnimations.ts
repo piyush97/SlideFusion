@@ -13,7 +13,7 @@ export function useScrollAnimation(threshold: number = 0.1) {
           setIsVisible(true);
         }
       },
-      { threshold }
+      { threshold },
     );
 
     const element = document.querySelector("[data-scroll-animation]");

@@ -15,16 +15,16 @@ const PresentationMode = ({ onClose }: Props) => {
   const slides = getOrderedSlides();
   const isLastSlide = currentSlideIndex === slides.length - 1;
 
-  const goToPreviousSlide = () => {
+  const goToPreviousSlide = useCallback(() => {
     setCurrentSlideIndex((prevIndex) => Math.max(prevIndex - 1, 0));
-  };
+  }, []);
 
   const goToNextSlide = useCallback(() => {
     if (currentSlideIndex === slides.length - 1) {
       onClose();
     } else {
       setCurrentSlideIndex((prevIndex) =>
-        Math.min(prevIndex + 1, slides.length - 1)
+        Math.min(prevIndex + 1, slides.length - 1),
       );
     }
   }, [currentSlideIndex, onClose, slides.length]);
@@ -44,7 +44,7 @@ const PresentationMode = ({ onClose }: Props) => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [slides.length, onClose, goToNextSlide]);
+  }, [onClose, goToNextSlide, goToPreviousSlide]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">

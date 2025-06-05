@@ -24,7 +24,7 @@ const DropZone = ({ index, parentId, slideId }: Props) => {
             id: v4(),
           },
           parentId,
-          index
+          index,
         );
       }
     },
@@ -42,7 +42,7 @@ const DropZone = ({ index, parentId, slideId }: Props) => {
         "border-gray-300 hover:border-blue-400",
         isOver && canDrop ? "border-blue-500 bg-blue-100" : "",
         canDrop ? "border-blue-300" : "",
-        "flex items-center justify-center"
+        "flex items-center justify-center",
       )}
     >
       {isOver && canDrop && (

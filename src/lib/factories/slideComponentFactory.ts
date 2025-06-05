@@ -14,7 +14,7 @@ export class SlideComponentFactory {
   static createHeading(
     level: 1 | 2 | 3 | 4,
     content: string = "",
-    placeholder?: string
+    placeholder?: string,
   ): ContentItem {
     return {
       id: uuidv4(),
@@ -30,7 +30,7 @@ export class SlideComponentFactory {
    */
   static createParagraph(
     content: string = "",
-    placeholder: string = "Start typing..."
+    placeholder: string = "Start typing...",
   ): ContentItem {
     return {
       id: uuidv4(),
@@ -47,7 +47,7 @@ export class SlideComponentFactory {
   static createImage(
     src: string = SlideComponentFactory.defaultPlaceholderImage,
     alt: string = "Image",
-    className: string = "p-3"
+    className: string = "p-3",
   ): ContentItem {
     return {
       id: uuidv4(),
@@ -64,7 +64,7 @@ export class SlideComponentFactory {
    */
   static createTitle(
     content: string = "",
-    placeholder: string = "Untitled Card"
+    placeholder: string = "Untitled Card",
   ): ContentItem {
     return {
       id: uuidv4(),
@@ -80,7 +80,7 @@ export class SlideComponentFactory {
    */
   static createColumn(
     content: ContentItem[] = [],
-    className?: string
+    className?: string,
   ): ContentItem {
     return {
       id: uuidv4(),
@@ -96,7 +96,7 @@ export class SlideComponentFactory {
    */
   static createResizableColumn(
     content: ContentItem[] = [],
-    className: string = "border"
+    className: string = "border",
   ): ContentItem {
     return {
       id: uuidv4(),
@@ -113,7 +113,7 @@ export class SlideComponentFactory {
   static createImageTextColumn(
     headingText: string = "",
     paragraphText: string = "",
-    imageSrc?: string
+    imageSrc?: string,
   ): ContentItem {
     return SlideComponentFactory.createColumn([
       SlideComponentFactory.createImage(imageSrc),
@@ -128,7 +128,7 @@ export class SlideComponentFactory {
   static createTextImageColumn(
     headingText: string = "",
     paragraphText: string = "",
-    imageSrc?: string
+    imageSrc?: string,
   ): ContentItem {
     return SlideComponentFactory.createColumn([
       SlideComponentFactory.createHeading(3, headingText),
@@ -142,7 +142,7 @@ export class SlideComponentFactory {
    */
   static createTable(
     initialRows: number = 2,
-    initialColumns: number = 2
+    initialColumns: number = 2,
   ): ContentItem {
     return {
       id: uuidv4(),
@@ -159,7 +159,7 @@ export class SlideComponentFactory {
    */
   static createList(
     type: "numberedList" | "bulletList" | "todoList",
-    items: string[] = []
+    items: string[] = [],
   ): ContentItem {
     const defaultItems = {
       numberedList: ["First item", "Second item", "Third item"],
@@ -174,8 +174,8 @@ export class SlideComponentFactory {
         type === "numberedList"
           ? "Numbered List"
           : type === "bulletList"
-          ? "Bullet List"
-          : "Todo List",
+            ? "Bullet List"
+            : "Todo List",
       content: items.length > 0 ? items : defaultItems[type],
     };
   }
@@ -190,7 +190,7 @@ export class SlideComponentFactory {
       | "info"
       | "question"
       | "caution" = "info",
-    content: string = "This is a callout box"
+    content: string = "This is a callout box",
   ): ContentItem {
     return {
       id: uuidv4(),
@@ -206,7 +206,7 @@ export class SlideComponentFactory {
    */
   static createCodeBlock(
     code: string = "console.log('Hello World!');",
-    language: string = "javascript"
+    language: string = "javascript",
   ): ContentItem {
     return {
       id: uuidv4(),

@@ -20,8 +20,8 @@ const useScratchStore = create<OutlineStore>()(
     }),
     {
       name: "scratch-store",
-    }
-  )
+    },
+  ),
 );
 
 export default useScratchStore;

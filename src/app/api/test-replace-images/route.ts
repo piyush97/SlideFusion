@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 // Import the replaceImagePlaceholders function - we need to copy it since it's not exported
 const generateImageUrl = async (): Promise<string> => {
   const response = await fetch(
-    `${process.env.VERCEL_URL || "http://localhost:3000"}/api/test-image`
+    `${process.env.VERCEL_URL || "http://localhost:3000"}/api/test-image`,
   );
   const data = await response.json();
   return data.imageUrl || "https://via.placeholder.com/1024";
@@ -38,7 +38,7 @@ const replaceImagePlaceholders = async (layout: Slide) => {
   console.log("🔍 Found image components:", imageComponents.length);
   console.log(
     "🔍 Image components details:",
-    imageComponents.map((c) => ({ id: c.id, alt: c.alt, content: c.content }))
+    imageComponents.map((c) => ({ id: c.id, alt: c.alt, content: c.content })),
   );
 
   for (const component of imageComponents) {
@@ -73,7 +73,7 @@ export async function GET() {
           SlideComponentFactory.createTitle("Test Title"),
           SlideComponentFactory.createImage(
             "https://via.placeholder.com/1024",
-            "A test business meeting"
+            "A test business meeting",
           ),
           SlideComponentFactory.createParagraph("Test paragraph"),
         ],
@@ -98,7 +98,7 @@ export async function GET() {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

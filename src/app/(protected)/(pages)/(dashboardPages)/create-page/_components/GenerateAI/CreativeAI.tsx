@@ -212,7 +212,7 @@ const CreativeAI = ({ onBack }: Props) => {
                       >
                         {num} Card{num > 1 ? "s" : ""}
                       </SelectItem>
-                    )
+                    ),
                   )
                 )}
               </SelectContent>

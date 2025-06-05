@@ -56,7 +56,7 @@ const CardList = ({
     if (!draggedItem || dragOverIndex === null) return;
     const updatedCards = [...outlines];
     const draggedIndex = updatedCards.findIndex(
-      (card) => card.id === draggedItem.id
+      (card) => card.id === draggedItem.id,
     );
     if (draggedIndex === -1 || draggedIndex === dragOverIndex) return;
 
@@ -65,11 +65,11 @@ const CardList = ({
     updatedCards.splice(
       dragOverIndex > draggedIndex ? dragOverIndex - 1 : dragOverIndex,
       0,
-      removedCard
+      removedCard,
     );
 
     addMultipleOutlines(
-      updatedCards.map((card, index) => ({ ...card, order: index + 1 }))
+      updatedCards.map((card, index) => ({ ...card, order: index + 1 })),
     );
     setDraggedItem(null);
     setDragOverIndex(null);
@@ -77,7 +77,9 @@ const CardList = ({
 
   const onCardUpdate = (id: string, text: string) => {
     addMultipleOutlines(
-      outlines.map((card) => (card.id === id ? { ...card, title: text } : card))
+      outlines.map((card) =>
+        card.id === id ? { ...card, title: text } : card,
+      ),
     );
     setEditingCard(null);
     setSelectedCard(null);
@@ -88,13 +90,13 @@ const CardList = ({
     addMultipleOutlines(
       outlines
         .filter((card) => card.id !== id)
-        .map((card, index) => ({ ...card, order: index + 1 }))
+        .map((card, index) => ({ ...card, order: index + 1 })),
     );
   };
 
   const onDragStart = (
     e: React.DragEvent<HTMLDivElement>,
-    card: OutlineCard
+    card: OutlineCard,
   ) => {
     setDraggedItem(card);
     e.dataTransfer.effectAllowed = "move";

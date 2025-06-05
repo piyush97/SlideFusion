@@ -12,7 +12,7 @@ export const ListRenderer: React.FC<ContentRendererProps> = ({
 }) => {
   const handleChange = React.useCallback(
     (newItems: string[]) => onContentChange(newItems, content.id),
-    [content.id, onContentChange]
+    [content.id, onContentChange],
   );
 
   const getListComponent = () => {

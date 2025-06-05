@@ -159,7 +159,7 @@ const Page = () => {
     }
     metaDescription.setAttribute(
       "content",
-      "Create stunning presentations with AI-powered SlideFusion. Save time and impress your audience with creative AI generation, smart layouts, and auto-generated visuals."
+      "Create stunning presentations with AI-powered SlideFusion. Save time and impress your audience with creative AI generation, smart layouts, and auto-generated visuals.",
     );
 
     // Update og tags
@@ -167,17 +167,17 @@ const Page = () => {
     if (ogTitle) {
       ogTitle.setAttribute(
         "content",
-        "SlideFusion - AI-Powered Presentation Tool"
+        "SlideFusion - AI-Powered Presentation Tool",
       );
     }
 
     const ogDescription = document.querySelector(
-      'meta[property="og:description"]'
+      'meta[property="og:description"]',
     );
     if (ogDescription) {
       ogDescription.setAttribute(
         "content",
-        "Create stunning presentations with AI-powered SlideFusion. Save time and impress your audience."
+        "Create stunning presentations with AI-powered SlideFusion. Save time and impress your audience.",
       );
     }
   }, []);

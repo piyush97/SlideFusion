@@ -5,7 +5,7 @@ export async function GET() {
   try {
     console.log("🧪 Testing image generation...");
     const imageUrl = await generateImageUrl(
-      "A professional business meeting in a modern office"
+      "A professional business meeting in a modern office",
     );
     console.log("🧪 Test image result:", imageUrl);
 
@@ -21,7 +21,7 @@ export async function GET() {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

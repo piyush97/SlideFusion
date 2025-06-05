@@ -128,7 +128,7 @@ const ScratchPage = ({ onBack }: { onBack: () => void }) => {
                 ) : (
                   Array.from(
                     { length: outlines.length },
-                    (_, index) => index + 1
+                    (_, index) => index + 1,
                   ).map((number) => (
                     <SelectItem
                       className="font-semibold"

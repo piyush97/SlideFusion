@@ -57,7 +57,7 @@ export const ColumnRenderer: React.FC<RecursiveContentProps> = ({
                 />
               )}
             </React.Fragment>
-          )
+          ),
         )
       ) : isEditable ? (
         <DropZone index={0} parentId={content.id} slideId={slideId || ""} />

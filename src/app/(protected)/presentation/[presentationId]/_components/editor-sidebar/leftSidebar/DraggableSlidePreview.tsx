@@ -45,7 +45,7 @@ const DraggableSlidePreview = ({ slide, index, moveSlide }: Props) => {
       className={cn(
         "relative cursor-pointer group",
         index === currentSlide ? "before:bg-blue-500" : "before:bg-transparent",
-        isDragging ? "opacity-50" : "opacity-100"
+        isDragging ? "opacity-50" : "opacity-100",
       )}
       onClick={() => setCurrentSlide(index)}
     >

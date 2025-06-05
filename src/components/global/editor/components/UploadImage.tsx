@@ -5,7 +5,7 @@ type Props = {
   contentId: string;
   onContentChange: (
     newContent: string | string[] | string[][],
-    contentId: string
+    contentId: string,
   ) => void;
 };
 

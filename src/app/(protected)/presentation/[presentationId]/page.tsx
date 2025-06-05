@@ -28,7 +28,7 @@ const Page = () => {
     { projectId: params?.presentationId as string },
     {
       enabled: !!params?.presentationId,
-    }
+    },
   );
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const Page = () => {
       }
 
       const findTheme = themes.find(
-        (theme) => theme.name === projectData.data.themeName
+        (theme) => theme.name === projectData.data.themeName,
       );
 
       setCurrentTheme(findTheme || themes[0]);

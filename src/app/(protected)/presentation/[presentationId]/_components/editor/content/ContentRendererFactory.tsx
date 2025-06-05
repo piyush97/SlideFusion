@@ -76,7 +76,7 @@ export class ContentRendererFactory {
    */
   private static isHeadingType(type: string): boolean {
     return ["heading1", "heading2", "heading3", "heading4", "title"].includes(
-      type
+      type,
     );
   }
 
