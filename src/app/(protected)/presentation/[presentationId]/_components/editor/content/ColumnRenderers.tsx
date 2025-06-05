@@ -1,9 +1,9 @@
 import ColumnComponent from "@/components/global/editor/components/ColumnComponent";
-import { ContentItem } from "@/lib/types";
+import type { ContentItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import React from "react";
 import DropZone from "../DropZone";
-import { ContentRendererProps, ContentWrapper } from "./ContentBase";
+import { type ContentRendererProps, ContentWrapper } from "./ContentBase";
 
 // Forward declaration to avoid circular dependency
 interface RecursiveContentProps extends ContentRendererProps {

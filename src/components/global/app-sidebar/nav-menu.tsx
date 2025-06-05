@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import type React from "react";
 
 const NavMenu = ({
   items,

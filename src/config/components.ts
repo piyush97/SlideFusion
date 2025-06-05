@@ -12,7 +12,7 @@ import {
   Title,
   TodoListComponent,
 } from "@/lib/slideComponents";
-import { ComponentGroup } from "@/lib/types";
+import type { ComponentGroup } from "@/lib/types";
 
 export const COMPONENT_GROUPS: ComponentGroup[] = [
   {

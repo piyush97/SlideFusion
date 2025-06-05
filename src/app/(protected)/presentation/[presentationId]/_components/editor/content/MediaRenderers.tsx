@@ -1,7 +1,7 @@
 import ImageComponent from "@/components/global/editor/components/ImageComponent";
 import TableComponent from "@/components/global/editor/components/TableComponent";
-import React from "react";
-import { ContentRendererProps, ContentWrapper } from "./ContentBase";
+import type React from "react";
+import { type ContentRendererProps, ContentWrapper } from "./ContentBase";
 
 // Table renderer
 export const TableRenderer: React.FC<ContentRendererProps> = ({

@@ -1,4 +1,4 @@
-import { ContentItem } from "../types";
+import type { ContentItem } from "../types";
 import { SlideComponentFactory } from "./slideComponentFactory";
 
 /**
@@ -9,8 +9,8 @@ export class SlideLayoutFactory {
    * Creates a basic slide layout with title and content area (now includes image)
    */
   static createBasicLayout(
-    title: string = "",
-    className: string = "p-8 mx-auto flex justify-center items-center min-h-[200px]",
+    title = "",
+    className = "p-8 mx-auto flex justify-center items-center min-h-[200px]",
   ): ContentItem {
     return SlideComponentFactory.createColumn(
       [
@@ -28,7 +28,7 @@ export class SlideLayoutFactory {
   static createTwoColumnLayout(
     leftContent: ContentItem[] = [],
     rightContent: ContentItem[] = [],
-    className: string = "p-4 mx-auto flex justify-center items-center",
+    className = "p-4 mx-auto flex justify-center items-center",
   ): ContentItem {
     const defaultLeft =
       leftContent.length > 0
@@ -65,7 +65,7 @@ export class SlideLayoutFactory {
    */
   static createThreeColumnLayout(
     columns: ContentItem[][] = [],
-    className: string = "p-4 mx-auto flex justify-center items-center",
+    className = "p-4 mx-auto flex justify-center items-center",
   ): ContentItem {
     const defaultColumns =
       columns.length === 3
@@ -106,7 +106,7 @@ export class SlideLayoutFactory {
    */
   static createFourColumnLayout(
     columns: ContentItem[][] = [],
-    className: string = "p-4 mx-auto flex justify-center items-center",
+    className = "p-4 mx-auto flex justify-center items-center",
   ): ContentItem {
     const defaultColumns =
       columns.length === 4
@@ -152,7 +152,7 @@ export class SlideLayoutFactory {
    */
   static createImageColumnLayout(
     numberOfColumns: 2 | 3 | 4,
-    className: string = "p-4 mx-auto flex justify-center items-center",
+    className = "p-4 mx-auto flex justify-center items-center",
   ): ContentItem {
     const columns = Array(numberOfColumns)
       .fill(null)
@@ -182,7 +182,7 @@ export class SlideLayoutFactory {
    * Creates a layout with heading and two columns
    */
   static createTwoColumnsWithHeadingsLayout(
-    className: string = "p-4 mx-auto flex justify-center items-center",
+    className = "p-4 mx-auto flex justify-center items-center",
   ): ContentItem {
     return SlideComponentFactory.createColumn(
       [
@@ -206,8 +206,8 @@ export class SlideLayoutFactory {
    * Creates image and text side-by-side layout
    */
   static createImageAndTextLayout(
-    imageFirst: boolean = true,
-    className: string = "min-h-[200px] p-8 mx-auto flex justify-center items-center",
+    imageFirst = true,
+    className = "min-h-[200px] p-8 mx-auto flex justify-center items-center",
   ): ContentItem {
     const imageColumn = SlideComponentFactory.createColumn([
       SlideComponentFactory.createImage(),
@@ -236,7 +236,7 @@ export class SlideLayoutFactory {
    */
   static createAccentLayout(
     position: "left" | "right",
-    className: string = "p-4 mx-auto flex justify-center items-center",
+    className = "p-4 mx-auto flex justify-center items-center",
   ): ContentItem {
     const textContent = [
       SlideComponentFactory.createHeading(1),
@@ -266,9 +266,9 @@ export class SlideLayoutFactory {
    * Creates a table layout
    */
   static createTableLayout(
-    initialRows: number = 2,
-    initialColumns: number = 2,
-    className: string = "p-8 mx-auto flex flex-col justify-center items-center min-h-[400px]",
+    initialRows = 2,
+    initialColumns = 2,
+    className = "p-8 mx-auto flex flex-col justify-center items-center min-h-[400px]",
   ): ContentItem {
     return SlideComponentFactory.createColumn(
       [SlideComponentFactory.createTable(initialRows, initialColumns)],

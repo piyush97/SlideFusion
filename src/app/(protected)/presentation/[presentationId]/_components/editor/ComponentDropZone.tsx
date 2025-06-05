@@ -1,8 +1,8 @@
 "use client";
-import { ContentItem } from "@/lib/types";
+import type { ContentItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useSlideStore } from "@/store/useSlideStore";
-import React from "react";
+import type React from "react";
 import { useDrop } from "react-dnd";
 import { v4 as uuidv4 } from "uuid";
 

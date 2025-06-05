@@ -1,6 +1,6 @@
-import { LayoutSlides } from "@/lib/types";
+import type { LayoutSlides } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import React from "react";
+import type React from "react";
 
 type Props = {
   name: string;
@@ -14,6 +14,7 @@ type Props = {
 const LayoutPreviewItem = ({ name, Icon, onClick, isSelected }: Props) => {
   return (
     <button
+      type="button"
       onClick={onClick}
       className={cn(
         "flex flex-col items-center cursor-grab active:cursor-grabbing gap-2 p-2 rounded-lg hover:bg-primary-10 transition-all duration-200",

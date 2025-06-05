@@ -8,7 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { layouts } from "@/config";
-import { Layout } from "@/lib/types";
+import type { Layout } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { Lightbulb, Sparkles } from "lucide-react";
 import { useDrag } from "react-dnd";

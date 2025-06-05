@@ -1,4 +1,4 @@
-import { Slide } from "@/lib/types";
+import type { Slide } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useSlideStore } from "@/store/useSlideStore";
 import { MasterRecursiveComponent } from "../../editor/Content";

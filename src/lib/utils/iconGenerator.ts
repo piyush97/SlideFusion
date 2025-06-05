@@ -12,7 +12,7 @@ interface IconProps {
  */
 export function createColumnIcon(
   numberOfColumns: number,
-  withHeading: boolean = false,
+  withHeading = false,
 ): React.FC<IconProps> {
   return function ColumnIcon({ className = "" }: IconProps) {
     return React.createElement(
@@ -48,9 +48,7 @@ export function createColumnIcon(
     );
   };
 }
-export function createTextImageIcon(
-  imageFirst: boolean = false,
-): React.FC<IconProps> {
+export function createTextImageIcon(imageFirst = false): React.FC<IconProps> {
   return function TextImageIcon({ className = "" }: IconProps) {
     const textContent = React.createElement(
       "div",

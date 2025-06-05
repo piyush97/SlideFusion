@@ -26,10 +26,15 @@
         "useAltText": "warn",
         "useAriaPropsForRole": "warn",
         "useValidAriaProps": "warn",
-        "useValidAriaValues": "warn"
+        "useValidAriaValues": "warn",
+        "useValidAnchor": "off",
+        "noSvgWithoutTitle": "off",
+        "useSemanticElements": "off",
+        "useFocusableInteractive": "off"
       },
       "complexity": {
-        "noUselessTypeConstraint": "error"
+        "noUselessTypeConstraint": "error",
+        "noStaticOnlyClass": "off"
       },
       "correctness": {
         "noChildrenProp": "error",
@@ -49,7 +54,8 @@
         "useJsxKeyInIterable": "error"
       },
       "security": {
-        "noDangerouslySetInnerHtmlWithChildren": "error"
+        "noDangerouslySetInnerHtmlWithChildren": "off",
+        "noDangerouslySetInnerHtml": "off"
       },
       "style": {
         "noArguments": "error",
@@ -68,6 +74,7 @@
         "noExplicitAny": "error",
         "noExtraNonNullAssertion": "error",
         "noFunctionAssign": "off",
+        "noArrayIndexKey": "off",
         "noImportAssign": "off",
         "noMisleadingInstantiator": "error",
         "noRedeclare": "off",

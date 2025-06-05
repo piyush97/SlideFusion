@@ -5,9 +5,9 @@ import Divider from "@/components/global/editor/components/Divider";
 import Paragraph from "@/components/global/editor/components/Paragraph";
 import TableOfContents from "@/components/global/editor/components/TableOfContents";
 import { cn } from "@/lib/utils";
-import React from "react";
+import type React from "react";
 import {
-  ContentRendererProps,
+  type ContentRendererProps,
   ContentWrapper,
   useCommonTextProps,
 } from "./ContentBase";

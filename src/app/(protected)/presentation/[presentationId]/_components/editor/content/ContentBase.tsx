@@ -1,4 +1,4 @@
-import { ContentItem } from "@/lib/types";
+import type { ContentItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import React from "react";
@@ -55,7 +55,7 @@ export interface CommonTextProps {
 export const useCommonTextProps = (
   content: ContentItem,
   onContentChange: ContentRendererProps["onContentChange"],
-  isPreview: boolean = false,
+  isPreview = false,
 ): CommonTextProps => {
   const handleChange = React.useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {

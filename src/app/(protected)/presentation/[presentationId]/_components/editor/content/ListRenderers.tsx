@@ -3,7 +3,7 @@ import NumberedList, {
   TodoList,
 } from "@/components/global/editor/components/NumberedList";
 import React from "react";
-import { ContentRendererProps, ContentWrapper } from "./ContentBase";
+import { type ContentRendererProps, ContentWrapper } from "./ContentBase";
 
 // List renderers
 export const ListRenderer: React.FC<ContentRendererProps> = ({

@@ -2,7 +2,7 @@
 import AlertDialogBox from "@/components/global/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { api } from "@/lib/api";
-import { Project } from "@prisma/client";
+import type { Project } from "@prisma/client";
 import { Trash } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";

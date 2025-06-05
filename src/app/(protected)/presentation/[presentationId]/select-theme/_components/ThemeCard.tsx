@@ -1,8 +1,8 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Theme } from "@/lib/types";
-import { AnimationControls, motion } from "motion/react";
+import type { Theme } from "@/lib/types";
+import { type AnimationControls, motion } from "motion/react";
 import Image from "next/image";
-import React from "react";
+import type React from "react";
 
 type Props = {
   title: string;

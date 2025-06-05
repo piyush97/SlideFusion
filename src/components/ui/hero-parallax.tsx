@@ -1,6 +1,6 @@
 "use client";
 import {
-  MotionValue,
+  type MotionValue,
   motion,
   useScroll,
   useSpring,
@@ -149,7 +149,7 @@ export const ProductCard = ({
           alt={product.title}
         />
       </Link>
-      <div className="absolute inset-0 w-full h-full bg-black opacity-0 pointer-events-none group-hover/product:opacity-80"></div>
+      <div className="absolute inset-0 w-full h-full bg-black opacity-0 pointer-events-none group-hover/product:opacity-80" />
       <h2 className="absolute text-white opacity-0 bottom-4 left-4 group-hover/product:opacity-100">
         {product.title}
       </h2>

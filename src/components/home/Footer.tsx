@@ -9,7 +9,7 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <div className="flex items-center justify-center w-8 h-8 rounded-md bg-gradient-to-br from-slide-blue to-slide-purple">
-                <div className="w-5 h-1 bg-white rounded-sm"></div>
+                <div className="w-5 h-1 bg-white rounded-sm" />
               </div>
               <span className="text-xl font-bold tracking-tight">
                 SlideFusion

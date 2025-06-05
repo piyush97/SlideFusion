@@ -1,4 +1,4 @@
-import { ContentType } from "@/lib/types";
+import type { ContentType } from "@/lib/types";
 import { currentUser } from "@clerk/nextjs/server";
 import OpenAI from "openai";
 import { v4 as uuidv4 } from "uuid";

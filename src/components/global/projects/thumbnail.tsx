@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { MasterRecursiveComponent } from "@/app/(protected)/presentation/[presentationId]/_components/editor/Content";
-import { Slide, Theme } from "@/lib/types";
+import type { Slide, Theme } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Image } from "lucide-react";
 

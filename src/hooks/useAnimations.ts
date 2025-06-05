@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 /**
  * Custom hook for handling scroll-based animations
  */
-export function useScrollAnimation(threshold: number = 0.1) {
+export function useScrollAnimation(threshold = 0.1) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export function useScrollAnimation(threshold: number = 0.1) {
 /**
  * Custom hook for staggered animations
  */
-export function useStaggeredAnimation(itemCount: number, delay: number = 0.1) {
+export function useStaggeredAnimation(itemCount: number, delay = 0.1) {
   return Array.from({ length: itemCount }, (_, index) => ({
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },

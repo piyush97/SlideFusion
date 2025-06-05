@@ -1,4 +1,4 @@
-import { Theme } from "@/lib/types";
+import type { Theme } from "@/lib/types";
 
 export const THEMES: Theme[] = [
   {

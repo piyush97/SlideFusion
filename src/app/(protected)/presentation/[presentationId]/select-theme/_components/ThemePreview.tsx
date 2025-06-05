@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { themes } from "@/config";
-import { Theme } from "@/lib/types";
+import type { Theme } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { ArrowLeft } from "lucide-react";
 import { useAnimation } from "motion/react";
@@ -66,7 +66,7 @@ const ThemePreview = () => {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div
           className="p-6 rounded-xl"
-          style={{ backgroundColor: selectedTheme.accentColor + "10" }}
+          style={{ backgroundColor: `${selectedTheme.accentColor}10` }}
         >
           <p style={{ color: selectedTheme.accentColor }}>
             This is a smart layout: it acts as a text box.
@@ -74,7 +74,7 @@ const ThemePreview = () => {
         </div>
         <div
           className="p-6 rounded-xl"
-          style={{ backgroundColor: selectedTheme.accentColor + "10" }}
+          style={{ backgroundColor: `${selectedTheme.accentColor}10` }}
         >
           <p style={{ color: selectedTheme.accentColor }}>
             You can get thee by typing /smart{" "}
@@ -100,7 +100,7 @@ const ThemePreview = () => {
     <div className="space-y-4">
       <div
         className="p-6 rounded-xl"
-        style={{ backgroundColor: selectedTheme.accentColor + "10" }}
+        style={{ backgroundColor: `${selectedTheme.accentColor}10` }}
       >
         <h3 className="mb-4 text-xl font-semibold">Th eme Features</h3>
         <ul className="space-y-2 list-inside list-desc">
@@ -139,9 +139,9 @@ const ThemePreview = () => {
             className="self-start mb-12"
             size="lg"
             style={{
-              backgroundColor: selectedTheme.accentColor + "10",
+              backgroundColor: `${selectedTheme.accentColor}10`,
               color: selectedTheme.accentColor,
-              borderColor: selectedTheme.accentColor + "20",
+              borderColor: `${selectedTheme.accentColor}20`,
             }}
             onClick={() => router.push("/create-page")}
           >

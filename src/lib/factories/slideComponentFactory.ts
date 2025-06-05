@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { ContentItem, ContentType } from "../types";
+import type { ContentItem, ContentType } from "../types";
 
 /**
  * Factory for creating slide components with consistent structure
@@ -13,7 +13,7 @@ export class SlideComponentFactory {
    */
   static createHeading(
     level: 1 | 2 | 3 | 4,
-    content: string = "",
+    content = "",
     placeholder?: string,
   ): ContentItem {
     return {
@@ -29,8 +29,8 @@ export class SlideComponentFactory {
    * Creates a paragraph component
    */
   static createParagraph(
-    content: string = "",
-    placeholder: string = "Start typing...",
+    content = "",
+    placeholder = "Start typing...",
   ): ContentItem {
     return {
       id: uuidv4(),
@@ -46,8 +46,8 @@ export class SlideComponentFactory {
    */
   static createImage(
     src: string = SlideComponentFactory.defaultPlaceholderImage,
-    alt: string = "Image",
-    className: string = "p-3",
+    alt = "Image",
+    className = "p-3",
   ): ContentItem {
     return {
       id: uuidv4(),
@@ -62,10 +62,7 @@ export class SlideComponentFactory {
   /**
    * Creates a title component
    */
-  static createTitle(
-    content: string = "",
-    placeholder: string = "Untitled Card",
-  ): ContentItem {
+  static createTitle(content = "", placeholder = "Untitled Card"): ContentItem {
     return {
       id: uuidv4(),
       type: "title" as ContentType,
@@ -96,7 +93,7 @@ export class SlideComponentFactory {
    */
   static createResizableColumn(
     content: ContentItem[] = [],
-    className: string = "border",
+    className = "border",
   ): ContentItem {
     return {
       id: uuidv4(),
@@ -111,8 +108,8 @@ export class SlideComponentFactory {
    * Creates a standard image + text column combination
    */
   static createImageTextColumn(
-    headingText: string = "",
-    paragraphText: string = "",
+    headingText = "",
+    paragraphText = "",
     imageSrc?: string,
   ): ContentItem {
     return SlideComponentFactory.createColumn([
@@ -126,8 +123,8 @@ export class SlideComponentFactory {
    * Creates a standard text + image column combination
    */
   static createTextImageColumn(
-    headingText: string = "",
-    paragraphText: string = "",
+    headingText = "",
+    paragraphText = "",
     imageSrc?: string,
   ): ContentItem {
     return SlideComponentFactory.createColumn([
@@ -140,10 +137,7 @@ export class SlideComponentFactory {
   /**
    * Creates a table component
    */
-  static createTable(
-    initialRows: number = 2,
-    initialColumns: number = 2,
-  ): ContentItem {
+  static createTable(initialRows = 2, initialColumns = 2): ContentItem {
     return {
       id: uuidv4(),
       type: "table" as ContentType,
@@ -190,7 +184,7 @@ export class SlideComponentFactory {
       | "info"
       | "question"
       | "caution" = "info",
-    content: string = "This is a callout box",
+    content = "This is a callout box",
   ): ContentItem {
     return {
       id: uuidv4(),
@@ -205,8 +199,8 @@ export class SlideComponentFactory {
    * Creates a code block component
    */
   static createCodeBlock(
-    code: string = "console.log('Hello World!');",
-    language: string = "javascript",
+    code = "console.log('Hello World!');",
+    language = "javascript",
   ): ContentItem {
     return {
       id: uuidv4(),

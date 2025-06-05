@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/select";
 import { containerVariants, itemVariant } from "@/config";
 import { api } from "@/lib/api";
-import { OutlineCard } from "@/lib/types";
+import type { OutlineCard } from "@/lib/types";
 import { useCreativeAIStore } from "@/store/useCreativeAIStore";
 import { usePromptStore } from "@/store/usePromptStore";
 import { useSlideStore } from "@/store/useSlideStore";
@@ -191,7 +191,7 @@ const CreativeAI = ({ onBack }: Props) => {
           <div className="flex items-center gap-3">
             <Select
               value={noOfCards.toString()}
-              onValueChange={(value) => setNoOfCards(parseInt(value))}
+              onValueChange={(value) => setNoOfCards(Number.parseInt(value))}
             >
               <SelectTrigger className="gap-2 font-semibold shadow-xl w-fit">
                 <SelectValue placeholder="Select number of Cards" />

@@ -1,5 +1,5 @@
-import React from "react";
-import { ContentRendererProps } from "./ContentBase";
+import type React from "react";
+import type { ContentRendererProps } from "./ContentBase";
 import { ListRenderer } from "./ListRenderers";
 import { ImageRenderer, TableRenderer } from "./MediaRenderers";
 import {
@@ -22,7 +22,7 @@ export class ContentRendererFactory {
     const { content } = props;
 
     // Text-based content
-    if (this.isHeadingType(content.type)) {
+    if (ContentRendererFactory.isHeadingType(content.type)) {
       return <HeadingRenderer {...props} />;
     }
 
@@ -31,7 +31,7 @@ export class ContentRendererFactory {
     }
 
     // List content
-    if (this.isListType(content.type)) {
+    if (ContentRendererFactory.isListType(content.type)) {
       return <ListRenderer {...props} />;
     }
 

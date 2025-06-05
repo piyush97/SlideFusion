@@ -1,5 +1,5 @@
 "use client";
-import { OutlineCard } from "@/lib/types";
+import type { OutlineCard } from "@/lib/types";
 import { AnimatePresence, motion } from "motion/react";
 import React, { useRef, useState } from "react";
 import AddCardButton from "./AddCardButton";
@@ -130,7 +130,8 @@ const CardList = ({
         marginTop: "0.5rem",
         transition: "margin 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
       };
-    } else if (cardId === dragOverIndex - 1)
+    }
+    if (cardId === dragOverIndex - 1)
       return {
         borderBottom: "2px solid #000",
         marginBottom: "0.5rem",

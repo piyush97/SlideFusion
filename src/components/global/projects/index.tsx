@@ -1,6 +1,6 @@
 "use client";
 import { containerVariants } from "@/config";
-import { Project } from "@prisma/client";
+import type { Project } from "@prisma/client";
 import * as motion from "motion/react-client";
 import ProjectCard from "./project-card";
 

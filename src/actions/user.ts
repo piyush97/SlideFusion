@@ -29,7 +29,7 @@ export const onAuthenticateUser = async () => {
       data: {
         clerkId: user.id,
         email: user.emailAddresses[0].emailAddress,
-        name: user.firstName + " " + user.lastName,
+        name: `${user.firstName} ${user.lastName}`,
         profileImage: user.imageUrl,
       },
     });

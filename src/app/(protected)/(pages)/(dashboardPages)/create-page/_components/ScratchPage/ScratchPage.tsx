@@ -18,7 +18,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import CardList from "../Common/CardList";
 
-import { OutlineCard } from "@/lib/types";
+import type { OutlineCard } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

@@ -6,9 +6,9 @@ import {
   Title,
 } from "@/components/global/editor/components/Headings";
 import Paragraph from "@/components/global/editor/components/Paragraph";
-import React from "react";
+import type React from "react";
 import {
-  ContentRendererProps,
+  type ContentRendererProps,
   ContentWrapper,
   useCommonTextProps,
 } from "./ContentBase";

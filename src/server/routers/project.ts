@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server";
-import { InputJsonValue } from "@prisma/client/runtime/library";
+import type { InputJsonValue } from "@prisma/client/runtime/library";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../../lib/trpc";
 

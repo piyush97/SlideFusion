@@ -1,7 +1,7 @@
 "use server";
 
 import { client } from "@/lib/prisma";
-import { ContentItem, ContentType, Slide } from "@/lib/types";
+import type { ContentItem, ContentType, Slide } from "@/lib/types";
 import { currentUser } from "@clerk/nextjs/server";
 import OpenAI from "openai";
 import { v4 as uuidv4 } from "uuid";
@@ -123,11 +123,11 @@ const findImageComponents = (layout: ContentItem): ContentItem[] => {
     images.push(layout);
   }
   if (Array.isArray(layout.content)) {
-    layout.content.forEach((child: ContentItem | string | string[]) => {
+    for (const child of layout.content) {
       if (typeof child === "object" && !Array.isArray(child)) {
         images.push(...findImageComponents(child as ContentItem));
       }
-    });
+    }
   } else if (
     layout.content &&
     typeof layout.content === "object" &&
@@ -350,7 +350,7 @@ ${JSON.stringify([
       return { status: 400, error: "No content generated" };
     }
 
-    let jsonResponse;
+    let jsonResponse: Slide[];
     try {
       // More robust JSON extraction and parsing
       const jsonContent = responseContent.trim();

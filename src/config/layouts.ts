@@ -26,7 +26,7 @@ import {
   TwoColumnsWithHeadings,
   TwoImageColumns,
 } from "@/lib/slideLayouts";
-import { LayoutGroup } from "@/lib/types";
+import type { LayoutGroup } from "@/lib/types";
 
 export const LAYOUT_GROUPS: LayoutGroup[] = [
   {

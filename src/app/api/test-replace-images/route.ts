@@ -1,5 +1,5 @@
 import { SlideComponentFactory } from "@/lib/factories/slideComponentFactory";
-import { ContentItem, Slide } from "@/lib/types";
+import type { ContentItem, Slide } from "@/lib/types";
 import { NextResponse } from "next/server";
 import { v4 as uuidv4 } from "uuid";
 
@@ -18,11 +18,11 @@ const findImageComponents = (layout: ContentItem): ContentItem[] => {
     images.push(layout);
   }
   if (Array.isArray(layout.content)) {
-    layout.content.forEach((child: ContentItem | string | string[]) => {
+    for (const child of layout.content) {
       if (typeof child === "object" && !Array.isArray(child)) {
         images.push(...findImageComponents(child as ContentItem));
       }
-    });
+    }
   } else if (
     layout.content &&
     typeof layout.content === "object" &&

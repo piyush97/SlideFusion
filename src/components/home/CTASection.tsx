@@ -20,7 +20,7 @@ export function CTASection({ className }: CTASectionProps) {
           opacity: [0.3, 0.5, 0.3],
         }}
         transition={{
-          repeat: Infinity,
+          repeat: Number.POSITIVE_INFINITY,
           duration: 8,
         }}
       />

@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 
 export type PrismaUser = Prisma.UserGetPayload<{
   include: { PurchasedProjects: true };

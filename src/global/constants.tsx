@@ -40,7 +40,7 @@ import {
   TwoColumnsWithHeadings,
   TwoImageColumns,
 } from "@/lib/slideLayouts";
-import { ComponentGroup, LayoutGroup, Theme } from "@/lib/types";
+import type { ComponentGroup, LayoutGroup, Theme } from "@/lib/types";
 import { Home, LayoutTemplate, SettingsIcon, TrashIcon } from "lucide-react";
 
 export const APP_NAME = "SlideFusion - AI based Presentation Tool";

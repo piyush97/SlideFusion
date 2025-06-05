@@ -260,7 +260,7 @@ const Page = () => {
                   opacity: [0.5, 0.8, 0.5],
                 }}
                 transition={{
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   duration: 5,
                 }}
               />
@@ -271,7 +271,7 @@ const Page = () => {
                   opacity: [0.5, 0.8, 0.5],
                 }}
                 transition={{
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   duration: 4,
                   delay: 1,
                 }}
@@ -467,7 +467,7 @@ const Page = () => {
             opacity: [0.3, 0.5, 0.3],
           }}
           transition={{
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             duration: 8,
           }}
         />

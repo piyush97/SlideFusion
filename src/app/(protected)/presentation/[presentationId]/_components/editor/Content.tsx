@@ -1,11 +1,11 @@
 "use client";
-import { ContentItem } from "@/lib/types";
+import type { ContentItem } from "@/lib/types";
 import React from "react";
 import {
   ColumnRenderer,
   ResizableColumnRenderer,
 } from "./content/ColumnRenderers";
-import { ContentRendererProps } from "./content/ContentBase";
+import type { ContentRendererProps } from "./content/ContentBase";
 import ContentRendererFactory from "./content/ContentRendererFactory";
 
 type Props = {

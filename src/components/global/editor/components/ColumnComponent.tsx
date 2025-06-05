@@ -4,7 +4,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { ContentItem } from "@/lib/types";
+import type { ContentItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import React, { useEffect } from "react";
 import { v4 } from "uuid";

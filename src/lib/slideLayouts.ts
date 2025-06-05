@@ -1,5 +1,5 @@
 import { SlideLayoutFactory } from "./factories/slideLayoutFactory";
-import { LayoutSlides } from "./types";
+import type { LayoutSlides } from "./types";
 
 // Create layouts using the factory methods for consistency and maintainability
 export const BlankCard: LayoutSlides = {

@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { api } from "@/lib/api";
-import { Theme } from "@/lib/types";
+import type { Theme } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { Loader2, Wand2 } from "lucide-react";
 import { motion } from "motion/react";

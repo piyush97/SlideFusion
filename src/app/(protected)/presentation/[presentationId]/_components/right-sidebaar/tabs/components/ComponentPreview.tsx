@@ -1,4 +1,4 @@
-import { ContentItem } from "@/lib/types";
+import type { ContentItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useDrag } from "react-dnd";
 

@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card as UICard } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { OutlineCard } from "@/lib/types";
+import type { OutlineCard } from "@/lib/types";
 import { Trash2 } from "lucide-react";
 import { motion } from "motion/react";
 import { useRef } from "react";

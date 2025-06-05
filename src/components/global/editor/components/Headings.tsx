@@ -56,7 +56,7 @@ const createHeading = (name: string, defaultClassName: string) => {
           }}
           readOnly={isPreview}
           {...props}
-        ></textarea>
+        />
       );
     },
   );
