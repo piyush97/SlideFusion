@@ -8,7 +8,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/lib/api";
-import { LayoutSlides, Slide } from "@/lib/types";
+import type { LayoutSlides, Slide } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useSlideStore } from "@/store/useSlideStore";
 import { EllipsisVertical, Trash } from "lucide-react";
@@ -30,7 +30,7 @@ type DropZoneProps = {
       component: LayoutSlides;
       index?: number;
     },
-    dropIndex: number
+    dropIndex: number,
   ) => void;
   isEditable: boolean;
 };
@@ -64,7 +64,7 @@ export const DropZone: React.FC<DropZoneProps> = ({
       className={cn(
         "h-4 my-2 rounded-md transition-all duration-200",
         isOver && canDrop ? "border-green-500 bg-green-100" : "border-gray-300",
-        canDrop ? "border-blue-300" : ""
+        canDrop ? "border-blue-300" : "",
       )}
       ref={dropRef as unknown as React.RefObject<HTMLDivElement>}
     >
@@ -137,10 +137,19 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
         "flex flex-col",
         index === currentSlide ? "ring-2 ring-blue-500 ring-offset-2" : "",
         slide.className,
-        isDragging ? "opacity-50" : "opacity-100"
+        isDragging ? "opacity-50" : "opacity-100",
       )}
       style={{ backgroundImage: currentTheme.gradientBackground }}
       onClick={() => setCurrentSlide(index)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setCurrentSlide(index);
+        }
+      }}
+      tabIndex={0}
+      role="button"
+      aria-label={`Select slide ${index + 1}: ${slide.slideName}`}
     >
       <div className="flex-grow w-full h-full overflow-hidden">
         <MasterRecursiveComponent
@@ -220,17 +229,17 @@ const Editor = ({ isEditable }: Props) => {
       component: LayoutSlides;
       index?: number;
     },
-    dropIndex: number
+    dropIndex: number,
   ) => {
     if (!isEditable) return;
-    if (item.type === "layout") {
+    if (item.type === "LAYOUT") {
       addSlideAtIndex(
         {
           ...item.component,
           id: v4(),
           slideOrder: dropIndex,
         },
-        dropIndex
+        dropIndex,
       );
     } else if (item.type === "SLIDE" && item.index !== undefined) {
       moveSlide(item.index, dropIndex);
@@ -282,7 +291,7 @@ const Editor = ({ isEditable }: Props) => {
         clearTimeout(autoSaveTimeoutRef.current);
       }
     };
-  }, [slides, isEditable, project, saveSlides]);
+  }, [isEditable, saveSlides]);
 
   return (
     <div className="relative flex flex-col flex-1 h-full max-w-3xl px-4 mx-auto mb-20">
@@ -306,12 +315,12 @@ const Editor = ({ isEditable }: Props) => {
                 r="10"
                 stroke="currentColor"
                 strokeWidth="4"
-              ></circle>
+              />
               <path
                 className="opacity-75"
                 fill="currentColor"
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
+              />
             </svg>
             <span className="text-sm">Saving...</span>
           </div>

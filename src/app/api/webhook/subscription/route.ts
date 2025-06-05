@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic"; // to remove cache
+import crypto from "node:crypto";
 import { client } from "@/lib/prisma";
-import crypto from "crypto";
-import { NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,14 +14,22 @@ export async function POST(req: NextRequest) {
       throw new Error("Missing buyerUserId in custom_data");
     }
 
-    const hmac = crypto.createHmac(
-      "sha256",
-      process.env.LEMON_SQUEEZY_WEBHOOK_SECRET!
-    ); // Create HMAC using the secret key
+    const webhookSecret = process.env.LEMON_SQUEEZY_WEBHOOK_SECRET;
+    if (!webhookSecret) {
+      throw new Error(
+        "Missing LEMON_SQUEEZY_WEBHOOK_SECRET environment variable",
+      );
+    }
+
+    const hmac = crypto.createHmac("sha256", webhookSecret); // Create HMAC using the secret key
 
     const digest = Buffer.from(hmac.update(rawBody).digest("hex"), "utf8"); // Create HMAC digest
 
-    const signature = Buffer.from(req.headers.get("x-signature")!, "utf8"); // Get the signature from the request header
+    const signatureHeader = req.headers.get("x-signature");
+    if (!signatureHeader) {
+      throw new Error("Missing x-signature header");
+    }
+    const signature = Buffer.from(signatureHeader, "utf8"); // Get the signature from the request header
 
     console.log("Digest:", digest);
     console.log("Signature:", signature);
@@ -55,7 +63,7 @@ export async function POST(req: NextRequest) {
         data: buyer,
         status: 200,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Error processing webhook:", error);

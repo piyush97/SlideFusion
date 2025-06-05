@@ -1,936 +1,102 @@
-import { v4 as uuidv4 } from "uuid";
-import { ContentType } from "./types";
+import { SlideLayoutFactory } from "./factories/slideLayoutFactory";
+import type { LayoutSlides } from "./types";
 
-export const BlankCard = {
+// Create layouts using the factory methods for consistency and maintainability
+export const BlankCard: LayoutSlides = {
   slideName: "Blank card",
   type: "blank-card",
   className: "p-8 mx-auto flex justify-center items-center min-h-[200px]",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "title" as ContentType,
-        name: "Title",
-        content: "",
-        placeholder: "Untitled Card",
-      },
-    ],
-  },
+  content: SlideLayoutFactory.createBasicLayout(),
 };
 
-export const AccentLeft = {
-  slideName: "Accent left",
-  type: "accentLeft",
-  className: "min-h-[300px]",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    restrictDropTo: true,
-    content: [
-      {
-        id: uuidv4(),
-        type: "resizable-column" as ContentType,
-        name: "Resizable column",
-        restrictToDrop: true,
-        content: [
-          {
-            id: uuidv4(),
-            type: "image" as ContentType,
-            name: "Image",
-            content:
-              "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            alt: "Title",
-          },
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "heading1" as ContentType,
-                name: "Heading1",
-                content: "",
-                placeholder: "Heading1",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "start typing here",
-              },
-            ],
-            className: "w-full h-full p-8 flex justify-center items-center",
-            placeholder: "Heading1",
-          },
-        ],
-      },
-    ],
-  },
-};
-
-export const AccentRight = {
-  slideName: "Accent Right",
-  type: "accentRight",
-  className: "min-h-[300px]",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "resizable-column" as ContentType,
-        name: "Resizable column",
-        restrictToDrop: true,
-        content: [
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "heading1" as ContentType,
-                name: "Heading1",
-                content: "",
-                placeholder: "Heading1",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "start typing here",
-              },
-            ],
-            className: "w-full h-full p-8 flex justify-center items-center",
-            placeholder: "Heading1",
-          },
-          {
-            id: uuidv4(),
-            type: "image" as ContentType,
-            name: "Image",
-            restrictToDrop: true,
-            content:
-              "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            alt: "Title",
-          },
-        ],
-      },
-    ],
-  },
-};
-
-export const ImageAndText = {
+export const ImageAndText: LayoutSlides = {
   slideName: "Image and text",
   type: "imageAndText",
   className: "min-h-[200px] p-8 mx-auto flex justify-center items-center",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "resizable-column" as ContentType,
-        name: "Image and text",
-        className: "border",
-        content: [
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "image" as ContentType,
-                name: "Image",
-                className: "p-3",
-                content:
-                  "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                alt: "Title",
-              },
-            ],
-          },
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "heading1" as ContentType,
-                name: "Heading1",
-                content: "",
-                placeholder: "Heading1",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "start typing here",
-              },
-            ],
-            className: "w-full h-full p-8 flex justify-center items-center",
-            placeholder: "Heading1",
-          },
-        ],
-      },
-    ],
-  },
+  content: SlideLayoutFactory.createImageAndTextLayout(true),
 };
 
-export const TextAndImage = {
+export const TextAndImage: LayoutSlides = {
   slideName: "Text and image",
   type: "textAndImage",
   className: "min-h-[200px] p-8 mx-auto flex justify-center items-center",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "resizable-column" as ContentType,
-        name: "Text and image",
-        className: "border",
-        content: [
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "",
-            content: [
-              {
-                id: uuidv4(),
-                type: "heading1" as ContentType,
-                name: "Heading1",
-                content: "",
-                placeholder: "Heading1",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "start typing here",
-              },
-            ],
-            className: "w-full h-full p-8 flex justify-center items-center",
-            placeholder: "Heading1",
-          },
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "image" as ContentType,
-                name: "Image",
-                className: "p-3",
-                content:
-                  "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                alt: "Title",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  content: SlideLayoutFactory.createImageAndTextLayout(false),
 };
 
-export const TwoColumns = {
+export const AccentLeft: LayoutSlides = {
+  slideName: "Accent Left",
+  type: "accentLeft",
+  className: "p-4 mx-auto flex justify-center items-center",
+  content: SlideLayoutFactory.createAccentLayout("left"),
+};
+
+export const AccentRight: LayoutSlides = {
+  slideName: "Accent Right",
+  type: "accentRight",
+  className: "p-4 mx-auto flex justify-center items-center",
+  content: SlideLayoutFactory.createAccentLayout("right"),
+};
+
+export const TwoColumns: LayoutSlides = {
   slideName: "Two columns",
   type: "twoColumns",
   className: "p-4 mx-auto flex justify-center items-center",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "title" as ContentType,
-        name: "Title",
-        content: "",
-        placeholder: "Untitled Card",
-      },
-      {
-        id: uuidv4(),
-        type: "resizable-column" as ContentType,
-        name: "Text and image",
-        className: "border",
-        content: [
-          {
-            id: uuidv4(),
-            type: "paragraph" as ContentType,
-            name: "Paragraph",
-            content: "",
-            placeholder: "Start typing...",
-          },
-          {
-            id: uuidv4(),
-            type: "paragraph" as ContentType,
-            name: "Paragraph",
-            content: "",
-            placeholder: "Start typing...",
-          },
-        ],
-      },
-    ],
-  },
+  content: SlideLayoutFactory.createTwoColumnLayout(),
 };
 
-export const TwoColumnsWithHeadings = {
+export const TwoColumnsWithHeadings: LayoutSlides = {
   slideName: "Two columns with headings",
   type: "twoColumnsWithHeadings",
   className: "p-4 mx-auto flex justify-center items-center",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "title" as ContentType,
-        name: "Title",
-        content: "",
-        placeholder: "Untitled Card",
-      },
-      {
-        id: uuidv4(),
-        type: "resizable-column" as ContentType,
-        name: "Text and image",
-        className: "border",
-        content: [
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  content: SlideLayoutFactory.createTwoColumnsWithHeadingsLayout(),
 };
 
-export const ThreeColumns = {
-  slideName: "Three column",
+export const ThreeColumns: LayoutSlides = {
+  slideName: "Three columns",
   type: "threeColumns",
   className: "p-4 mx-auto flex justify-center items-center",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "title" as ContentType,
-        name: "Title",
-        content: "",
-        placeholder: "Untitled Card",
-      },
-      {
-        id: uuidv4(),
-        type: "resizable-column" as ContentType,
-        name: "Text and image",
-        className: "border",
-        content: [
-          {
-            id: uuidv4(),
-            type: "paragraph" as ContentType,
-            name: "",
-            content: "",
-            placeholder: "Start typing...",
-          },
-          {
-            id: uuidv4(),
-            type: "paragraph" as ContentType,
-            name: "",
-            content: "",
-            placeholder: "Start typing...",
-          },
-          {
-            id: uuidv4(),
-            type: "paragraph" as ContentType,
-            name: "",
-            content: "",
-            placeholder: "Start typing...",
-          },
-        ],
-      },
-    ],
-  },
+  content: SlideLayoutFactory.createThreeColumnLayout(),
 };
 
-export const ThreeColumnsWithHeadings = {
+export const ThreeColumnsWithHeadings: LayoutSlides = {
   slideName: "Three columns with headings",
   type: "threeColumnsWithHeadings",
   className: "p-4 mx-auto flex justify-center items-center",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "title" as ContentType,
-        name: "Title",
-        content: "",
-        placeholder: "Untitled Card",
-      },
-      {
-        id: uuidv4(),
-        type: "resizable-column" as ContentType,
-        name: "Text and image",
-        className: "border",
-        content: [
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  content: SlideLayoutFactory.createThreeColumnLayout(),
 };
 
-export const FourColumns = {
-  slideName: "Four column",
+export const FourColumns: LayoutSlides = {
+  slideName: "Four columns",
   type: "fourColumns",
   className: "p-4 mx-auto flex justify-center items-center",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "title" as ContentType,
-        name: "Title",
-        content: "",
-        placeholder: "Untitled Card",
-      },
-      {
-        id: uuidv4(),
-        type: "resizable-column" as ContentType,
-        name: "Text and image",
-        className: "border",
-        content: [
-          {
-            id: uuidv4(),
-            type: "paragraph" as ContentType,
-            name: "Paragraph",
-            content: "",
-            placeholder: "Start typing...",
-          },
-          {
-            id: uuidv4(),
-            type: "paragraph" as ContentType,
-            name: "Paragraph",
-            content: "",
-            placeholder: "Start typing...",
-          },
-          {
-            id: uuidv4(),
-            type: "paragraph" as ContentType,
-            name: "Paragraph",
-            content: "",
-            placeholder: "Start typing...",
-          },
-          {
-            id: uuidv4(),
-            type: "paragraph" as ContentType,
-            name: "Paragraph",
-            content: "",
-            placeholder: "Start typing...",
-          },
-        ],
-      },
-    ],
-  },
+  content: SlideLayoutFactory.createFourColumnLayout(),
 };
 
-export const TwoImageColumns = {
-  slideName: "Two Image Columns",
+export const TwoImageColumns: LayoutSlides = {
+  slideName: "Two image columns",
   type: "twoImageColumns",
   className: "p-4 mx-auto flex justify-center items-center",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "title" as ContentType,
-        name: "Title",
-        content: "",
-        placeholder: "Untitled Card",
-      },
-      {
-        id: uuidv4(),
-        type: "resizable-column" as ContentType,
-        name: "Text and image",
-        className: "border",
-        content: [
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "image" as ContentType,
-                name: "Image",
-                className: "p-3",
-                content:
-                  "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                alt: "Title",
-              },
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "image" as ContentType,
-                name: "Image",
-                className: "p-3",
-                content:
-                  "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                alt: "Title",
-              },
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  content: SlideLayoutFactory.createImageColumnLayout(2),
 };
 
-export const ThreeImageColumns = {
-  slideName: "Three Image Columns",
+export const ThreeImageColumns: LayoutSlides = {
+  slideName: "Three image columns",
   type: "threeImageColumns",
   className: "p-4 mx-auto flex justify-center items-center",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "title" as ContentType,
-        name: "Title",
-        content: "",
-        placeholder: "Untitled Card",
-      },
-      {
-        id: uuidv4(),
-        type: "resizable-column" as ContentType,
-        name: "Text and image",
-        className: "border",
-        content: [
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "image" as ContentType,
-                name: "Image",
-                className: "p-3",
-                content:
-                  "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                alt: "Title",
-              },
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "image" as ContentType,
-                name: "Image",
-                className: "p-3",
-                content:
-                  "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                alt: "Title",
-              },
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "image" as ContentType,
-                name: "Image",
-                className: "p-3",
-                content:
-                  "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                alt: "Title",
-              },
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  content: SlideLayoutFactory.createImageColumnLayout(3),
 };
 
-export const FourImageColumns = {
-  slideName: "Four Image Columns",
+export const FourImageColumns: LayoutSlides = {
+  slideName: "Four image columns",
   type: "fourImageColumns",
   className: "p-4 mx-auto flex justify-center items-center",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "title" as ContentType,
-        name: "Title",
-        content: "",
-        placeholder: "Untitled Card",
-      },
-      {
-        id: uuidv4(),
-        type: "resizable-column" as ContentType,
-        name: "Text and image",
-        className: "border",
-        content: [
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "image" as ContentType,
-                name: "Image",
-                className: "p-3",
-                content:
-                  "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                alt: "Title",
-              },
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "image" as ContentType,
-                name: "Image",
-                className: "p-3",
-                content:
-                  "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                alt: "Title",
-              },
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "image" as ContentType,
-                name: "Image",
-                className: "p-3",
-                content:
-                  "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                alt: "Title",
-              },
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-
-          {
-            id: uuidv4(),
-            type: "column" as ContentType,
-            name: "Column",
-            content: [
-              {
-                id: uuidv4(),
-                type: "image" as ContentType,
-                name: "Image",
-                className: "p-3",
-                content:
-                  "https://plus.unsplash.com/premium_photo-1729004379397-ece899804701?q=80&w=2767&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                alt: "Title",
-              },
-              {
-                id: uuidv4(),
-                type: "heading3" as ContentType,
-                name: "Heading3",
-                content: "",
-                placeholder: "Heading 3",
-              },
-              {
-                id: uuidv4(),
-                type: "paragraph" as ContentType,
-                name: "Paragraph",
-                content: "",
-                placeholder: "Start typing...",
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  content: SlideLayoutFactory.createImageColumnLayout(4),
 };
 
-export const TableLayout = {
+export const TableLayout: LayoutSlides = {
   slideName: "Table Layout",
   type: "tableLayout",
   className:
     "p-8 mx-auto flex flex-col justify-center items-center min-h-[400px]",
-  content: {
-    id: uuidv4(),
-    type: "column" as ContentType,
-    name: "Column",
-    content: [
-      {
-        id: uuidv4(),
-        type: "table" as ContentType,
-        name: "Table",
-        initialRowSizes: 2,
-        initialColumnSizes: 2,
-        content: [],
-      },
-    ],
-  },
+  content: SlideLayoutFactory.createTableLayout(),
 };

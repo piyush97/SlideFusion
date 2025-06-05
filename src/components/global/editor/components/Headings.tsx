@@ -33,7 +33,7 @@ const createHeading = (name: string, defaultClassName: string) => {
         <textarea
           className={cn(
             `w-full bg-transparent ${defaultClassName} ${previewClassName} font-normal text-gray-900 placeholder:text-gray-300 focus:outline-none resize-none overflow-hidden leading-tight`,
-            className
+            className,
           )}
           style={{
             padding: 0,
@@ -56,9 +56,9 @@ const createHeading = (name: string, defaultClassName: string) => {
           }}
           readOnly={isPreview}
           {...props}
-        ></textarea>
+        />
       );
-    }
+    },
   );
   Heading.displayName = name;
   return Heading;

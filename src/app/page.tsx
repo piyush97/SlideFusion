@@ -3,7 +3,7 @@ import { Footer } from "@/components/home/Footer";
 import { Navbar } from "@/components/home/Navbar";
 import { Pricing } from "@/components/home/Pricing";
 import { Button } from "@/components/ui/button";
-import { IS_WAITLIST_MODE, WAITLIST_PATH } from "@/global/constants";
+import { IS_WAITLIST_MODE, WAITLIST_PATH } from "@/config";
 import { motion } from "framer-motion";
 import {
   Image as ImageIcon,
@@ -159,7 +159,7 @@ const Page = () => {
     }
     metaDescription.setAttribute(
       "content",
-      "Create stunning presentations with AI-powered SlideFusion. Save time and impress your audience with creative AI generation, smart layouts, and auto-generated visuals."
+      "Create stunning presentations with AI-powered SlideFusion. Save time and impress your audience with creative AI generation, smart layouts, and auto-generated visuals.",
     );
 
     // Update og tags
@@ -167,17 +167,17 @@ const Page = () => {
     if (ogTitle) {
       ogTitle.setAttribute(
         "content",
-        "SlideFusion - AI-Powered Presentation Tool"
+        "SlideFusion - AI-Powered Presentation Tool",
       );
     }
 
     const ogDescription = document.querySelector(
-      'meta[property="og:description"]'
+      'meta[property="og:description"]',
     );
     if (ogDescription) {
       ogDescription.setAttribute(
         "content",
-        "Create stunning presentations with AI-powered SlideFusion. Save time and impress your audience."
+        "Create stunning presentations with AI-powered SlideFusion. Save time and impress your audience.",
       );
     }
   }, []);
@@ -260,7 +260,7 @@ const Page = () => {
                   opacity: [0.5, 0.8, 0.5],
                 }}
                 transition={{
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   duration: 5,
                 }}
               />
@@ -271,7 +271,7 @@ const Page = () => {
                   opacity: [0.5, 0.8, 0.5],
                 }}
                 transition={{
-                  repeat: Infinity,
+                  repeat: Number.POSITIVE_INFINITY,
                   duration: 4,
                   delay: 1,
                 }}
@@ -467,7 +467,7 @@ const Page = () => {
             opacity: [0.3, 0.5, 0.3],
           }}
           transition={{
-            repeat: Infinity,
+            repeat: Number.POSITIVE_INFINITY,
             duration: 8,
           }}
         />

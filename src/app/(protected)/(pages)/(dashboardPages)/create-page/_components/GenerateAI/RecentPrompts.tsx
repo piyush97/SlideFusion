@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { containerVariants, itemVariant } from "@/global/constants";
+import { containerVariants, itemVariant } from "@/config";
 import { timeAgo } from "@/lib/utils";
 import { useCreativeAIStore } from "@/store/useCreativeAIStore";
 import { usePromptStore } from "@/store/usePromptStore";

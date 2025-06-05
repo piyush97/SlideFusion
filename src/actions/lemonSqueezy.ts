@@ -4,7 +4,7 @@ import { lemonSqueezyClient } from "@/lib/axios";
 export const buySubscription = async (userId: string) => {
   try {
     const res = await lemonSqueezyClient(
-      process.env.LEMON_SQUEEZY_API_KEY
+      process.env.LEMON_SQUEEZY_API_KEY,
     ).post("/checkout", {
       data: {
         type: "checkouts",

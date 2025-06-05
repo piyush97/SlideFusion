@@ -1,35 +1,18 @@
 "use client";
-import BlockQuote from "@/components/global/editor/components/BlockQuote";
-import CalloutBox from "@/components/global/editor/components/CalloutBox";
-import CodeBlock from "@/components/global/editor/components/CodeBlock";
-import ColumnComponent from "@/components/global/editor/components/ColumnComponent";
-import Divider from "@/components/global/editor/components/Divider";
+import type { ContentItem } from "@/lib/types";
+import React from "react";
 import {
-  Heading1,
-  Heading2,
-  Heading3,
-  Heading4,
-  Title,
-} from "@/components/global/editor/components/Headings";
-import ImageComponent from "@/components/global/editor/components/ImageComponent";
-import NumberedList, {
-  BulletList,
-  TodoList,
-} from "@/components/global/editor/components/NumberedList";
-import Paragraph from "@/components/global/editor/components/Paragraph";
-import TableComponent from "@/components/global/editor/components/TableComponent";
-import TableOfContents from "@/components/global/editor/components/TableOfContents";
-import { ContentItem } from "@/lib/types";
-import { cn } from "@/lib/utils";
-import { motion } from "motion/react";
-import React, { useCallback } from "react";
-import DropZone from "./DropZone";
+  ColumnRenderer,
+  ResizableColumnRenderer,
+} from "./content/ColumnRenderers";
+import type { ContentRendererProps } from "./content/ContentBase";
+import ContentRendererFactory from "./content/ContentRendererFactory";
 
 type Props = {
   content: ContentItem;
   onContentChange: (
     newContent: string | string[] | string[][],
-    contentId: string
+    contentId: string,
   ) => void;
   isPreview?: boolean;
   isEditable?: boolean;
@@ -37,6 +20,9 @@ type Props = {
   index?: number;
 };
 
+/**
+ * Main content renderer component - now much cleaner and focused
+ */
 const Content: React.FC<Props> = React.memo(
   ({
     content,
@@ -44,270 +30,41 @@ const Content: React.FC<Props> = React.memo(
     isPreview = false,
     isEditable = true,
     slideId,
-    // index is unused in this scope
+    index,
   }) => {
-    const handleChange = useCallback(
-      (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        onContentChange(content.id, e.target.value);
-      },
-      [content.id, onContentChange]
-    );
-
-    const commonProps = {
-      placeholder: content.placeholder,
-      value: content.content as string,
-      onChange: handleChange,
-      isPreview: isPreview,
+    const contentProps: ContentRendererProps = {
+      content,
+      onContentChange,
+      isPreview,
+      isEditable,
+      slideId,
+      index,
     };
 
-    const animateProps = {
-      initial: { opacity: 0, y: 20 },
-      animate: { opacity: 1, y: 0 },
-      transition: { duration: 0.5 },
-    };
-
-    switch (content.type) {
-      case "heading1":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <Heading1 {...commonProps} />
-          </motion.div>
-        );
-
-      case "heading2":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <Heading2 {...commonProps} />
-          </motion.div>
-        );
-
-      case "heading3":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <Heading3 {...commonProps} />
-          </motion.div>
-        );
-
-      case "heading4":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <Heading4 {...commonProps} />
-          </motion.div>
-        );
-
-      case "title":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <Title {...commonProps} />
-          </motion.div>
-        );
-
-      case "paragraph":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <Paragraph {...commonProps} />
-          </motion.div>
-        );
-
-      case "table":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <TableComponent
-              content={content.content as string[][]}
-              onChange={(newContent) =>
-                onContentChange(
-                  newContent !== null ? newContent : "",
-                  content.id
-                )
-              }
-              isPreview={isPreview}
-              isEditable={isEditable}
-              initialColumnSize={content.initialColumns}
-              initialRowSize={content.initialRows}
-            />
-          </motion.div>
-        );
-
-      case "resizable-column":
-        if (Array.isArray(content.content)) {
-          return (
-            <motion.div className="w-full h-full" {...animateProps}>
-              <ColumnComponent
-                content={content.content as ContentItem[]}
-                onContentChange={onContentChange}
-                className={content.className}
-                isPreview={isPreview}
-                isEditable={isEditable}
-                slideId={slideId || ""}
-              />
-            </motion.div>
-          );
-        }
-        return null;
-
-      case "image":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <ImageComponent
-              src={content.content as string}
-              alt={content.alt || "image"}
-              className={content.className}
-              isPreview={isPreview}
-              contentId={content.id}
-              onContentChange={onContentChange}
-              isEditable={isEditable}
-            />
-          </motion.div>
-        );
-
-      case "blockquote":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <BlockQuote>
-              <Paragraph {...commonProps} />
-            </BlockQuote>
-          </motion.div>
-        );
-
-      case "numberedList":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <NumberedList
-              items={content.content as string[]}
-              onChange={(newItems) => onContentChange(newItems, content.id)}
-              className={content.className}
-            />
-          </motion.div>
-        );
-
-      case "bulletedList":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <BulletList
-              items={content.content as string[]}
-              onChange={(newItems) => onContentChange(newItems, content.id)}
-              className={content.className}
-            />
-          </motion.div>
-        );
-
-      case "todoList":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <TodoList
-              items={content.content as string[]}
-              onChange={(newItems) => onContentChange(newItems, content.id)}
-              className={content.className}
-            />
-          </motion.div>
-        );
-
-      case "calloutBox":
-        return (
-          <motion.div className={cn("w-full h-full ")} {...animateProps}>
-            <CalloutBox
-              type={content.callOutType || "info"}
-              className={content.className}
-            >
-              <Paragraph {...commonProps} />
-            </CalloutBox>
-          </motion.div>
-        );
-
-      case "codeBlock":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <CodeBlock
-              code={content.code}
-              language={content.language}
-              onChange={(newCode) => onContentChange(newCode, content.id)}
-              className={content.className}
-            />
-          </motion.div>
-        );
-
-      case "tableOfContents":
-        return (
-          <motion.div className="w-full h-full" {...animateProps}>
-            <TableOfContents
-              items={content.content as string[]}
-              onItemClick={(id) => {
-                console.log(`Navigate to section: ${id}`);
-              }}
-              className={content.className}
-            />
-          </motion.div>
-        );
-
-      case "divider":
-        return (
-          <motion.div
-            className={cn("w-full h-full border-b", content.className)}
-            {...animateProps}
-          >
-            <Divider className={content.className} />
-          </motion.div>
-        );
-
-      case "column":
-        if (Array.isArray(content.content)) {
-          return (
-            <motion.div
-              className={cn("w-full h-full flex flex-col", content.className)}
-              {...animateProps}
-            >
-              {content.content.length > 0 ? (
-                (content.content as ContentItem[]).map(
-                  (subItem: ContentItem, subIndex: number) => (
-                    <React.Fragment key={subItem.id || `item-${subIndex}`}>
-                      {!isPreview &&
-                        !subItem.restrictToDrop &&
-                        subIndex === 0 &&
-                        isEditable && (
-                          <DropZone
-                            index={0}
-                            parentId={content.id}
-                            slideId={slideId || ""}
-                          />
-                        )}
-                      <MasterRecursiveComponent
-                        content={subItem}
-                        onContentChange={onContentChange}
-                        isPreview={isPreview}
-                        isEditable={isEditable}
-                        slideId={slideId}
-                        index={subIndex}
-                      />
-                      {!isPreview && !subItem.restrictToDrop && isEditable && (
-                        <DropZone
-                          index={subIndex + 1}
-                          parentId={content.id}
-                          slideId={slideId || ""}
-                        />
-                      )}
-                    </React.Fragment>
-                  )
-                )
-              ) : isEditable ? (
-                <DropZone
-                  index={0}
-                  parentId={content.id}
-                  slideId={slideId || ""}
-                />
-              ) : null}
-            </motion.div>
-          );
-        }
-        return null;
-
-      default:
-        return null;
+    // Handle layout types that need special recursive handling
+    if (content.type === "column") {
+      return (
+        <ColumnRenderer
+          {...contentProps}
+          renderContent={(props) => <MasterRecursiveComponent {...props} />}
+        />
+      );
     }
-  }
+
+    if (content.type === "resizable-column") {
+      return <ResizableColumnRenderer {...contentProps} />;
+    }
+
+    // Use factory for all other content types
+    return ContentRendererFactory.render(contentProps);
+  },
 );
 
 Content.displayName = "ContentRenderer";
 
+/**
+ * Recursive component wrapper for handling nested content
+ */
 export const MasterRecursiveComponent: React.FC<Props> = React.memo(
   ({
     content,
@@ -317,20 +74,19 @@ export const MasterRecursiveComponent: React.FC<Props> = React.memo(
     isPreview = false,
     isEditable = true,
   }) => {
-    // When in preview mode, we should still respect the isEditable flag
-    // but ensure it's properly respected (readOnly is controlled by isPreview separately)
     return (
-      <React.Fragment>
-        <Content
-          content={content}
-          onContentChange={onContentChange}
-          isPreview={isPreview}
-          isEditable={isEditable}
-          slideId={slideId}
-          index={index}
-        />
-      </React.Fragment>
+      <Content
+        content={content}
+        onContentChange={onContentChange}
+        isPreview={isPreview}
+        isEditable={isEditable}
+        slideId={slideId}
+        index={index}
+      />
     );
-  }
+  },
 );
+
 MasterRecursiveComponent.displayName = "MasterRecursiveComponent";
+
+export default Content;

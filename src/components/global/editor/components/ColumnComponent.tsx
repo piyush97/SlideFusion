@@ -4,7 +4,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
-import { ContentItem } from "@/lib/types";
+import type { ContentItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import React, { useEffect } from "react";
 import { v4 } from "uuid";
@@ -17,7 +17,7 @@ type Props = {
   slideId: string;
   onContentChange: (
     newContent: string | string[] | string[][],
-    contentId: string
+    contentId: string,
   ) => void;
 };
 
@@ -31,7 +31,7 @@ const ColumnComponent = ({
 }: Props) => {
   const [columns, setColumns] = React.useState<ContentItem[]>(content);
 
-  const createDefaultColumns = (num: number) => {
+  const createDefaultColumns = React.useCallback((num: number) => {
     return Array(num)
       .fill(null)
       .map(() => ({
@@ -41,12 +41,12 @@ const ColumnComponent = ({
         content: "",
         placeholder: "Start typing...",
       }));
-  };
+  }, []);
 
   useEffect(() => {
     if (content.length === 0) setColumns(createDefaultColumns(2));
     else setColumns(content);
-  }, [content]);
+  }, [content, createDefaultColumns]);
 
   return (
     <div className="relative w-full h-full">
@@ -55,7 +55,7 @@ const ColumnComponent = ({
         className={cn(
           "h-full w-full flex",
           !isEditable && "!border-0",
-          className
+          className,
         )}
       >
         {columns.map((column, index) => (

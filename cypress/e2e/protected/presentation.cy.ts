@@ -7,7 +7,7 @@ describe("Protected Presentation Routes", () => {
           if (res.body) {
             res.body = res.body.replace(
               /IS_WAITLIST_MODE\s*=\s*false/,
-              "IS_WAITLIST_MODE = true"
+              "IS_WAITLIST_MODE = true",
             );
           }
         });
@@ -46,7 +46,7 @@ describe("Protected Presentation Routes", () => {
           if (res.body) {
             res.body = res.body.replace(
               /IS_WAITLIST_MODE\s*=\s*true/,
-              "IS_WAITLIST_MODE = false"
+              "IS_WAITLIST_MODE = false",
             );
           }
         });

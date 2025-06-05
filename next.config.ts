@@ -97,7 +97,7 @@ const nextConfig: NextConfig = {
             name(module: { context: string }) {
               // Extract npm package name
               const matches = module.context.match(
-                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
               );
               const packageName = matches ? matches[1] : "unknown";
 

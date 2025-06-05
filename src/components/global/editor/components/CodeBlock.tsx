@@ -14,7 +14,7 @@ const CodeBlock = ({ code, language, onChange, className }: Props) => {
   return (
     <pre
       className={cn("p-4 rounded-lg overflow-x-auto", className)}
-      style={{ backgroundColor: currentTheme.accentColor + "20" }}
+      style={{ backgroundColor: `${currentTheme.accentColor}20` }}
     >
       <code className={`language-${language}`}>
         <textarea

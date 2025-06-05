@@ -7,10 +7,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { ROUTES } from "@/global/constants";
+import { ROUTES } from "@/config";
 import { useSlideStore } from "@/store/useSlideStore";
-import { Project } from "@prisma/client";
-import { JsonValue } from "@prisma/client/runtime/library";
+import type { Project } from "@prisma/client";
+import type { JsonValue } from "@prisma/client/runtime/library";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 

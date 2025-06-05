@@ -5,7 +5,7 @@ type Props = {
   contentId: string;
   onContentChange: (
     newContent: string | string[] | string[][],
-    contentId: string
+    contentId: string,
   ) => void;
 };
 
@@ -18,7 +18,7 @@ const UploadImage = ({ contentId, onContentChange }: Props) => {
       sourceList="local, camera, facebook, gdrive"
       cameraModes="photo"
       classNameUploader="uc-light"
-      pubkey={process.env.UPLOADCARE_PUBLIC_KEY!}
+      pubkey={process.env.UPLOADCARE_PUBLIC_KEY || ""}
       multiple={false}
       onFileUploadSuccess={handleChangeEvent}
       maxLocalFileSizeBytes={10 * 1024 * 1024}

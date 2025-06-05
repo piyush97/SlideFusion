@@ -1,4 +1,4 @@
-import { OutlineCard } from "@/lib/types";
+import type { OutlineCard } from "@/lib/types";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
@@ -33,7 +33,7 @@ export const usePromptStore = create<PromptStore>()(
             prompts: state.prompts.filter((p) => p.id !== id),
           })),
       }),
-      { name: "prompts" }
-    )
-  )
+      { name: "prompts" },
+    ),
+  ),
 );

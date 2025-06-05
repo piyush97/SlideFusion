@@ -135,7 +135,7 @@ export function TwoImageColumnsIcon() {
   return (
     <div className="flex flex-col w-full h-full gap-1">
       <div className="w-full h-3 bg-white rounded" />
-      <div className="flex items-center justify-center w-full h-8 bg-white rounded"></div>
+      <div className="flex items-center justify-center w-full h-8 bg-white rounded" />
       <div className="flex w-full h-full gap-2">
         {Array.from({ length: 2 }, (_, i) => (
           <div className="flex flex-col w-1/2 gap-1" key={i}>
@@ -154,7 +154,7 @@ export function ThreeImageColumnsIcon() {
   return (
     <div className="flex flex-col w-full h-full gap-1">
       <div className="w-full h-3 bg-white rounded" />
-      <div className="flex items-center justify-center w-full h-8 bg-white rounded"></div>
+      <div className="flex items-center justify-center w-full h-8 bg-white rounded" />
       <div className="flex w-full h-full gap-2">
         {Array.from({ length: 3 }, (_, i) => (
           <div className="flex flex-col w-1/2 gap-1" key={i}>
@@ -173,7 +173,7 @@ export function FourImageColumnsIcon() {
   return (
     <div className="flex flex-col w-full h-full gap-1">
       <div className="w-full h-3 bg-white rounded" />
-      <div className="flex items-center justify-center w-full h-8 bg-white rounded"></div>
+      <div className="flex items-center justify-center w-full h-8 bg-white rounded" />
       <div className="flex w-full h-full gap-2">
         {Array.from({ length: 4 }, (_, i) => (
           <div className="flex flex-col w-1/2 gap-1" key={i}>

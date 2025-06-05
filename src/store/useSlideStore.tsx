@@ -1,5 +1,5 @@
-import { ContentItem, Slide, Theme } from "@/lib/types";
-import { Project } from "@prisma/client";
+import type { ContentItem, Slide, Theme } from "@/lib/types";
+import type { Project } from "@prisma/client";
 import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
@@ -37,14 +37,15 @@ interface SlideState {
   updateContentItem: (
     slideId: string,
     contentId: string,
-    newContent: string | string[] | string[][]
+    newContent: string | string[] | string[][],
   ) => void;
   addComponentInSlide: (
     slideId: string,
     component: ContentItem,
     parentId: string,
-    index: number
+    index: number,
   ) => void;
+  updateSlide: (slideId: string, updatedSlide: Slide) => void;
 }
 
 // Create the slide store with persistence
@@ -112,7 +113,7 @@ export const useSlideStore = create<SlideState>()(
       updateContentItem: (
         slideId: string,
         contentId: string,
-        newContent: string | string[] | string[][]
+        newContent: string | string[] | string[][],
       ) => {
         set((state) => {
           // Find the slide by ID
@@ -121,7 +122,7 @@ export const useSlideStore = create<SlideState>()(
 
             // Define the recursive update function
             const updateContentRecursively = (
-              item: ContentItem
+              item: ContentItem,
             ): ContentItem => {
               if (item.id === contentId) {
                 return { ...item, content: newContent };
@@ -136,7 +137,7 @@ export const useSlideStore = create<SlideState>()(
                   content: item.content.map((subItem) =>
                     typeof subItem !== "string"
                       ? updateContentRecursively(subItem as ContentItem)
-                      : subItem
+                      : subItem,
                   ),
                 };
               }
@@ -157,7 +158,7 @@ export const useSlideStore = create<SlideState>()(
       addComponentInSlide(
         slideId: string,
         component: ContentItem,
-        parentId: string
+        parentId: string,
         // Removing the unused index parameter
       ) {
         set((state) => {
@@ -165,7 +166,7 @@ export const useSlideStore = create<SlideState>()(
             if (slide.id !== slideId) return slide;
 
             const addComponentRecursively = (
-              item: ContentItem
+              item: ContentItem,
             ): ContentItem => {
               if (item.id === parentId) {
                 const newComponent = { ...component, id: uuidv4() };
@@ -186,7 +187,7 @@ export const useSlideStore = create<SlideState>()(
                   content: item.content.map((subItem) =>
                     typeof subItem !== "string"
                       ? addComponentRecursively(subItem as ContentItem)
-                      : subItem
+                      : subItem,
                   ),
                 };
               }
@@ -203,9 +204,17 @@ export const useSlideStore = create<SlideState>()(
           return { slides: updatedSlides };
         });
       },
+      updateSlide: (slideId: string, updatedSlide: Slide) => {
+        set((state) => {
+          const updatedSlides = state.slides.map((slide) =>
+            slide.id === slideId ? updatedSlide : slide,
+          );
+          return { slides: updatedSlides };
+        });
+      },
     }),
     {
       name: "slides-storage",
-    }
-  )
+    },
+  ),
 );

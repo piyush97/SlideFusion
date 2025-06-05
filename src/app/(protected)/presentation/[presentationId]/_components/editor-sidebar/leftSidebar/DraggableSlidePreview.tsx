@@ -1,4 +1,4 @@
-import { Slide } from "@/lib/types";
+import type { Slide } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { useSlideStore } from "@/store/useSlideStore";
 import { useRef } from "react";
@@ -45,9 +45,18 @@ const DraggableSlidePreview = ({ slide, index, moveSlide }: Props) => {
       className={cn(
         "relative cursor-pointer group",
         index === currentSlide ? "before:bg-blue-500" : "before:bg-transparent",
-        isDragging ? "opacity-50" : "opacity-100"
+        isDragging ? "opacity-50" : "opacity-100",
       )}
       onClick={() => setCurrentSlide(index)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setCurrentSlide(index);
+        }
+      }}
+      tabIndex={0}
+      role="button"
+      aria-label={`Select slide ${index + 1}: ${slide.slideName}`}
     >
       <div className="relative pl-2 mb-4">
         <ScaledPreview

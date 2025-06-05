@@ -1,8 +1,8 @@
 "use server";
 
 import { client } from "@/lib/prisma";
-import { OutlineCard } from "@/lib/types";
-import { JsonValue } from "@prisma/client/runtime/library";
+import type { OutlineCard } from "@/lib/types";
+import type { JsonValue } from "@prisma/client/runtime/library";
 import { onAuthenticateUser } from "./user";
 
 export const getAllProjects = async () => {

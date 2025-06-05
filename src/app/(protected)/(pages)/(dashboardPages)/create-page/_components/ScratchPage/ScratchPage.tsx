@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { containerVariants, itemVariant } from "@/global/constants";
+import { containerVariants, itemVariant } from "@/config";
 import { api } from "@/lib/api";
 import useScratchStore from "@/store/useScratchStore";
 import { ChevronLeft, RotateCcw } from "lucide-react";
@@ -18,7 +18,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import CardList from "../Common/CardList";
 
-import { OutlineCard } from "@/lib/types";
+import type { OutlineCard } from "@/lib/types";
 import { useSlideStore } from "@/store/useSlideStore";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -128,7 +128,7 @@ const ScratchPage = ({ onBack }: { onBack: () => void }) => {
                 ) : (
                   Array.from(
                     { length: outlines.length },
-                    (_, index) => index + 1
+                    (_, index) => index + 1,
                   ).map((number) => (
                     <SelectItem
                       className="font-semibold"

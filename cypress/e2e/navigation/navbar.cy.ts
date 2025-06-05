@@ -7,7 +7,7 @@ describe("Navbar Component", () => {
           if (res.body) {
             res.body = res.body.replace(
               /IS_WAITLIST_MODE\s*=\s*false/,
-              "IS_WAITLIST_MODE = true"
+              "IS_WAITLIST_MODE = true",
             );
           }
         });
@@ -39,7 +39,7 @@ describe("Navbar Component", () => {
       cy.contains("a", "Join Waitlist").should(
         "have.attr",
         "href",
-        "/waitlist"
+        "/waitlist",
       );
     });
 
@@ -60,7 +60,7 @@ describe("Navbar Component", () => {
           if (res.body) {
             res.body = res.body.replace(
               /IS_WAITLIST_MODE\s*=\s*true/,
-              "IS_WAITLIST_MODE = false"
+              "IS_WAITLIST_MODE = false",
             );
           }
         });

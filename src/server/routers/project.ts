@@ -1,5 +1,5 @@
 import { currentUser } from "@clerk/nextjs/server";
-import { InputJsonValue } from "@prisma/client/runtime/library";
+import type { InputJsonValue } from "@prisma/client/runtime/library";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../../lib/trpc";
 
@@ -125,7 +125,7 @@ export const projectRouter = createTRPCRouter({
       z.object({
         title: z.string(),
         outlines: z.array(outlineCardSchema),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
@@ -176,7 +176,7 @@ export const projectRouter = createTRPCRouter({
       z.object({
         projectId: z.string(),
         slides: z.any(), // JsonValue from Prisma
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       try {
@@ -208,7 +208,7 @@ export const projectRouter = createTRPCRouter({
       z.object({
         projectId: z.string(),
         theme: z.string(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       try {

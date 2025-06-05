@@ -1,4 +1,4 @@
-import { ContentType } from "@/lib/types";
+import type { ContentType } from "@/lib/types";
 import { currentUser } from "@clerk/nextjs/server";
 import OpenAI from "openai";
 import { v4 as uuidv4 } from "uuid";
@@ -63,7 +63,7 @@ export const openaiRouter = createTRPCRouter({
             console.error(
               "Invalid JSON received:",
               cleanedResponseContent,
-              error
+              error,
             );
             return {
               status: 500,
@@ -83,7 +83,7 @@ export const openaiRouter = createTRPCRouter({
       z.object({
         projectId: z.string(),
         theme: z.string(),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       try {

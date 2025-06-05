@@ -1,4 +1,4 @@
-import { clsx, type ClassValue } from "clsx";
+import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 export const timeAgo = (timestamp: Date) => {
   const now = new Date();
   const diffInSecs = Math.floor(
-    (now.getTime() - new Date(timestamp).getTime()) / 1000
+    (now.getTime() - new Date(timestamp).getTime()) / 1000,
   );
 
   const intervals = [

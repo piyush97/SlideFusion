@@ -37,9 +37,9 @@ const Paragraph = React.forwardRef<HTMLTextAreaElement, Props>(
             ).current = el;
         }}
         className={cn(
-          `w-full bg-transparent font-normal text-gray-900 placeholder:text-gray-300 focus:outline-none resize-none overflow-hidden leading-tight`,
+          "w-full bg-transparent font-normal text-gray-900 placeholder:text-gray-300 focus:outline-none resize-none overflow-hidden leading-tight",
           `${isPreview ? "text-[0.5rem]" : "text-lg"}`,
-          className
+          className,
         )}
         readOnly={isPreview}
         style={{
@@ -54,7 +54,7 @@ const Paragraph = React.forwardRef<HTMLTextAreaElement, Props>(
         {...props}
       />
     );
-  }
+  },
 );
 
 Paragraph.displayName = "Paragraph";

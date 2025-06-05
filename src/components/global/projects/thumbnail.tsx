@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { MasterRecursiveComponent } from "@/app/(protected)/presentation/[presentationId]/_components/editor/Content";
-import { Slide, Theme } from "@/lib/types";
+import type { Slide, Theme } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { Image } from "lucide-react";
 
@@ -13,7 +13,7 @@ const Thumbnail = ({ slide, theme }: Props) => {
   return (
     <div
       className={cn(
-        "w-full relative aspect-[16/9] rounded-lg overflow-hidden transition-all duration-200 p-2"
+        "w-full relative aspect-[16/9] rounded-lg overflow-hidden transition-all duration-200 p-2",
       )}
       style={{
         fontFamily: theme.fontFamily,
