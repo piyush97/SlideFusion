@@ -350,7 +350,7 @@ ${JSON.stringify([
       return { status: 400, error: "No content generated" };
     }
 
-    let jsonResponse: Slide[];
+    let jsonResponse: unknown;
     try {
       // More robust JSON extraction and parsing
       const jsonContent = responseContent.trim();
