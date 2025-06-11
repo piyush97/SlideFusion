@@ -105,15 +105,42 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
 
   drag(ref);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, drop] = useDrop({
+  const [, drop] = useDrop({
     accept: ["SLIDE", "LAYOUT"],
-    hover(item: { index: number; type: string }) {
+    drop: (
+      item: {
+        type: string;
+        layoutType?: string;
+        component?: LayoutSlides;
+        index?: number;
+      },
+      monitor,
+    ) => {
+      const itemType = monitor.getItemType();
+      if (itemType === "LAYOUT" && item.layoutType && item.component) {
+        // Apply layout to this slide
+        applyLayoutToSlide(slide.id, item.component.content, item.layoutType);
+        console.log(
+          `Applied layout ${item.layoutType} to slide ${slide.slideName}`,
+        );
+      }
+    },
+    hover(
+      item: {
+        type: string;
+        layoutType?: string;
+        component?: LayoutSlides;
+        index?: number;
+      },
+      monitor,
+    ) {
       if (!ref.current || !isEditable) return;
-      const dragIndex = item.index;
-      const hoverIndex = index;
 
-      if (item.type === "SLIDE") {
+      const itemType = monitor.getItemType();
+      if (itemType === "SLIDE" && typeof item.index === "number") {
+        const dragIndex = item.index;
+        const hoverIndex = index;
+
         if (dragIndex === hoverIndex) {
           return;
         }
@@ -125,8 +152,13 @@ const DraggableSlide: React.FC<DraggableSlideProps> = ({
 
   drag(drop(ref));
 
-  const { currentSlide, setCurrentSlide, currentTheme, updateContentItem } =
-    useSlideStore();
+  const {
+    currentSlide,
+    setCurrentSlide,
+    currentTheme,
+    updateContentItem,
+    applyLayoutToSlide,
+  } = useSlideStore();
 
   return (
     <div

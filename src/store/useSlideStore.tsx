@@ -46,6 +46,11 @@ interface SlideState {
     index: number,
   ) => void;
   updateSlide: (slideId: string, updatedSlide: Slide) => void;
+  applyLayoutToSlide: (
+    slideId: string,
+    layoutContent: ContentItem,
+    layoutType: string,
+  ) => void;
 }
 
 // Create the slide store with persistence
@@ -209,6 +214,26 @@ export const useSlideStore = create<SlideState>()(
           const updatedSlides = state.slides.map((slide) =>
             slide.id === slideId ? updatedSlide : slide,
           );
+          return { slides: updatedSlides };
+        });
+      },
+
+      applyLayoutToSlide: (
+        slideId: string,
+        layoutContent: ContentItem,
+        layoutType: string,
+      ) => {
+        set((state) => {
+          const updatedSlides = state.slides.map((slide) => {
+            if (slide.id === slideId) {
+              return {
+                ...slide,
+                content: layoutContent,
+                type: layoutType,
+              };
+            }
+            return slide;
+          });
           return { slides: updatedSlides };
         });
       },

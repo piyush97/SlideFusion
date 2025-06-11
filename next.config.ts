@@ -19,6 +19,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "plus.unsplash.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "oaidalleapiprodscus.blob.core.windows.net",
         port: "",
         pathname: "/private/**", // Adjust pathname if needed, using a wildcard for now
@@ -97,7 +103,7 @@ const nextConfig: NextConfig = {
             name(module: { context: string }) {
               // Extract npm package name
               const matches = module.context.match(
-                /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
+                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
               );
               const packageName = matches ? matches[1] : "unknown";
 

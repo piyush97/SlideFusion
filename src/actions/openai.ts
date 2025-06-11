@@ -78,6 +78,12 @@ export const generateImageUrl = async (prompt: string): Promise<string> => {
   console.log("🎨 Starting image generation for prompt:", prompt);
 
   try {
+    // Check if OpenAI API key is available
+    if (!process.env.OPENAI_API_KEY) {
+      console.error("🔴 OpenAI API key not found");
+      return "https://via.placeholder.com/1024";
+    }
+
     const improvedPrompt = `
     Create a highly realistic, professional image based on the following description. The image should look as if captured in real life, with attention to detail, lighting, and texture.
 
@@ -113,6 +119,10 @@ export const generateImageUrl = async (prompt: string): Promise<string> => {
     return "https://via.placeholder.com/1024";
   } catch (error) {
     console.error("🎨 Failed to generate image:", error);
+    console.error("🎨 Error details:", {
+      message: error instanceof Error ? error.message : "Unknown error",
+      stack: error instanceof Error ? error.stack : undefined,
+    });
     return "https://via.placeholder.com/1024";
   }
 };
@@ -143,14 +153,14 @@ const replaceImagePlaceholders = async (layout: Slide) => {
   console.log("� Found image components:", imageComponents.length);
   console.log(
     "🔍 Image components details:",
-    imageComponents.map((c) => ({ id: c.id, alt: c.alt, content: c.content })),
+    imageComponents.map((c) => ({ id: c.id, alt: c.alt, content: c.content }))
   );
 
   for (const component of imageComponents) {
     console.log("� Generating image for component:", component.alt);
     const originalContent = component.content;
     const generatedUrl = await generateImageUrl(
-      component.alt || "Placeholder Image",
+      component.alt || "Placeholder Image"
     );
     component.content = generatedUrl;
     console.log("🔥 Image generation result:", {
@@ -161,9 +171,73 @@ const replaceImagePlaceholders = async (layout: Slide) => {
   }
 };
 
+// Function to ensure minimum image requirements are met
+const ensureMinimumImages = (layouts: Slide[], minImageSlides = 3) => {
+  // Count slides that already have images
+  let slidesWithImages = 0;
+  const imageSlideIndices: number[] = [];
+
+  layouts.forEach((layout, index) => {
+    const imageCount = findImageComponents(layout.content).length;
+    if (imageCount > 0) {
+      slidesWithImages++;
+      imageSlideIndices.push(index);
+    }
+  });
+
+  console.log(
+    `🔍 Found ${slidesWithImages} slides with images, need at least ${minImageSlides}`
+  );
+
+  // If we don't have enough image slides, convert some text-only slides to image layouts
+  if (slidesWithImages < minImageSlides) {
+    const slidesToConvert = minImageSlides - slidesWithImages;
+    console.log(`🔄 Converting ${slidesToConvert} slides to include images`);
+
+    // Find slides without images
+    const slidesWithoutImages = layouts
+      .map((layout, index) => ({ layout, index }))
+      .filter(({ index }) => !imageSlideIndices.includes(index))
+      .slice(0, slidesToConvert);
+
+    // Convert these slides to image layouts
+    for (const { layout, index } of slidesWithoutImages) {
+      console.log(
+        `🖼️ Converting slide ${index + 1} (${
+          layout.slideName
+        }) to include images`
+      );
+
+      // Change layout type to image-focused
+      layout.type = "imageAndText";
+
+      // Update content to include an image
+      if (layout.content?.content && Array.isArray(layout.content.content)) {
+        // Add an image component to the beginning of the content
+        const imageComponent: ContentItem = {
+          id: uuidv4(),
+          type: "image" as ContentType,
+          name: "Image",
+          content: "https://via.placeholder.com/800x600",
+          alt: `Professional image related to ${layout.slideName}`,
+          className: "w-full h-auto rounded-lg shadow-lg",
+        };
+
+        // Insert image at the beginning
+        (layout.content.content as ContentItem[]).unshift(imageComponent);
+      }
+    }
+  }
+
+  return layouts;
+};
+
 export const generateLayoutsJson = async (outlineArray: string[]) => {
   const prompt = `### Guidelines
 You are a highly creative AI that generates JSON-based layouts for presentations. I will provide you with a pattern and a format to follow, and for each outline, you must generate unique layouts and contents and give me the output in the JSON format expected.
+
+🖼️ IMPORTANT IMAGE REQUIREMENT: You MUST ensure that at least 3 slides (or at least 50% of slides if fewer than 6 slides) include image components. Use image-focused layout types like "imageAndText", "textAndImage", "twoImageColumns", "threeImageColumns", or "fourImageColumns" for these slides.
+
 Our final JSON output is a combination of layouts and elements. The available LAYOUTS TYPES are as follows: "accentLeft", "accentRight", "imageAndText", "textAndImage", "twoColumns", "twoColumnsWithHeadings", "threeColumns", "threeColumnsWithHeadings", "fourColumns", "twoImageColumns", "threeImageColumns", "fourImageColumns", "tableLayout".
 The available CONTENT TYPES are "heading1", "heading2", "heading3", "heading4", "title", "paragraph", "table", "resizable-column", "image", "blockquote", "numberedList", "bulletList", "todoList", "calloutBox", "codeBlock", "tableOfContents", "divider", "column"
 
@@ -173,10 +247,11 @@ Use these outlines as a starting point for the content of the presentations
 The output must be an array of JSON objects.
   1. Write layouts based on the specific outline provided. Do not use types that are not mentioned in the example layouts.
   2. Ensuring each layout is unique.
-  3. Adhere to the structure of existing layouts
-  4. Fill placeholder data into content fields where required.
-  5. Generate unique image placeholders for the 'content' property of image components and also alt text according to the outline.
-  6. Ensure proper formatting and schema alignment for the output JSON.
+  3. 🖼️ MANDATORY: At least 3 slides (or 50% if fewer than 6 slides) MUST include image components using image-focused layout types.
+  4. Adhere to the structure of existing layouts
+  5. Fill placeholder data into content fields where required.
+  6. Generate unique image placeholders for the 'content' property of image components and also alt text according to the outline.
+  7. Ensure proper formatting and schema alignment for the output JSON.
 7. First create LAYOUTS TYPES  at the top most level of the JSON output as follows ${JSON.stringify(
     [
       {
@@ -185,7 +260,7 @@ The output must be an array of JSON objects.
         className: "p-8 mx-auto flex justify-center items-center min-h-[200px]",
         content: {},
       },
-    ],
+    ]
   )}
 
 8.The content property of each LAYOUTS TYPE should start with “column” and within the columns content property you can use any  of the CONTENT TYPES I provided above. Resizable-column, column and other multi element contents should be an array because you can have more elements inside them nested. Static elements like title and paragraph should have content set to a string.Here is an example of what 1 layout with 1 column with 1 title inside would look like:
@@ -350,7 +425,7 @@ ${JSON.stringify([
       return { status: 400, error: "No content generated" };
     }
 
-    let jsonResponse: unknown;
+    let jsonResponse: Slide[];
     try {
       // More robust JSON extraction and parsing
       const jsonContent = responseContent.trim();
@@ -363,36 +438,52 @@ ${JSON.stringify([
       }
 
       console.log("🟢 Attempting to parse JSON");
-      jsonResponse = JSON.parse(jsonString);
+      const parsedResponse = JSON.parse(jsonString);
 
-      if (!Array.isArray(jsonResponse)) {
+      if (!Array.isArray(parsedResponse)) {
         throw new Error("Response is not an array as expected");
       }
 
       console.log(
         "🔍 Generated layouts before image replacement:",
-        jsonResponse.length,
+        parsedResponse.length
       );
       console.log(
         "🔍 Sample layout structure:",
-        JSON.stringify(jsonResponse[0], null, 2),
+        JSON.stringify(parsedResponse[0], null, 2)
+      );
+
+      // Ensure minimum image requirements are met
+      const minImageSlides = Math.max(
+        3,
+        Math.ceil(parsedResponse.length * 0.5)
+      );
+      jsonResponse = ensureMinimumImages(
+        parsedResponse as Slide[],
+        minImageSlides
       );
 
       // Count image components before replacement
-      const imageCountBefore = jsonResponse.reduce((count, layout) => {
-        return count + findImageComponents(layout.content).length;
-      }, 0);
+      const imageCountBefore = jsonResponse.reduce(
+        (count: number, layout: Slide) => {
+          return count + findImageComponents(layout.content).length;
+        },
+        0
+      );
       console.log(
         "🔍 Total image components found across all layouts:",
-        imageCountBefore,
+        imageCountBefore
       );
 
       await Promise.all(jsonResponse.map(replaceImagePlaceholders));
 
       // Count and log after replacement
-      const imageCountAfter = jsonResponse.reduce((count, layout) => {
-        return count + findImageComponents(layout.content).length;
-      }, 0);
+      const imageCountAfter = jsonResponse.reduce(
+        (count: number, layout: Slide) => {
+          return count + findImageComponents(layout.content).length;
+        },
+        0
+      );
       console.log("🔍 Image components processed:", imageCountAfter);
     } catch (error) {
       console.log("🔴 ERROR parsing JSON:", error);
@@ -460,23 +551,15 @@ export const generateLayouts = async (projectId: string, theme: string) => {
       };
     }
 
-    // Generate images for all slides
-    console.log("🟢 Generating images for slides...");
-    try {
-      if (layouts.data && Array.isArray(layouts.data)) {
-        for (const slide of layouts.data) {
-          await replaceImagePlaceholders(slide);
-        }
-        console.log("🟢 Images generated successfully for all slides");
-      }
-    } catch (error) {
-      console.error("🔴 Error generating images:", error);
-      // Continue without failing the entire process
-    }
+    // Images have already been generated in generateLayoutsJson
+    console.log("🟢 Layouts and images generated successfully");
 
     await client.project.update({
       where: { id: projectId },
-      data: { slides: layouts.data, themeName: theme },
+      data: {
+        slides: JSON.parse(JSON.stringify(layouts.data)),
+        themeName: theme,
+      },
     });
 
     return { status: 200, data: layouts.data };
