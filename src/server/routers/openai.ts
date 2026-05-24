@@ -5,9 +5,15 @@ import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../../lib/trpc";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const getOpenAIClient = () => {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error("OPENAI_API_KEY is not configured");
+  }
+
+  return new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+};
 
 export const openaiRouter = createTRPCRouter({
   generateCreativePrompt: protectedProcedure
@@ -34,6 +40,7 @@ export const openaiRouter = createTRPCRouter({
         `;
 
       try {
+        const openai = getOpenAIClient();
         const completion = await openai.chat.completions.create({
           model: "chatgpt-4o-latest",
           messages: [
@@ -109,8 +116,12 @@ export const openaiRouter = createTRPCRouter({
           };
         }
 
-        const project = await ctx.db.project.findUnique({
-          where: { id: input.projectId, isDeleted: false },
+        const project = await ctx.db.project.findFirst({
+          where: {
+            id: input.projectId,
+            userId: userExist.id,
+            isDeleted: false,
+          },
         });
 
         if (!project) {
@@ -133,7 +144,7 @@ export const openaiRouter = createTRPCRouter({
         }
 
         await ctx.db.project.update({
-          where: { id: input.projectId },
+          where: { id: project.id },
           data: { slides: layouts.data, themeName: input.theme },
         });
 

@@ -72,16 +72,17 @@ export const recoverProject = async (projectId: string) => {
       return { status: 403, error: "User Not Authenticated" };
     }
 
-    const project = await client?.project.update({
+    const project = await client?.project.updateMany({
       where: {
         id: projectId,
+        userId: user.user.id,
       },
       data: {
         isDeleted: false,
       },
     });
 
-    if (!project) {
+    if (!project || project.count === 0) {
       return { status: 404, error: "Project Not Found" };
     }
 
@@ -100,16 +101,17 @@ export const deleteProject = async (projectId: string) => {
       return { status: 403, error: "User Not Authenticated" };
     }
 
-    const project = await client?.project.update({
+    const project = await client?.project.updateMany({
       where: {
         id: projectId,
+        userId: user.user.id,
       },
       data: {
         isDeleted: true,
       },
     });
 
-    if (!project) {
+    if (!project || project.count === 0) {
       return { status: 404, error: "Project Not Found" };
     }
 
@@ -163,9 +165,10 @@ export const getProjectById = async (projectId: string) => {
       return { status: 403, error: "User Not Authenticated" };
     }
 
-    const project = await client?.project.findUnique({
+    const project = await client?.project.findFirst({
       where: {
         id: projectId,
+        userId: user.user.id,
       },
     });
 
@@ -186,19 +189,26 @@ export const updateSlides = async (projectId: string, slides: JsonValue) => {
       return { status: 400, error: "Project ID and slides are required" };
     }
 
-    const updatedProject = await client?.project.update({
+    const user = await onAuthenticateUser();
+
+    if (!user || user.status !== 200 || !user.user) {
+      return { status: 403, error: "User Not Authenticated" };
+    }
+
+    const updatedProject = await client?.project.updateMany({
       where: {
         id: projectId,
+        userId: user.user.id,
       },
       data: {
         slides: slides,
       },
     });
 
-    if (!updatedProject) {
+    if (!updatedProject || updatedProject.count === 0) {
       return { status: 404, error: "Project Not Found" };
     }
-    return { status: 200, data: updatedProject };
+    return { status: 200 };
   } catch (error) {
     console.error("Error", error);
     return { status: 500, error: "Internal Server Error" };
@@ -211,19 +221,26 @@ export const updateTheme = async (projectId: string, theme: string) => {
       return { status: 400, error: "Project ID and theme are required" };
     }
 
-    const updatedProject = await client?.project.update({
+    const user = await onAuthenticateUser();
+
+    if (!user || user.status !== 200 || !user.user) {
+      return { status: 403, error: "User Not Authenticated" };
+    }
+
+    const updatedProject = await client?.project.updateMany({
       where: {
         id: projectId,
+        userId: user.user.id,
       },
       data: {
         themeName: theme,
       },
     });
 
-    if (!updatedProject) {
+    if (!updatedProject || updatedProject.count === 0) {
       return { status: 404, error: "Project Not Found" };
     }
-    return { status: 200, data: updatedProject };
+    return { status: 200 };
   } catch (error) {
     console.error("Error", error);
     return { status: 500, error: "Internal Server Error" };

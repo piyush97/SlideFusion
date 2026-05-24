@@ -31,24 +31,33 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const app = (
+    <html lang="en" suppressHydrationWarning>
+      <Analytics />
+      <SpeedInsights />
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        suppressHydrationWarning // for clerk to work in future
+      >
+        <ThemeProvider attribute={"class"} defaultTheme="dark" enableSystem>
+          <TRPCProvider>{children}</TRPCProvider>
+          <Toaster />
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+
+  const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
+  if (!publishableKey) {
+    return app;
+  }
+
   return (
     <ClerkProvider
-      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+      publishableKey={publishableKey}
       appearance={{ baseTheme: dark }}
     >
-      <html lang="en" suppressHydrationWarning>
-        <Analytics />
-        <SpeedInsights />
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-          suppressHydrationWarning // for clerk to work in future
-        >
-          <ThemeProvider attribute={"class"} defaultTheme="dark" enableSystem>
-            <TRPCProvider>{children}</TRPCProvider>
-            <Toaster />
-          </ThemeProvider>
-        </body>
-      </html>
+      {app}
     </ClerkProvider>
   );
 }

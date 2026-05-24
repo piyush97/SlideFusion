@@ -5,6 +5,8 @@ import { Sparkles } from "lucide-react";
 import Link from "next/link";
 
 export default function WaitlistPage() {
+  const hasClerkKey = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Simple header */}
@@ -28,7 +30,13 @@ export default function WaitlistPage() {
             </p>
           </div>
           <div className="p-6 border shadow-sm bg-card rounded-xl">
-            <Waitlist />
+            {hasClerkKey ? (
+              <Waitlist />
+            ) : (
+              <p className="text-sm text-center text-muted-foreground">
+                Waitlist signup is unavailable until Clerk is configured.
+              </p>
+            )}
           </div>
         </div>
       </main>
