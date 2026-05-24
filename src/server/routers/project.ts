@@ -103,9 +103,10 @@ export const projectRouter = createTRPCRouter({
           return { status: 403, error: "User Not Found" };
         }
 
-        const project = await ctx.db.project.findUnique({
+        const project = await ctx.db.project.findFirst({
           where: {
             id: input.projectId,
+            userId: userExist.id,
           },
         });
 
@@ -184,19 +185,34 @@ export const projectRouter = createTRPCRouter({
           return { status: 400, error: "Project ID and slides are required" };
         }
 
-        const updatedProject = await ctx.db.project.update({
+        const user = await currentUser();
+
+        if (!user) {
+          return { status: 403, error: "User Not Authenticated" };
+        }
+
+        const userExist = await ctx.db.user.findUnique({
+          where: { clerkId: user.id },
+        });
+
+        if (!userExist) {
+          return { status: 403, error: "User Not Found" };
+        }
+
+        const updatedProject = await ctx.db.project.updateMany({
           where: {
             id: input.projectId,
+            userId: userExist.id,
           },
           data: {
             slides: input.slides as InputJsonValue,
           },
         });
 
-        if (!updatedProject) {
+        if (updatedProject.count === 0) {
           return { status: 404, error: "Project Not Found" };
         }
-        return { status: 200, data: updatedProject };
+        return { status: 200 };
       } catch (error) {
         console.error("Error", error);
         return { status: 500, error: "Internal Server Error" };
@@ -216,19 +232,34 @@ export const projectRouter = createTRPCRouter({
           return { status: 400, error: "Project ID and theme are required" };
         }
 
-        const updatedProject = await ctx.db.project.update({
+        const user = await currentUser();
+
+        if (!user) {
+          return { status: 403, error: "User Not Authenticated" };
+        }
+
+        const userExist = await ctx.db.user.findUnique({
+          where: { clerkId: user.id },
+        });
+
+        if (!userExist) {
+          return { status: 403, error: "User Not Found" };
+        }
+
+        const updatedProject = await ctx.db.project.updateMany({
           where: {
             id: input.projectId,
+            userId: userExist.id,
           },
           data: {
             themeName: input.theme,
           },
         });
 
-        if (!updatedProject) {
+        if (updatedProject.count === 0) {
           return { status: 404, error: "Project Not Found" };
         }
-        return { status: 200, data: updatedProject };
+        return { status: 200 };
       } catch (error) {
         console.error("Error", error);
         return { status: 500, error: "Internal Server Error" };
@@ -253,16 +284,17 @@ export const projectRouter = createTRPCRouter({
           return { status: 403, error: "User Not Found" };
         }
 
-        const project = await ctx.db.project.update({
+        const project = await ctx.db.project.updateMany({
           where: {
             id: input.projectId,
+            userId: userExist.id,
           },
           data: {
             isDeleted: true,
           },
         });
 
-        if (!project) {
+        if (project.count === 0) {
           return { status: 404, error: "Project Not Found" };
         }
 
@@ -291,16 +323,17 @@ export const projectRouter = createTRPCRouter({
           return { status: 403, error: "User Not Found" };
         }
 
-        const project = await ctx.db.project.update({
+        const project = await ctx.db.project.updateMany({
           where: {
             id: input.projectId,
+            userId: userExist.id,
           },
           data: {
             isDeleted: false,
           },
         });
 
-        if (!project) {
+        if (project.count === 0) {
           return { status: 404, error: "Project Not Found" };
         }
 

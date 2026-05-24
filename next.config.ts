@@ -33,18 +33,17 @@ const nextConfig: NextConfig = {
   },
   // Configure for Vercel deployment
   output: "standalone",
+  outputFileTracingRoot: process.cwd(),
   distDir: ".next", // Make sure the output directory is .next
   experimental: {
     serverActions: {
       allowedOrigins: ["*"],
     },
-    // Add Turbopack configuration
-    turbo: {
-      // Updated Turbopack configuration using proper rules API
-      rules: {
-        // Define loaders for specific file extensions if needed
-        ".svg": ["file"],
-      },
+  },
+  // Add Turbopack configuration
+  turbopack: {
+    rules: {
+      ".svg": ["file"],
     },
   },
   // Support for environment variables
@@ -103,7 +102,7 @@ const nextConfig: NextConfig = {
             name(module: { context: string }) {
               // Extract npm package name
               const matches = module.context.match(
-                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
               );
               const packageName = matches ? matches[1] : "unknown";
 

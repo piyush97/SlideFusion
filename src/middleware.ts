@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 import { IS_WAITLIST_MODE, WAITLIST_PATH } from "./config";
 
 const isPublicRoute = createRouteMatcher([
+  "/",
   "/signin(.*)",
   "/signup(.*)",
-  "/(.*)",
   "/api/webhook(.*)",
   `${WAITLIST_PATH}(.*)`,
 ]);

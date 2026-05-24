@@ -48,7 +48,7 @@ const ImageComponent = ({
 
     setIsGenerating(true);
     try {
-      const response = await fetch("/api/test-image", {
+      const response = await fetch("/api/images/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +73,7 @@ const ImageComponent = ({
       "professional business presentation image, clean modern style";
     setIsGenerating(true);
     try {
-      const response = await fetch("/api/test-image", {
+      const response = await fetch("/api/images/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

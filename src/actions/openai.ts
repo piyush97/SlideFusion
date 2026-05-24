@@ -6,15 +6,17 @@ import { currentUser } from "@clerk/nextjs/server";
 import OpenAI from "openai";
 import { v4 as uuidv4 } from "uuid";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const getOpenAIClient = () => {
+  if (!process.env.OPENAI_API_KEY) {
+    throw new Error("OPENAI_API_KEY is not configured");
+  }
 
-export const generateCreativePrompt = async (userPrompt: string) => {
-  const openai = new OpenAI({
+  return new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
   });
+};
 
+export const generateCreativePrompt = async (userPrompt: string) => {
   const finalPrompt = `
     Create a coherent and relevant outline for the following prompt: ${userPrompt}.
     The outline should consist of at least 6 points, with each point written as a single sentence.
@@ -36,6 +38,7 @@ export const generateCreativePrompt = async (userPrompt: string) => {
     `;
 
   try {
+    const openai = getOpenAIClient();
     const completion = await openai.chat.completions.create({
       model: "chatgpt-4o-latest",
       messages: [
@@ -100,6 +103,7 @@ export const generateImageUrl = async (prompt: string): Promise<string> => {
   `;
 
     console.log("🎨 Calling DALL-E API...");
+    const openai = getOpenAIClient();
     const dalleResponse = await openai.images.generate({
       prompt: improvedPrompt,
       n: 1,
@@ -153,14 +157,14 @@ const replaceImagePlaceholders = async (layout: Slide) => {
   console.log("� Found image components:", imageComponents.length);
   console.log(
     "🔍 Image components details:",
-    imageComponents.map((c) => ({ id: c.id, alt: c.alt, content: c.content }))
+    imageComponents.map((c) => ({ id: c.id, alt: c.alt, content: c.content })),
   );
 
   for (const component of imageComponents) {
     console.log("� Generating image for component:", component.alt);
     const originalContent = component.content;
     const generatedUrl = await generateImageUrl(
-      component.alt || "Placeholder Image"
+      component.alt || "Placeholder Image",
     );
     component.content = generatedUrl;
     console.log("🔥 Image generation result:", {
@@ -186,7 +190,7 @@ const ensureMinimumImages = (layouts: Slide[], minImageSlides = 3) => {
   });
 
   console.log(
-    `🔍 Found ${slidesWithImages} slides with images, need at least ${minImageSlides}`
+    `🔍 Found ${slidesWithImages} slides with images, need at least ${minImageSlides}`,
   );
 
   // If we don't have enough image slides, convert some text-only slides to image layouts
@@ -205,7 +209,7 @@ const ensureMinimumImages = (layouts: Slide[], minImageSlides = 3) => {
       console.log(
         `🖼️ Converting slide ${index + 1} (${
           layout.slideName
-        }) to include images`
+        }) to include images`,
       );
 
       // Change layout type to image-focused
@@ -260,7 +264,7 @@ The output must be an array of JSON objects.
         className: "p-8 mx-auto flex justify-center items-center min-h-[200px]",
         content: {},
       },
-    ]
+    ],
   )}
 
 8.The content property of each LAYOUTS TYPE should start with “column” and within the columns content property you can use any  of the CONTENT TYPES I provided above. Resizable-column, column and other multi element contents should be an array because you can have more elements inside them nested. Static elements like title and paragraph should have content set to a string.Here is an example of what 1 layout with 1 column with 1 title inside would look like:
@@ -406,6 +410,7 @@ ${JSON.stringify([
 
   try {
     console.log("🟢 Generating layouts...");
+    const openai = getOpenAIClient();
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-2024-11-20",
       messages: [
@@ -446,21 +451,21 @@ ${JSON.stringify([
 
       console.log(
         "🔍 Generated layouts before image replacement:",
-        parsedResponse.length
+        parsedResponse.length,
       );
       console.log(
         "🔍 Sample layout structure:",
-        JSON.stringify(parsedResponse[0], null, 2)
+        JSON.stringify(parsedResponse[0], null, 2),
       );
 
       // Ensure minimum image requirements are met
       const minImageSlides = Math.max(
         3,
-        Math.ceil(parsedResponse.length * 0.5)
+        Math.ceil(parsedResponse.length * 0.5),
       );
       jsonResponse = ensureMinimumImages(
         parsedResponse as Slide[],
-        minImageSlides
+        minImageSlides,
       );
 
       // Count image components before replacement
@@ -468,11 +473,11 @@ ${JSON.stringify([
         (count: number, layout: Slide) => {
           return count + findImageComponents(layout.content).length;
         },
-        0
+        0,
       );
       console.log(
         "🔍 Total image components found across all layouts:",
-        imageCountBefore
+        imageCountBefore,
       );
 
       await Promise.all(jsonResponse.map(replaceImagePlaceholders));
@@ -482,7 +487,7 @@ ${JSON.stringify([
         (count: number, layout: Slide) => {
           return count + findImageComponents(layout.content).length;
         },
-        0
+        0,
       );
       console.log("🔍 Image components processed:", imageCountAfter);
     } catch (error) {
@@ -527,8 +532,8 @@ export const generateLayouts = async (projectId: string, theme: string) => {
       };
     }
 
-    const project = await client.project.findUnique({
-      where: { id: projectId, isDeleted: false },
+    const project = await client.project.findFirst({
+      where: { id: projectId, userId: userExist.id, isDeleted: false },
     });
 
     if (!project) {
@@ -555,7 +560,7 @@ export const generateLayouts = async (projectId: string, theme: string) => {
     console.log("🟢 Layouts and images generated successfully");
 
     await client.project.update({
-      where: { id: projectId },
+      where: { id: project.id },
       data: {
         slides: JSON.parse(JSON.stringify(layouts.data)),
         themeName: theme,

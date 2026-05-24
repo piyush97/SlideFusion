@@ -7,10 +7,10 @@ WORKDIR /app
 
 # Install dependencies
 COPY package.json ./
-COPY bun.lockb ./
+COPY bun.lock ./
 COPY prisma ./prisma/
-# Install without frozen-lockfile to update bun.lockb if needed
-RUN bun install
+# Install from the checked-in lockfile
+RUN bun install --frozen-lockfile
 
 # Rebuild the source code only when needed
 FROM base AS builder
@@ -18,13 +18,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Set environment variables for build
+# Set public environment variables for build
 ARG CLERK_PUBLISHABLE_KEY
-ARG CLERK_SECRET_KEY
-ARG DATABASE_URL
 ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$CLERK_PUBLISHABLE_KEY
-ENV CLERK_SECRET_KEY=$CLERK_SECRET_KEY
-ENV DATABASE_URL=$DATABASE_URL  
 ENV NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/callback
 ENV NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/callback
 
@@ -45,13 +41,9 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
-# Pass runtime environment variables
+# Pass public runtime environment variables. Secrets must be supplied by the runtime.
 ARG CLERK_PUBLISHABLE_KEY
-ARG CLERK_SECRET_KEY
-ARG DATABASE_URL
 ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$CLERK_PUBLISHABLE_KEY
-ENV CLERK_SECRET_KEY=$CLERK_SECRET_KEY
-ENV DATABASE_URL=$DATABASE_URL  
 ENV NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/callback
 ENV NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/callback
 
