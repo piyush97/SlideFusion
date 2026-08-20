@@ -1,0 +1,3 @@
+[test]
+# The showcase is a standalone Vitest project; its tests run from portfolio-site/.
+pathIgnorePatterns = ["portfolio-site/**"]

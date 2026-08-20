@@ -81,6 +81,20 @@ set production environment variables, run database migrations, and configure
 the Clerk and Lemon Squeezy webhooks. See [DEPLOYMENT.md](DEPLOYMENT.md) and
 [DOCKER_DEPLOYMENT.md](DOCKER_DEPLOYMENT.md) for the existing deployment notes.
 
+## Static portfolio showcase
+
+`portfolio-site/` is a separate, static project showcase for GitHub Pages. It
+is intentionally limited to public, non-interactive material and must not rely
+on this application’s API routes, authentication, database, environment
+variables, billing, AI generation, or any locally running service. It is not a
+hosted substitute for the product.
+
+The Pages workflow uploads only that directory and runs
+`./scripts/check-pages-static.sh` before publishing. See the concise
+[Pages runbook](docs/PAGES_RUNBOOK.md) and the
+[claim/evidence matrix](docs/CLAIM_EVIDENCE_MATRIX.md) for publication and
+portfolio-claim boundaries.
+
 ## Tech stack
 
 Next.js · TypeScript · React · tRPC · Prisma · PostgreSQL · Clerk · OpenAI ·
